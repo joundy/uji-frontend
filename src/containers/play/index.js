@@ -5,6 +5,8 @@ import Button from "../../components/Button"
 import ExamGroupCard from "../../components/ExamGroupCard"
 import ExamCard from "../../components/ExamCard"
 import Navbar from "../../components/Navbar"
+import BreadCrumb from "../../components/BreadCrumb"
+import Title from "../../components/Title"
 
 const Wrapper = styled.section`
   padding: 20px;
@@ -13,6 +15,21 @@ const Wrapper = styled.section`
 
 const Play = () => (
   <Wrapper>
+    <Title title="Exam Groups"/>
+    <br/>
+    <BreadCrumb
+      links={[
+        {
+          title:"my-blogs",
+          link:"#"
+        },
+        {
+          title:"Tryout-UN-SMA-2019",
+          link:"#"
+        }
+      ]}
+    />
+    <br/>
     <Navbar
       title="Uji Yuksinau"
       titleOnlick={() => console.log("title onlick")}

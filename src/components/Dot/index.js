@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const DotC = (props) => (
   
-  <Wrapper width={props.width} height={props.height}>
+  <Wrapper>
 
   </Wrapper>
 )
