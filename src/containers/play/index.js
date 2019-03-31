@@ -7,6 +7,7 @@ import ExamCard from "../../components/ExamCard"
 import Navbar from "../../components/Navbar"
 import BreadCrumb from "../../components/BreadCrumb"
 import Title from "../../components/Title"
+import Box from "../../components/Box"
 
 const Wrapper = styled.section`
   padding: 20px;
@@ -15,6 +16,13 @@ const Wrapper = styled.section`
 
 const Play = () => (
   <Wrapper>
+    <Box
+      value="12"
+      // color="warning"
+      isFill={false}
+      onClick={() => console.log("onlick 12")}
+    />
+    <br/>
     <Title title="Exam Groups"/>
     <br/>
     <BreadCrumb
