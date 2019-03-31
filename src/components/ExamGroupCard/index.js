@@ -8,10 +8,10 @@ const ButtonC = (props) => (
   
   <Wrapper>
     <Header>Tryout UN SMP 2019</Header>
-    <TWrap>
+    <TagWrap>
       <Tag>#un</Tag>
       <Tag>#un</Tag>
-    </TWrap>
+    </TagWrap>
     <Desc>Contrary to popular belief, Lorem Ipsum is not simply random text.</Desc>
     <LWrap>
       <Line width={200}/>
@@ -20,7 +20,7 @@ const ButtonC = (props) => (
       <LCDWrap>
         <Level>SMA</Level>
         <Dot width={3} height={3}/>
-        <Class>12</Class>
+        <Class>12</Class> 
       </LCDWrap>
       <BWrap>
         <Button title="View Exams"/>
@@ -46,7 +46,7 @@ const Header = styled.h2`
   color: #232735;
 `
 
-const TWrap = styled.section`
+const TagWrap = styled.section`
   display: flex;
   justify-content: center;
   margin-top: 10px
@@ -64,18 +64,19 @@ const Desc = styled.p`
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-  color: #505565;
+  color: #8B90A0;
   text-align: center;
+  height: 40px;
 `
 
 const Level = styled.h4`
   margin-right: 5px;
-  color: #232735;
+  color: #505565;
 `
 
 const Class = styled.h4`
   margin-left: 5px;
-  color: #232735;
+  color: #505565;
 `
 
 const LCDWrap = styled.section`

@@ -3,13 +3,13 @@ import styled from 'styled-components'
 
 const LineC = (props) => (
   
-  <Wrapper width={props.width} height={props.height}>
+  <Wrapper width={props.width || 1} height={props.height || 1}>
 
   </Wrapper>
 )
 
 const Wrapper = styled.section`
-  height: ${(props) => props.height || 1}px;
+  height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
   background-color: #F0F1F3;
 `;

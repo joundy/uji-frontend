@@ -1,17 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const setColor = (color = "") => {
+  switch (color) {
+    case "warning":
+      return "#EF7923"
+    case "primary":
+      return "#2A76E5"
+    default:
+      return "#2A76E5"
+  }
+
+}
+
 const ButtonC = (props) => (
-  
   <Wrapper>
-    {console.log(props)}
-    <Button onClick={props.onClick}>{props.title}</Button>
+    <Button onClick={props.onClick} color={setColor(props.color)}>{props.title}</Button>
   </Wrapper>
 )
 
 const Button = styled.button`
   border: none;
-  background-color: #2A76E5;
+  background-color: ${(props) => props.color};
   border-radius: 5px;
   color: white;
   height: 40px;
