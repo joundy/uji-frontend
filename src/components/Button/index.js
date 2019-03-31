@@ -10,7 +10,6 @@ const setColor = (color = "") => {
     default:
       return "#2A76E5"
   }
-
 }
 
 const ButtonC = (props) => (

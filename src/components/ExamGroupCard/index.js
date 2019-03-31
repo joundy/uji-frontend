@@ -7,20 +7,19 @@ import Dot from "../Dot"
 const ButtonC = (props) => (
   
   <Wrapper>
-    <Header>Tryout UN SMP 2019</Header>
+    <Header>{props.title}</Header>
     <TagWrap>
-      <Tag>#un</Tag>
-      <Tag>#un</Tag>
+      {props.tag.map((v) => <Tag>#{v}</Tag>)}
     </TagWrap>
-    <Desc>Contrary to popular belief, Lorem Ipsum is not simply random text.</Desc>
+    <Desc>{props.description}</Desc>
     <LWrap>
       <Line width={200}/>
     </LWrap>
     <LBWrap>
       <LCDWrap>
-        <Level>SMA</Level>
+        <Level>{props.level}</Level>
         <Dot width={3} height={3}/>
-        <Class>12</Class> 
+        <Class>{props.class}</Class> 
       </LCDWrap>
       <BWrap>
         <Button title="View Exams"/>

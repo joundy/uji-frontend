@@ -6,9 +6,9 @@ import Line from "../Line"
 const ExamCardC = (props) => (
   <Wrapper>
     <LeftWrap>
-      <Header>Matematika</Header>
-      <Desc>Contrary to popular belief, Lorem Ipsum is not simply random text ...</Desc>
-      <Detail>Source Pak anang | Passing grade 50 %</Detail>
+      <Header>{props.title}</Header>
+      <Desc>{props.description}</Desc>
+      <Detail>Source: {props.source} | Passing grade: {props.passingGrade}</Detail>
     </LeftWrap>
 
     <CentertWrap>
@@ -20,14 +20,14 @@ const ExamCardC = (props) => (
         <MainDetailWrap>
           <MainDetailTitle>Duration(min)</MainDetailTitle>
           <MainDetailValueWrap>
-            <MainDetailValue>60</MainDetailValue>
+            <MainDetailValue>{props.duration}</MainDetailValue>
           </MainDetailValueWrap>
         </MainDetailWrap>
 
         <MainDetailWrap>
           <MainDetailTitle>Total question</MainDetailTitle>
           <MainDetailValueWrap>
-            <MainDetailValue>25</MainDetailValue>
+            <MainDetailValue>{props.questionsTotal}</MainDetailValue>
           </MainDetailValueWrap>
         </MainDetailWrap>
 
