@@ -1,0 +1,23 @@
+{
+  "name": "uji-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/haffjjj/uji-frontend.git",
+  "author": "Hafiz Joundy Syafie <hafizjoundys@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "7.1.0",
+    "@babel/core": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.2",
+    "css-loader": "1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.2",
+    "style-loader": "0.23.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "3.1.1",
+    "webpack-dev-server": "3.1.8"
+  }
+}
