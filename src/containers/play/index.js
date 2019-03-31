@@ -8,6 +8,8 @@ import Navbar from "../../components/Navbar"
 import BreadCrumb from "../../components/BreadCrumb"
 import Title from "../../components/Title"
 import Box from "../../components/Box"
+import Pagination from "../../components/Pagination"
+import Filter from "../../components/Filter"
 
 const Wrapper = styled.section`
   padding: 20px;
@@ -16,14 +18,41 @@ const Wrapper = styled.section`
 
 const Play = () => (
   <Wrapper>
+    <Filter/>
+    <br/>
+    <Pagination
+      pages={[
+        {
+          value: "1",
+          isFill: true
+        },
+        {
+          value: "2",
+          isFill: false
+        },
+        {
+          value: "3",
+          isFill: false
+        },
+        {
+          value: "4",
+          isFill: false
+        },
+        {
+          value: "5",
+          isFill: false
+        }
+      ]}
+    />
+    <br/>
+    <Title title="Exam Groups"/>
+    <br/>
     <Box
       value="12"
       // color="warning"
       isFill={false}
       onClick={() => console.log("onlick 12")}
     />
-    <br/>
-    <Title title="Exam Groups"/>
     <br/>
     <BreadCrumb
       links={[

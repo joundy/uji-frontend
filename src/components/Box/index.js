@@ -20,8 +20,8 @@ const BoxC = (props) => (
 )
 
 const Wrapper = styled.section`
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-color: ${(props) => props.color};
   border-radius: 5px;
   font-weight: 600;
