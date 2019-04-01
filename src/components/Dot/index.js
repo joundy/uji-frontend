@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const DotC = (props) => (
   
-  <Wrapper>
+  <Wrapper className={props.className}>
 
   </Wrapper>
 )

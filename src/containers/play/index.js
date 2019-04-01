@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 import Button from "../../components/Button"
 import ExamGroupCard from "../../components/ExamGroupCard"
@@ -16,9 +16,22 @@ const Wrapper = styled.section`
   background-color: #FAFAFC;
 `
 
+const handleChange = (e) => {
+  console.log(e.target.value)
+}
+
 const Play = () => (
   <Wrapper>
-    <Filter/>
+    <Filter
+      title="Level"
+      options={[
+        {
+          title: "UN 2019",
+          value: "UN 2019"
+        }
+      ]}
+      onChange={handleChange}
+    />
     <br/>
     <Pagination
       pages={[
@@ -82,7 +95,7 @@ const Play = () => (
       ]}
     />
     <br/>
-    <Button title="Hellow boy" onClick={() => console.log("hello boy")}/>
+    <Button title="Hellow boy" onClick={() => console.log("hello boy")} width={500}/>
     <br/>
     <ExamGroupCard
       title="Tryout UN SMP 2019"

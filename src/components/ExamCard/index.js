@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 import Button from "../Button"
 import Line from "../Line"
 
 const ExamCardC = (props) => (
-  <Wrapper>
+  <Wrapper className={props.className}>
     <LeftWrap>
       <Header>{props.title}</Header>
       <Desc>{props.description}</Desc>
@@ -18,20 +18,21 @@ const ExamCardC = (props) => (
     <RightWrap>
       <MBWrap>
         <MainDetailWrap>
-          <MainDetailTitle>Duration(min)</MainDetailTitle>
+          {console.log(props.status)}
+          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Rem. time (min)" : "Duration(min)"}</MainDetailTitle>
           <MainDetailValueWrap>
-            <MainDetailValue>{props.duration}</MainDetailValue>
+            <MainDetailValue>{props.status === "started" || props.status === "submited" ? props.remainingTime : props.duration}</MainDetailValue>
           </MainDetailValueWrap>
         </MainDetailWrap>
 
         <MainDetailWrap>
-          <MainDetailTitle>Total question</MainDetailTitle>
+          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Stat. questions" : "Total question"}</MainDetailTitle>
           <MainDetailValueWrap>
-            <MainDetailValue>{props.questionsTotal}</MainDetailValue>
+            <MainDetailValue>{props.status === "started" || props.status === "submited" ? props.statQuestion : props.questionsTotal}</MainDetailValue>
           </MainDetailValueWrap>
         </MainDetailWrap>
 
-        <Button title="Take Exam"/>
+        <Button onClick={props.onClickButton} width={100} title={props.status === "submited" ? "Review Exam" : (props.status === "started" ? "Continue" : "Take Exam")} color={props.status === "started" ? "warning" : "primary"} type={props.status === "submited" ? "outline" : ""}/>
       </MBWrap>
     </RightWrap>
 
@@ -53,7 +54,7 @@ const Wrapper = styled.section`
   justify-content: space-between;
 `;
 
-const Header = styled.h2`
+const Header = styled.h3`
   margin: 0px;
   color: #232735;
 `
@@ -85,7 +86,7 @@ const MainDetailValue = styled.h2`
 
 const MainDetailValueWrap = styled.section`
   height: 40px;
-  width: 95px;
+  width: 100px;
   border: 1px solid #D3D4D8;
   box-sizing: border-box;
   border-radius: 5px;

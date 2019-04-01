@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const setColor = (color = "") => {
   switch (color) {
@@ -14,7 +14,7 @@ const setColor = (color = "") => {
 
 const BoxC = (props) => (
   
-  <Wrapper color={setColor(props.color)} isFill={props.isFill} onClick={props.onClick}>
+  <Wrapper className={props.className} color={setColor(props.color)} isFill={props.isFill} onClick={props.onClick}>
     <Value isFill={props.isFill}>{props.value}</Value>
   </Wrapper>
 )

@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 import Box from "../Box"
 
 const PaginationC = (props) => (
-  <Wrapper>
+  <Wrapper className={props.className}>
     {props.pages.map((v) => (
       <BoxWrap>
         <Box isFill={v.isFill} value={v.value} />

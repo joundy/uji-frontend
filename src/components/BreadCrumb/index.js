@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 import iconArrowRight from "../../images/icon-arrow-right.svg"
 
 
 const BreadCrumbC = (props) => (
   
-  <Wrapper>
+  <Wrapper className={props.className}>
     <MainWrap>
       {props.links.map((v, i) => (
         <div>

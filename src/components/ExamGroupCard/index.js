@@ -6,7 +6,7 @@ import Dot from "../Dot"
 
 const ButtonC = (props) => (
   
-  <Wrapper>
+  <Wrapper className={props.className}>
     <Header>{props.title}</Header>
     <TagWrap>
       {props.tag.map((v) => <Tag>#{v}</Tag>)}
@@ -38,7 +38,7 @@ const Wrapper = styled.section`
   padding: 10px;
 `;
 
-const Header = styled.h2`
+const Header = styled.h3`
   text-align: center;
   line-height: 32px;
   margin: 0px;

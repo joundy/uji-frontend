@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const TitleC = (props) => (
   
-  <Wrapper>
+  <Wrapper className={props.className}>
     <Title>{props.title}</Title>
     <UnderLine/>
   </Wrapper>
@@ -16,7 +16,7 @@ const Wrapper = styled.section`
 const Title = styled.h2`
   color: #232735;
   margin: 0px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 `
 
 const UnderLine = styled.section`

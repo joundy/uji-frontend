@@ -1,9 +1,9 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
 const NavbarC = (props) => (
   
-  <Wrapper>
+  <Wrapper className={props.className}>
     <MainWrap>
       <Header onClick={props.titleOnlick}>{props.title}</Header>
       <MenuWrap>
