@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import iconNext from "../../images/icon-next.svg"
+import iconArrowRight from "../../images/icon-arrow-right.svg"
 
 
 const BreadCrumbC = (props) => (
@@ -28,7 +28,7 @@ const MainText = styled.a`
 `
 
 const IconNext = styled.img.attrs({
-    src: iconNext
+    src: iconArrowRight
 })`
     width: 10px;
     height: 10px;

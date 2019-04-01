@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import iconArrowDown from "../../images/icon-arrow-down.svg"
 
 const FilterC = (props) => (
-  
   <Wrapper>
     <Title>Level</Title>
     <Select>
@@ -25,6 +25,11 @@ const Select = styled.select`
   background-color: white;
   appearance:none;
   padding-left: 10px;
+  cursor: pointer;
+  color: #505565;
+  background: url(${iconArrowDown}) right no-repeat;
+  background-size: 15px 15px;
+  background-position-x: 90px;
 `
 const Title = styled.p`
   font-size: 12px;
