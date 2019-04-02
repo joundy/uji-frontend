@@ -1,5 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import { push } from "connected-react-router"
 import Home from "../home"
 import Exams from "../exams"
 import MyExams from "../myExam"
@@ -8,25 +11,23 @@ import Navbar from "../../components/Navbar"
 import SignIn from "../signin"
 import SignUp from "../signup"
 
-const App = () => (
+const App = (props) => (
   <div>
     <header>
       <Navbar
         title="Uji Yuksinau"
-        titleOnlick={() => console.log("title onlick")}
+        titleOnlick={() => props.changePage("/")}
         menus={[
           {
             title: "My exams",
-            onClick: () => console.log("my exams onlick")
+            onClick: () => props.changePage("/my-exams")
           },
-          {
+          { 
             title: "SignIn",
-            onClick: () => console.log("singin onlick")
+            onClick: () => props.changePage("/signin")
           }
         ]}
       />
-      {/* <Link to="/">Home </Link>
-      <Link to="/play"> play</Link> */}
     </header>
 
     <main>
@@ -40,4 +41,12 @@ const App = () => (
   </div>
 )
 
-export default App
+const mapDispatchToProps = dispatch => 
+  bindActionCreators(
+    {
+      changePage: (url) => push(url)
+    },
+    dispatch
+)
+
+export default connect(null, mapDispatchToProps)(App)
