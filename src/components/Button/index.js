@@ -13,9 +13,7 @@ const setColor = (color = "") => {
 }
 
 const ButtonC = (props) => (
-  <Wrapper className={props.className}>
-    <Button type={props.type} onClick={props.onClick} color={setColor(props.color)} width={props.width}>{props.title}</Button>
-  </Wrapper>
+    <Button className={props.className} btn={props.btn} onClick={props.onClick} color={setColor(props.color)} width={props.width}>{props.title}</Button>
 )
 
 const Button = styled.button`
@@ -53,10 +51,6 @@ const Button = styled.button`
   :active {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   }
-`;
-
-const Wrapper = styled.section`
-
 `;
 
 export default ButtonC

@@ -5,6 +5,8 @@ import Exams from "../exams"
 import MyExams from "../myExam"
 import Play from "../play"
 import Navbar from "../../components/Navbar"
+import SignIn from "../signin"
+import SignUp from "../signup"
 
 const App = () => (
   <div>
@@ -31,6 +33,8 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/exams" component={Exams} />
       <Route exact path="/my-exams" component={MyExams} />
+      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signup" component={SignUp} />
       <Route exact path="/play" component={Play} />
     </main>
   </div>

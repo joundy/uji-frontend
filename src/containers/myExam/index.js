@@ -56,7 +56,7 @@ const MyExams = props => (
                 duration="75"
                 remainingTime= "23"
                 questionsTotal="25"
-                statQuestion="12/2"
+                statQuestion="12 / 2"
     
                 onClickButton ={() => console.log("changeButton")}
     
