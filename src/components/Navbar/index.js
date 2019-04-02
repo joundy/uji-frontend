@@ -48,7 +48,7 @@ const MenuTitleWrap = styled.section`
   align-items: center; 
   justify-content: center;
   display: flex;
-  margin-right: 10px;
+  margin-left: 10px;
   padding: 10px;
   border-radius: 5px
   cursor: pointer;

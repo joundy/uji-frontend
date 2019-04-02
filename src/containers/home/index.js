@@ -43,7 +43,7 @@ const Home = props => (
         />
       </FiltersWrap>
       <ExamGroupCardWrap>
-        {[1,2,3,4,5,6].map((v) => (
+        {[1,2,3,4,5,6,7,8].map((v) => (
           <ExamGroupCard
             title="Tryout UN SMP 2019"
             tag={["UN"]}
