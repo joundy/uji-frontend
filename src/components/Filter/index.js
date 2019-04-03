@@ -17,7 +17,7 @@ const FilterC = (props) => (
 )
 
 const Wrapper = styled.section`
-  background-color: white;
+  
 `;
 
 const Select = styled.select`
@@ -30,6 +30,7 @@ const Select = styled.select`
   padding-left: 10px;
   cursor: pointer;
   color: #505565;
+  background-color: white;
   background: url(${iconArrowDown}) right no-repeat;
   background-size: 15px 15px;
   background-position-x: 90px;

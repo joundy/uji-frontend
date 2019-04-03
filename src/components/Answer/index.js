@@ -44,6 +44,10 @@ const RadioWrap = styled.section`
     background: #2A76E5;
     border: 1px solid #2A76E5;
   ` : `background: white;`};
+
+  :hover{
+    border: 1px solid #2A76E5;
+  }
 `
 
 const AnswerTitle = styled.p`

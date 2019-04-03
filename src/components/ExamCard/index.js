@@ -18,7 +18,6 @@ const ExamCardC = (props) => (
     <RightWrap>
       <MBWrap>
         <MainDetailWrap>
-          {console.log(props.status)}
           <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Rem. time (min)" : "Duration(min)"}</MainDetailTitle>
           <MainDetailValueWrap>
             <MainDetailValue>{props.status === "started" || props.status === "submited" ? props.remainingTime : props.duration}</MainDetailValue>

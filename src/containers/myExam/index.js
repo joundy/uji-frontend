@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 
@@ -7,6 +7,8 @@ import TitleC from "../../components/Title"
 import FilterC from "../../components/Filter"
 import ExamCardC from "../../components/ExamCard"
 import PaginationC from "../../components/Pagination"
+
+import Modal from "../../components/Modal";
 
 const datas = [
   {
@@ -19,81 +21,91 @@ const datas = [
   }
 ]
 
-const MyExams = props => (
-  <Wrapper>
-    <MainWrap>
-      <BreadCrumb
-        links={[
+const MyExams = props => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  return (
+    <Wrapper>
+      {/* {console.log(isModalOpen)} */}
+      <Modal isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
+        <p>this is from modal hola holo</p>
+      </Modal>
+  
+      <MainWrap>
+        <BreadCrumb
+          links={[
+            {
+              title:"my-exams",
+              link:"#"
+            }
+          ]}  
+        />
+        <Title title="My Exams"/>
+        <FiltersWrap>
+          <Filter
+            title="Exam group"
+            options={[]}
+          />
+          <Filter
+            title="Status"
+            options={[]}
+          />
+        </FiltersWrap>
+        <ExamCardWrap>
+  
+          {datas.map((v) => (
+            <ExamGroupWrap>
+              <ExamsTitle>{v.title}</ExamsTitle>
+              {v.exams.map(() => (
+                <ExamCard
+                  title="Matematika"
+                  description="Lorem ipsum dono dan si memet"
+                  source="http://pak-anang.blogpsot.com"
+                  passingGrade="50"
+      
+                  duration="75"
+                  remainingTime= "23"
+                  questionsTotal="25"
+                  statQuestion="12 / 2"
+      
+                  onClickButton ={() => setIsModalOpen(true)}
+      
+                  // status="submited"
+                  status="started"
+                />
+              ))}
+            </ExamGroupWrap>
+          ))}
+        </ExamCardWrap>
+        <Pagination
+        pages={[
           {
-            title:"my-exams",
-            link:"#"
+            value: "1",
+            isFill: true
+          },
+          {
+            value: "2",
+            isFill: false
+          },
+          {
+            value: "3",
+            isFill: false
+          },
+          {
+            value: "4",
+            isFill: false
+          },
+          {
+            value: "5",
+            isFill: false
           }
         ]}
       />
-      <Title title="My Exams"/>
-      <FiltersWrap>
-        <Filter
-          title="Exam group"
-          options={[]}
-        />
-        <Filter
-          title="Status"
-          options={[]}
-        />
-      </FiltersWrap>
-      <ExamCardWrap>
-
-        {datas.map((v) => (
-          <ExamGroupWrap>
-            <ExamsTitle>{v.title}</ExamsTitle>
-            {v.exams.map(() => (
-              <ExamCard
-                title="Matematika"
-                description="Lorem ipsum dono dan si memet"
-                source="http://pak-anang.blogpsot.com"
-                passingGrade="50"
-    
-                duration="75"
-                remainingTime= "23"
-                questionsTotal="25"
-                statQuestion="12 / 2"
-    
-                onClickButton ={() => console.log("changeButton")}
-    
-                // status="submited"
-                status="started"
-              />
-            ))}
-          </ExamGroupWrap>
-        ))}
-      </ExamCardWrap>
-      <Pagination
-      pages={[
-        {
-          value: "1",
-          isFill: true
-        },
-        {
-          value: "2",
-          isFill: false
-        },
-        {
-          value: "3",
-          isFill: false
-        },
-        {
-          value: "4",
-          isFill: false
-        },
-        {
-          value: "5",
-          isFill: false
-        }
-      ]}
-    />
-    </MainWrap>
-  </Wrapper>
-)
+      </MainWrap>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.section`
   display: flex;
