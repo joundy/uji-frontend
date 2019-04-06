@@ -31,7 +31,7 @@ const Button = styled.button`
   font-size: 14px;
   letter-spacing: 0.5px;
 
-  ${(props) => props.type === "outline" ? `
+  ${(props) => props.btn === "outline" ? `
     border: 1px solid #2A76E5;
     box-sizing: border-box;
     background-color: transparent;

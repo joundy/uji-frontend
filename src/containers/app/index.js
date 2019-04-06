@@ -11,6 +11,7 @@ import Navbar from "../../components/Navbar"
 import SignIn from "../signin"
 import SignUp from "../signup"
 import Exam from "../exam"
+import ExamResult from "../examResult"
 
 const App = (props) => (
   <div>
@@ -40,6 +41,7 @@ const App = (props) => (
       <Route exact path="/" component={Home} />
       <Route exact path="/exams" component={Exams} />
       <Route exact path="/exams/:exam" component={Exam}/>
+      <Route exact path="/exams/:exam/result" component={ExamResult}/>
       <Route exact path="/my-exams" component={MyExams} />
       <Route exact path="/signin" component={SignIn} />
       <Route exact path="/signup" component={SignUp} />

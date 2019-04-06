@@ -7,8 +7,9 @@ import TitleC from "../../components/Title"
 import FilterC from "../../components/Filter"
 import ExamCardC from "../../components/ExamCard"
 import PaginationC from "../../components/Pagination"
-
-import Modal from "../../components/Modal";
+import ModalC from "../../components/Modal";
+import Result from "../../components/Result"
+import ButtonC from "../../components/Button"
 
 const datas = [
   {
@@ -28,8 +29,9 @@ const MyExams = props => {
   return (
     <Wrapper>
       {/* {console.log(isModalOpen)} */}
-      <Modal isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
-        <p>this is from modal hola holo</p>
+      <Modal width={325} height={400} isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
+        <Result/>
+        <Button title="Review exam" btn="outline"/>
       </Modal>
   
       <MainWrap>
@@ -107,6 +109,13 @@ const MyExams = props => {
   )
 }
 
+const Modal = styled(ModalC)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+`
+
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -158,6 +167,10 @@ const ExamsTitle = styled.h5`
 
 const ExamGroupWrap = styled.section`
   margin-bottom: 30px;
+`
+
+const Button = styled(ButtonC)`
+  width: 250px;
 `
 
 export default connect()(MyExams)
