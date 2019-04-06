@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Button from "../Button"
-import Line from "../Line"
+import LineC from "../Line"
 
 const ExamCardC = (props) => (
   <Wrapper className={props.className}>
@@ -12,7 +12,8 @@ const ExamCardC = (props) => (
     </LeftWrap>
 
     <CentertWrap>
-      <Line height={65}/>
+      <LineH height={65}/>
+      <LineV/>
     </CentertWrap>
 
     <RightWrap>
@@ -51,6 +52,13 @@ const Wrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    align-items: flex-start;
+    width: 100%;
+    height: 150px;
+    flex-direction: column;
+  } 
 `;
 
 const Header = styled.h3`
@@ -71,6 +79,10 @@ const Detail = styled.p`
   font-size: 14px;
   color: #505565;
   margin: 0px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: none;
+  } 
 `
 
 const MainDetailTitle = styled.p`
@@ -102,18 +114,43 @@ const MainDetailWrap = styled.section`
 const MBWrap = styled.section`
   display: flex;
   align-items: center;
+  @media (min-width: 0px) and (max-width: 480px) {
+    justify-content: space-between;
+  } 
 `
 
 const LeftWrap = styled.section`
-  
+  @media (min-width: 0px) and (max-width: 480px) {
+    margin-bottom: 5px;
+  } 
 `
 
 const CentertWrap = styled.section`
-
+  @media (min-width: 0px) and (max-width: 480px) {
+    align-self: center;
+    width: 100%;
+  } 
 `
 
 const RightWrap = styled.section`
+  @media (min-width: 0px) and (max-width: 480px) {
+    width: 100%;
+  } 
+`
 
+const LineH = styled(LineC)`
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: none;
+  } 
+`
+
+const LineV = styled(LineC)`
+  display: none;
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  } 
 `
 
 

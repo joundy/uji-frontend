@@ -24,6 +24,12 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 const Header = styled.h2`

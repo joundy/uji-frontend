@@ -87,6 +87,11 @@ const Wrapper = styled.section`
   min-height: 1000px;
 `
 const Banner = styled.section`
+  @media (min-width: 0px) and (max-width: 480px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   width: 100%;
   height: 500px;
   background-color: #030A57;
@@ -103,6 +108,7 @@ const BannerTitle = styled.h1`
   margin: 0px;
   color: white;
   max-width: 435px;
+  margin-bottom: 10px;
 `
 
 const BannerDesc = styled.p`  
@@ -118,6 +124,12 @@ const BannerContentWrap = styled.section`
   padding-bottom: 50px;
 `
 const MainWrap = styled.section`
+  @media (min-width: 0px) and (max-width: 480px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   width: 960px;
   align-self: center;
   display: flex; 

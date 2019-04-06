@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import Button from "../Button"
+import ButtonC from "../Button"
 import Line from "../Line"
 import Dot from "../Dot"
 
-const ButtonC = (props) => (
+const ExamGroupCard = (props) => (
   
   <Wrapper className={props.className}>
     <Header>{props.title}</Header>
@@ -36,6 +36,12 @@ const Wrapper = styled.section`
   box-sizing: border-box;
   border-radius: 10px;
   padding: 10px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 const Header = styled.h3`
@@ -102,4 +108,8 @@ const LWrap = styled.section`
   display: flex;  
 `
 
-export default ButtonC
+const Button = styled(ButtonC)`
+  width: 100%;  
+`
+
+export default ExamGroupCard

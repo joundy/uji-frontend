@@ -9,10 +9,12 @@ const handleChange = (e) => {
 const FilterC = (props) => (
   <Wrapper className={props.className}>
     <Title>{props.title}</Title>
-    <Select onChange={handleChange}>
-      <Option value="">-- All --</Option>
-      {props.options.map((v) => <Option value={v.value}>{v.title}</Option>)}
-    </Select>
+    <SelectWrap>
+      <Select onChange={handleChange}>
+        <Option value="">-- All --</Option>
+        {props.options.map((v) => <Option value={v.value}>{v.title}</Option>)}
+      </Select>
+    </SelectWrap>
   </Wrapper>
 )
 
@@ -44,6 +46,10 @@ const Title = styled.p`
   color: #505565;
   margin-bottom: 5px;
   margin-top: 0px;  
+`
+
+const SelectWrap = styled.section`
+  background-color: white;
 `
 
 const Option = styled.option`
