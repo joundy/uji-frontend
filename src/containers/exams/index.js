@@ -79,6 +79,7 @@ const Exams = props => {
 }
 
 const Wrapper = styled.section`
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   min-height: 1000px;

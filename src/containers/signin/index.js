@@ -22,6 +22,7 @@ const SignIn = props => (
 )
 
 const Wrapper = styled.section`
+  margin-top: 60px;
   display: flex;
   justify-content: center;
 `

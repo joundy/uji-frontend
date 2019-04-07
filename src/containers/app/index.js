@@ -3,11 +3,13 @@ import { Route } from "react-router-dom"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { push } from "connected-react-router"
+import styled from "styled-components"
 import Home from "../home"
 import Exams from "../exams"
 import MyExams from "../myExam"
 import Play from "../play"
-import Navbar from "../../components/Navbar"
+import NavbarC from "../../components/Navbar"
+import BarC from "../../components/Bar"
 import SignIn from "../signin"
 import SignUp from "../signup"
 import Exam from "../exam"
@@ -33,6 +35,7 @@ const App = (props) => (
           ]}
         />
       ) : null}
+      <Bar/>
       
     </header>
 
@@ -48,6 +51,16 @@ const App = (props) => (
     </main>
   </div>
 )
+
+const Navbar = styled(NavbarC)`
+  position: fixed;
+  top: 0px;
+`
+
+const Bar = styled(BarC)`
+  position: fixed;
+  top: 0px;
+`
 
 const mapStateToPops = (state) => {
   return{
