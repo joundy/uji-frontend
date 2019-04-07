@@ -4,3 +4,7 @@ body {
   font-family: "Open Sans";
   background-color: #FAFAFC;
 }
+
+html, body, #app, #app>div {
+  height: 100%
+}

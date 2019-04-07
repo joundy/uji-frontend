@@ -73,6 +73,12 @@ const MainWrap = styled.section`
   align-self: center;
   display: flex; 
   flex-direction: column;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  } 
 `
 const BreadCrumb = styled(BreadCrumbC)`
   margin-top: 20px;
@@ -86,10 +92,11 @@ const ExamCard = styled(ExamCardC)`
   margin-bottom: 15px;
 `
 const ExamCardWrap = styled.section`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   margin-bottom: 50px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    width: 100%;
+  } 
 `
 
 const Pagination = styled(PaginationC)`

@@ -23,27 +23,35 @@ const Exam = props => (
     />
     <MainWrap>
       <QuestionWrap>
-        <QuestionNo>No. 12 / 25</QuestionNo>
-        <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
+        <QAWrap>
+          <QuestionNo>No. 12 / 25</QuestionNo>
+          <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
 
-        <Answer/>
-        <Answer/>
-        <Answer/>
-        <Answer/>
+          <AnswerWrap>
+            <Answer/>
+            <Answer/> 
+            <Answer/> 
+            <Answer/> 
+            <Answer/> 
+          </AnswerWrap>
+        </QAWrap>
 
-        <ButtonNavWrap>
-          <ButtonNavLeft>
-            <IconPrevious/>
-          </ButtonNavLeft>
-          <ButtonNavMiddle>
-            <MarkForReviewText>Mark for review</MarkForReviewText>
-          </ButtonNavMiddle>
-          <ButtonNavRight>
-            <IconNext/>
-          </ButtonNavRight>
-        </ButtonNavWrap>
-
+        <BWrap>
+          <ButtonNavWrap>
+            <ButtonNavLeft>
+              <IconPrevious/>
+            </ButtonNavLeft>
+            <ButtonNavMiddle>
+              <MarkForReviewText>Mark for review</MarkForReviewText>
+            </ButtonNavMiddle>
+            <ButtonNavRight>
+              <IconNext/>
+            </ButtonNavRight>
+          </ButtonNavWrap>
+        </BWrap>
       </QuestionWrap>
+      <ButtonClose/>
+      <ButtonOpen/>
       <NavWrap>
         <NCWrap>
           <NoWrap>
@@ -80,16 +88,25 @@ const Wrapper = styled.section`
   display: flex; 
   align-items: center;
   flex-direction: column;
+  height: calc(100% - 60px);
 `
 const MainWrap = styled.section`
-  min-width: 960px;
-  padding-top: 50px;
+  width: 960px;
   display: flex;
   justify-content: space-between;
   background-color: white;
-  padding: 20px;
   border: 1px solid #F0F1F3;
   height: ${window.innerHeight - 60}px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    height: auto;
+    width: 100%;
+    display: block;
+    padding-top: 0px;
+    padding-right: 20px; 
+    border: none;
+    justify-content: unset;
+  } 
 `
 
 const Box = styled(BoxC)`
@@ -100,6 +117,17 @@ const QuestionWrap = styled.section`
   display: flex;
   flex-direction: column;
   flex: 3;
+  padding: 20px;
+  background-color: white;
+  height: ${window.innerHeight - 60}px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    height: calc(100% - 60px);
+    position: absolute;
+    z-index: 0;
+    display: flex:
+    flex-direction: column
+  } 
 `
 
 const QuestionNo = styled.p`
@@ -109,6 +137,11 @@ const QuestionNo = styled.p`
   margin-bottom: 15px;
   border-bottom: 1px solid #F0F1F3;
   padding-bottom: 10px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    // border: none;
+  } 
+
 `
 
 const QuestionTitle = styled.h3`
@@ -119,39 +152,85 @@ const QuestionTitle = styled.h3`
 
 const NavWrap = styled.section`
   display: flex;
-  flex: 1
+  flex: 1;
+  height:100%;
+  padding: 20px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    height: auto;
+    padding: 0px;
+    // display: none;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    border-radius: 5px;
+    padding-right: 20px;
+    padding-top: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  } 
+`
+const ButtonClose = styled.section`
+  display: none;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-color: #2A76E5;
+    position: absolute;
+    z-index: 2
+    margin-top: 20px;
+    border-radius:50%;
+    right: 230px
+  }
 `
 
-// const AnswersWrap = styled.section`
+const ButtonOpen = styled.section`
+  display: none;
 
-// `
-
-// const AnswerTitle = styled.p`
-
-// `
-
-// const Radio = styled.section`
-
-// `
-
-// const ARWrap = styled.section`
-
-// `
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-color: #2A76E5;
+    position: absolute;
+    z-index: 1
+    margin-top: 20px;
+    border-radius:50%;
+    right: 10px
+  }
+`
 
 const ButtonNavWrap = styled.section`
   width: 100%;
   height: 40px;
   border: 1px solid #F0F1F3;
-  margin-top: auto;
+  // margin-top: auto;
   border-radius: 5px
   display: flex;
-  cursor: pointer;
+  flex: 1;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+  } 
 `
+const QAWrap = styled.section`
+  flex: 10
+  overflow: scroll;
+`
+
+const BWrap = styled.section`
+  @media (min-width: 0px) and (max-width: 480px) {
+    
+  } 
+`
+
 const ButtonNavLeft = styled.section`
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   :hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -164,6 +243,7 @@ const ButtonNavLeft = styled.section`
 
 const ButtonNavMiddle = styled.section`
   flex: 1;
+  cursor: pointer;
   border-left: 1px solid #F0F1F3;
   border-right: 1px solid #F0F1F3;
   display: flex;
@@ -185,6 +265,7 @@ const MarkForReviewText = styled.p`
 `
 
 const ButtonNavRight = styled.section`
+  cursor: pointer;
   flex: 1
   display: flex;
   align-items: center;
@@ -224,6 +305,12 @@ const NCWrap = styled.section`
   margin-left: 20px;
   border-left: 1px solid #F0F1F3;
   padding-left: 20px;
+
+  @media (min-width: 0px) and (max-width: 480px) {
+    margin-left: 0px;
+    border: none;
+    padding-bottom: 10px;
+  } 
 `
 
 const ColorDescTitle = styled.p`
@@ -261,5 +348,10 @@ const ColorDescTBWrap = styled.section`
   display: flex;
   margin-bottom: 10px;
 `
+
+const AnswerWrap = styled.section`
+
+`
+
 
 export default connect()(Exam)

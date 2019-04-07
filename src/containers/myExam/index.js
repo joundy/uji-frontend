@@ -154,9 +154,6 @@ const ExamCard = styled(ExamCardC)`
   margin-bottom: 15px;
 `
 const ExamCardWrap = styled.section`
-  // display: flex;
-  // justify-content: space-between;
-  // flex-wrap: wrap;
   margin-bottom: 50px;
 
   @media (min-width: 0px) and (max-width: 480px) {
