@@ -94,7 +94,7 @@ const Banner = styled.section`
 
   width: 100%;
   height: 500px;
-  background-color: #030A57;
+  background-color: #24304e;
   display: flex;
   justify-content: center;
   align-items: center;

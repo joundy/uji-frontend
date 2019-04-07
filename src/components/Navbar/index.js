@@ -20,7 +20,7 @@ const NavbarC = (props) => (
 const Wrapper = styled.section`
   height: 60px;
   width: 100%;
-  background-color: #2A76E5;
+  background-color: #24304e;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +60,7 @@ const MenuTitleWrap = styled.section`
   cursor: pointer;
 
   :hover{
-    background-color: #266ED6;
+    background-color: #1e2842;
   }
 `
 

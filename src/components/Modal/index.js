@@ -12,6 +12,7 @@ const ModalC = (props) => {
       isOpen={props.isOpen}
       // onAfterOpen={this.afterOpenModal}
       // onRequestClose={this.closeModal}
+      ariaHideApp={false}
       shouldCloseOnOverlayClick={true}
       style={customStyles}
       contentLabel="Example Modal"

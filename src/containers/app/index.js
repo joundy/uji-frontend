@@ -16,7 +16,6 @@ import ExamResult from "../examResult"
 const App = (props) => (
   <div>
     <header>
-
       {/* exclude navbar in /exams/:exam container */}
       {!RegExp("/exams/.+").test(props.router.location.pathname) ? (
         <Navbar
