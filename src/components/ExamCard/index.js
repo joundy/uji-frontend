@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import Button from "../Button"
+import ButtonC from "../Button"
 import LineC from "../Line"
 
 const ExamCardC = (props) => (
@@ -32,7 +32,7 @@ const ExamCardC = (props) => (
           </MainDetailValueWrap>
         </MainDetailWrap>
 
-        <Button onClick={props.onClickButton} width={100} title={props.status === "submited" ? "Review Exam" : (props.status === "started" ? "Continue" : "Take Exam")} color={props.status === "started" ? "warning" : "primary"} btn={props.status === "submited" ? "outline" : ""}/>
+        <Button onClick={props.onClickButton} title={props.status === "submited" ? "Review Exam" : (props.status === "started" ? "Continue" : "Take Exam")} color={props.status === "started" ? "warning" : "primary"} btn={props.status === "submited" ? "outline" : ""}/>
       </MBWrap>
     </RightWrap>
 
@@ -56,10 +56,10 @@ const Wrapper = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
     align-items: flex-start;
     width: 100%;
-    height: 150px;
+    height: 160px;
     flex-direction: column;
   } 
-`;
+`
 
 const Header = styled.h3`
   margin: 0px;
@@ -97,7 +97,7 @@ const MainDetailValue = styled.h2`
 
 const MainDetailValueWrap = styled.section`
   height: 40px;
-  width: 100px;
+  // width: 100px;
   border: 1px solid #D3D4D8;
   box-sizing: border-box;
   border-radius: 5px;
@@ -109,6 +109,18 @@ const MainDetailValueWrap = styled.section`
 const MainDetailWrap = styled.section`
   padding-bottom: 18px;
   margin-right: 10px;
+  @media (min-width: 400px) and (max-width: 480px) {
+    flex: 1;
+  } 
+`
+
+const Button = styled(ButtonC)`
+  // width: 100%;
+  min-width: 100px;
+  @media (min-width: 320px) and (max-width: 480px) {
+    min-width: auto;
+    flex: 1;
+  } 
 `
 
 const MBWrap = styled.section`

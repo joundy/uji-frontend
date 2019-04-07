@@ -149,6 +149,7 @@ const Filter = styled(FilterC)`
 const FiltersWrap = styled.section`
   display: flex;
   margin-bottom: 50px;
+  overflow: auto;
 `
 const ExamGroupCard = styled(ExamGroupCardC)`
   margin-bottom: 15px;

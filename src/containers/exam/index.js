@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import Navbar from "../../components/Navbar"
@@ -7,82 +7,102 @@ import Answer from "../../components/Answer"
 
 import IconNextI from "../../images/icon-next.svg"
 import IconPreviousI from "../../images/icon-previous.svg"
+import IconCloseWhiteI from "../../images/icon-close-white.svg"
+import IconPreviousWhiteI from "../../images/icon-previous-white.svg"
 
+const Exam = props => {
 
-const Exam = props => (
-  <Wrapper>
-    <Navbar
-      title="12 : 23"
-      // titleOnlick={() => props.changePage("/")}
-      menus={[
-        { 
-          title: "Exit",
-          // onClick: () => props.changePage("/signin")
-        }
-      ]}
-    />
-    <MainWrap>
-      <QuestionWrap>
-        <QAWrap>
-          <QuestionNo>No. 12 / 25</QuestionNo>
-          <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
+  const [isSideOpen, setIsSideOpen] = useState(false)
+  
+  return (
+    <Wrapper>
+      <Navbar
+        title="12 : 23"
+        // titleOnlick={() => props.changePage("/")}
+        menus={[
+          { 
+            title: "Exit",
+            // onClick: () => props.changePage("/signin")
+          }
+        ]}
+      />
+      <MainWrap>
+        <QuestionWrap>
+          <QAWrap>
+            <QuestionNo>No. 12 / 25</QuestionNo>
+            <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
+  
+            <AnswerWrap>
+              <Answer/>
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+              <Answer/> 
+            </AnswerWrap>
+          </QAWrap>
+  
+          <BWrap>
+            <ButtonNavWrap>
+              <ButtonNavLeft>
+                <IconPrevious/>
+              </ButtonNavLeft>
+              <ButtonNavMiddle>
+                <MarkForReviewText>Mark for review</MarkForReviewText>
+              </ButtonNavMiddle>
+              <ButtonNavRight>
+                <IconNext/>
+              </ButtonNavRight>
+            </ButtonNavWrap>
+          </BWrap>
+        </QuestionWrap>
 
-          <AnswerWrap>
-            <Answer/>
-            <Answer/> 
-            <Answer/> 
-            <Answer/> 
-            <Answer/> 
-          </AnswerWrap>
-        </QAWrap>
-
-        <BWrap>
-          <ButtonNavWrap>
-            <ButtonNavLeft>
-              <IconPrevious/>
-            </ButtonNavLeft>
-            <ButtonNavMiddle>
-              <MarkForReviewText>Mark for review</MarkForReviewText>
-            </ButtonNavMiddle>
-            <ButtonNavRight>
-              <IconNext/>
-            </ButtonNavRight>
-          </ButtonNavWrap>
-        </BWrap>
-      </QuestionWrap>
-      <ButtonClose/>
-      <ButtonOpen/>
-      <NavWrap>
-        <NCWrap>
-          <NoWrap>
-            {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26].map((v) => (
-              <Box value={v}/>
-            ))}
-          </NoWrap>
-          
-          <ColorDescTBWrap>
-            <ColorDescBoxOutline/>
-            <ColorDescTitle>Not answered</ColorDescTitle>
-          </ColorDescTBWrap>
-          
-          <ColorDescTBWrap>
-            <ColorDescBoxFill/>
-            <ColorDescTitle>Answered</ColorDescTitle>
-          </ColorDescTBWrap>
-
-          <ColorDescTBWrap>
-            <ColorDescBoxWarning/>
-            <ColorDescTitle>Marked for review</ColorDescTitle>
-          </ColorDescTBWrap>
-          
-          
-        </NCWrap>
+        {isSideOpen ? (
+          <ButtonClose onClick={() => setIsSideOpen(false)}>
+            <IconCloseWhite/>
+          </ButtonClose>
+        ): (
+          <ButtonOpen onClick={() => setIsSideOpen(true)}>
+            <IconPreviousWhite/>
+          </ButtonOpen>
+        )}
         
-
-      </NavWrap>
-    </MainWrap>
-  </Wrapper>
-)
+        <SideWrap isSideOpen={isSideOpen}>
+          <NCWrap>
+            <NoWrap>
+              {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26].map((v) => (
+                <Box value={v}/>
+              ))}
+            </NoWrap>
+            
+            <ColorDescTBWrap>
+              <ColorDescBoxOutline/>
+              <ColorDescTitle>Not answered</ColorDescTitle>
+            </ColorDescTBWrap>
+            
+            <ColorDescTBWrap>
+              <ColorDescBoxFill/>
+              <ColorDescTitle>Answered</ColorDescTitle>
+            </ColorDescTBWrap>
+  
+            <ColorDescTBWrap>
+              <ColorDescBoxWarning/>
+              <ColorDescTitle>Marked for review</ColorDescTitle>
+            </ColorDescTBWrap>
+            
+            
+          </NCWrap>
+          
+  
+        </SideWrap>
+      </MainWrap>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.section`
   display: flex; 
@@ -150,7 +170,7 @@ const QuestionTitle = styled.h3`
   margin-bottom: 40px;
 ` 
 
-const NavWrap = styled.section`
+const SideWrap = styled.section`
   display: flex;
   flex: 1;
   height:100%;
@@ -159,7 +179,7 @@ const NavWrap = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
     height: auto;
     padding: 0px;
-    // display: none;
+    ${(props) => props.isSideOpen ? `` : `display: none;`}
     position: absolute;
     z-index: 1;
     right: 0;
@@ -172,41 +192,58 @@ const NavWrap = styled.section`
 `
 const ButtonClose = styled.section`
   display: none;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 480px) {
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background-color: #2A76E5;
     position: absolute;
     z-index: 2
     margin-top: 20px;
     border-radius:50%;
-    right: 230px
+    right: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `
 
 const ButtonOpen = styled.section`
   display: none;
+  cursor: pointer;
 
   @media (min-width: 0px) and (max-width: 480px) {
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background-color: #2A76E5;
     position: absolute;
     z-index: 1
     margin-top: 20px;
     border-radius:50%;
     right: 10px
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+`
+
+const IconCloseWhite = styled.img.attrs({src: IconCloseWhiteI})`
+  width: 15px;
+  height: 15px
+`
+
+const IconPreviousWhite = styled.img.attrs({src: IconPreviousWhiteI})`
+  width: 15px;
+  height: 15px
 `
 
 const ButtonNavWrap = styled.section`
   width: 100%;
   height: 40px;
   border: 1px solid #F0F1F3;
-  // margin-top: auto;
   border-radius: 5px
   display: flex;
   flex: 1;

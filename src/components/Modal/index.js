@@ -18,10 +18,10 @@ const ModalC = (props) => {
       onClick={() => console.log("onclick")}
     >
       <Content width={props.width || 100} height={props.height || 100}>
-        <IconClose onClick={props.onButtonCloseClick}/>
         <MainWrap className={props.className}>
           {props.children}
         </MainWrap>
+        <IconClose onClick={props.onButtonCloseClick}/>
       </Content>
     </Modal>
   )
@@ -45,20 +45,26 @@ const Content = styled.section`
   background-color: white;  
   border-radius: 5px;  
   padding: 20px;
-  overflow: auto;
-  padding-left: 35px;
-  margin-top: 10px;
+  // overflow: auto;
+  margin-top: 50px;
+  position: relative;
 `
 
 const IconClose = styled.img.attrs({src: IconCloseC})`
   width: 15px;
   height: 15px;
-  float: right;
   cursor: pointer;
+  position: absolute;
+  z-index: 2
+  right: 20px;
 `
 
 const MainWrap = styled.section`
-  
+  position: absolute;  
+  z-index: 0
+  margin-left: auto; 
+  margin-right: auto;
+  // right: 1px;
 `
 
 export default ModalC

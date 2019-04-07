@@ -28,8 +28,8 @@ const MyExams = props => {
 
   return (
     <Wrapper>
-      {/* {console.log(isModalOpen)} */}
-      <Modal width={325} height={400} isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
+
+      <Modal width={300} height={390} isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
         <Result/>
         <Button title="Review exam" btn="outline"/>
       </Modal>
@@ -113,7 +113,8 @@ const Modal = styled(ModalC)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10px;
+  right: 50%;
+  margin-right: -125px;
 `
 
 const Wrapper = styled.section`

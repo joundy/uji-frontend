@@ -29,8 +29,8 @@ const Input = styled(InputC)`
 `
 
 const MainWrap = styled.section`
-  margin-top: 70px;
-  width: 350px;
+  margin-top: 50px;
+  width: 320px;
   background-color: white;
   border: 1px solid #F0F1F3;
   box-sizing: border-box;
