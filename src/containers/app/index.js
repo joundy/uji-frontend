@@ -6,12 +6,12 @@ import { push } from "connected-react-router"
 import styled from "styled-components"
 import Home from "../home"
 import Exams from "../exams"
-import MyExams from "../myExam"
-import Play from "../play"
+// import MyExams from "../myExam"
+// import Play from "../play"
 import NavbarC from "../../components/Navbar"
-import BarC from "../../components/Bar"
-import SignIn from "../signin"
-import SignUp from "../signup"
+// import BarC from "../../components/Bar"
+// import SignIn from "../signin"
+// import SignUp from "../signup"
 import Exam from "../exam"
 import ExamResult from "../examResult"
 
@@ -24,18 +24,19 @@ const App = (props) => (
           title="Uji Yuksinau"
           titleOnlick={() => props.changePage("/")}
           menus={[
-            {
-              title: "My exams",
-              onClick: () => props.changePage("/my-exams")
-            },
-            { 
-              title: "SignIn",
-              onClick: () => props.changePage("/signin")
-            }
+            // {
+            //   title: "My exams",
+            //   onClick: () => props.changePage("/my-exams")
+            // },
+            // { 
+            //   title: "SignIn",
+            //   onClick: () => props.changePage("/signin")
+            // }
           ]}
         />
       ) : null}
-      <Bar/>
+      
+      {/* <Bar/> */}
       
     </header>
 
@@ -44,10 +45,10 @@ const App = (props) => (
       <Route exact path="/exams" component={Exams} />
       <Route exact path="/exams/:exam" component={Exam}/>
       <Route exact path="/exams/:exam/result" component={ExamResult}/>
-      <Route exact path="/my-exams" component={MyExams} />
-      <Route exact path="/signin" component={SignIn} />
-      <Route exact path="/signup" component={SignUp} />
-      <Route exact path="/play" component={Play} />
+      {/* <Route exact path="/my-exams" component={MyExams} /> */}
+      {/* <Route exact path="/signin" component={SignIn} /> */}
+      {/* <Route exact path="/signup" component={SignUp} /> */}
+      {/* <Route exact path="/play" component={Play} /> */}
     </main>
   </div>
 )
@@ -57,10 +58,10 @@ const Navbar = styled(NavbarC)`
   top: 0px;
 `
 
-const Bar = styled(BarC)`
-  position: fixed;
-  top: 0px;
-`
+// const Bar = styled(BarC)`
+//   position: fixed;
+//   top: 0px;
+// `
 
 const mapStateToPops = (state) => {
   return{

@@ -6,12 +6,26 @@ class BarC extends React.Component{
     progress: 0
   }
 
-  componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({
-        progress: 100
-      })
-    }, 1)
+  componentDidMount = async () => {
+    // setTimeout(() => {
+    //   this.setState({
+    //     progress: 100
+    //   })
+    // }, 1)
+    await this.setBar()
+  }
+
+  setBar = async() => {
+    // while(true){
+    //   await delay(2500)
+    // this.setState({
+    //   progress: 100
+    // })
+    // await delay(2500)
+    // this.setState({
+    //   progress: 0
+    // })
+    // }
   }
 
   render() {
@@ -22,6 +36,14 @@ class BarC extends React.Component{
     )
   }
 
+}
+
+const delay = (delay) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, delay)
+  })
 }
 
 const Wrapper = styled.section`

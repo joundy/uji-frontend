@@ -9,77 +9,102 @@ import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
 
-const Home = props => (
-  <Wrapper>
-    <Banner>
-      <BannerContentWrap>
-        <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
-        <BannerDesc>Uji yuksinau adalah sebuah website ujian online,  pada website ini terdapat banyak course/tryout gratis mulai dari ujian nasional sampai smbpn</BannerDesc>
-        <Button title="Signup now" onClick={() => console.log("hello boy")} width={130}/>
-      </BannerContentWrap>
-    </Banner>
-    <MainWrap>
-      <BreadCrumb
-        links={[
-          {
-            title:"exam-groups",
-            link:"#"
-          }
-        ]}
-      />
-      <Title title="Exam Groups"/>
-      <FiltersWrap>
-        <Filter
-          title="Level"
-          options={[]}
-        />
-        <Filter
-          title="Class"
-          options={[]}
-        />
-        <Filter
-          title="Tag"
-          options={[]}
-        />
-      </FiltersWrap>
-      <ExamGroupCardWrap>
-        {[1,2,3,4,5,6,7,8].map((v) => (
-          <ExamGroupCard
-            title="Tryout UN SMP 2019"
-            tag={["UN"]}
-            description="Contrary to popular belief, Lorem Ipsum is not simply random text. "
-            level="SMA"
-            class="12"
+import actions from "./actions" 
+
+class Home extends React.Component{
+
+  componentDidMount = async() => {
+    this.loadExamGroups()
+  }
+
+  loadExamGroups = () => {
+    this.props.dispatch(actions.loadExamGroups(this.props.home.filter))
+  }
+
+  render(){
+    return (
+      <Wrapper>
+        {console.log(this.props.home.examGroups.data)}
+        <Banner>
+          <BannerContentWrap>
+            <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
+            <BannerDesc>Uji yuksinau adalah sebuah website ujian online,  pada website ini terdapat banyak course/tryout gratis mulai dari ujian nasional sampai smbpn</BannerDesc>
+            <Button title="Signup now" onClick={() => console.log("hello boy")} width={130}/>
+          </BannerContentWrap>
+        </Banner>
+        <MainWrap>
+          <BreadCrumb
+            links={[
+              {
+                title:"exam-groups",
+                link:"#"
+              }
+            ]}
           />
-        ))}
-      </ExamGroupCardWrap>
-      <Pagination
-      pages={[
-        {
-          value: "1",
-          isFill: true
-        },
-        {
-          value: "2",
-          isFill: false
-        },
-        {
-          value: "3",
-          isFill: false
-        },
-        {
-          value: "4",
-          isFill: false
-        },
-        {
-          value: "5",
-          isFill: false
-        }
-      ]}
-    />
-    </MainWrap>
-  </Wrapper>
-)
+          <Title title="Exam Groups"/>
+          <FiltersWrap>
+            <Filter
+              title="Level"
+              options={[]}
+            />
+            <Filter
+              title="Class"
+              options={[]}
+            />
+            <Filter
+              title="Tag"
+              options={[]}
+            />
+          </FiltersWrap>
+          <ExamGroupCardWrap>
+            {this.props.home.examGroups.data.map((v) => (
+              <ExamGroupCard
+                title={v.title}
+                tag={["UN"]}
+                description={v.description}
+                level={v.level.title}
+                class={v.class.title}
+              />
+            ))}
+          </ExamGroupCardWrap>
+          <Pagination
+          pages={[
+            {
+              value: "1",
+              isFill: true
+            },
+            {
+              value: "2",
+              isFill: false
+            },
+            {
+              value: "3",
+              isFill: false
+            },
+            {
+              value: "4",
+              isFill: false
+            },
+            {
+              value: "5",
+              isFill: false
+            }
+          ]}
+        />
+        </MainWrap>
+      </Wrapper>
+    )
+  }
+}
+
+const mapStateToProps = ({ home }) => {
+  return {
+    home
+  }
+}
+
+export default connect(mapStateToProps)(Home)
+
 
 const Wrapper = styled.section`
   margin-top: 60px;
@@ -166,5 +191,3 @@ const Pagination = styled(PaginationC)`
   align-self: center;
   margin-bottom: 100px;
 `
-
-export default connect()(Home)
