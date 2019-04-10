@@ -42,8 +42,8 @@ const App = (props) => (
 
     <main>
       <Route exact path="/" component={Home} />
-      <Route exact path="/exams" component={Exams} />
-      <Route exact path="/exams/:exam" component={Exam}/>
+      <Route exact path="/:examGroupSlug" component={Exams} />
+      <Route exact path="/exam-logs/:id/guest" component={Exam}/>
       <Route exact path="/exams/:exam/result" component={ExamResult}/>
       {/* <Route exact path="/my-exams" component={MyExams} /> */}
       {/* <Route exact path="/signin" component={SignIn} /> */}

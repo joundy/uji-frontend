@@ -1,29 +1,29 @@
 import config from "../config"
 import axios from "axios"
 
-const Mutation = {
+const mutation = {
 
 }
 
-const Query = {
-  async FetcG(filter){
-    // const res = await axios.get(`${config.API_URL}/examGroups`, {
-    //   params: {
-    //     ...filter
-    //   }
-    // })
-    // if (res.data.length === 0){
-    //   return {
-    //     data: [],
-    //     count: 0
-    //   }
-    // } 
+const query = {
+  async fetcG(filter){
+    const res = await axios.get(`${config.API_URL}/exams`, {
+      params: {
+        ...filter
+      }
+    })
+    if (res.data.length === 0){
+      return {
+        data: [],
+        count: 0
+      }
+    } 
 
-    // return res.data[0]
+    return res.data[0]
   }
 }
 
 export default {
-  Mutation,
-  Query
+  mutation,
+  query
 }

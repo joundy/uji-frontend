@@ -4,5 +4,6 @@ import exams from "./exams"
 
 export default {
   examGroups,
-  examLogs
+  examLogs,
+  exams
 }

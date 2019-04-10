@@ -14,7 +14,9 @@ const initialState = {
   filter: {
     level: "",
     class: "",
-    tag: ""
+    tag: "",
+    start: 0,
+    limit: 1000
   }
 }
 

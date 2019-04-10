@@ -7658,6 +7658,11 @@ react-router-redux@^4.0.0:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/react-router-redux/-/react-router-redux-4.0.8.tgz#227403596b5151e182377dab835b5d45f0f8054e"
 
+react-router-scroll-top@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-router-scroll-top/-/react-router-scroll-top-0.1.1.tgz#83ac4c2d0d26b349069b33e95a0add8ff90713c1"
+  integrity sha1-g6xMLQ0ms0kGmzPpWgrdj/kHE8E=
+
 react-router@4.4.0-beta.8, react-router@^4.4.0-beta.8:
   version "4.4.0-beta.8"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.4.0-beta.8.tgz#6001c87bd191961adc25e84e495bb2bf4d62e59d"

@@ -1,6 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
+import { push } from "connected-react-router"
 
 import Button from "../../components/Button"
 import BreadCrumbC from "../../components/BreadCrumb"
@@ -14,10 +15,10 @@ import actions from "../../redux/actions"
 class Home extends React.Component{
 
   componentDidMount = async() => {
-    this.loadExamGroups()
+    this.fetchExamGroups()
   }
 
-  loadExamGroups = () => {
+  fetchExamGroups = () => {
     this.props.dispatch(actions.fetchExamGroupsData())
   }
 
@@ -64,6 +65,7 @@ class Home extends React.Component{
                 description={v.description}
                 level={v.level.title}
                 class={v.class.title}
+                onClick={() => this.props.dispatch(push(`/${v.slug}`))}
               />
             ))}
           </ExamGroupCardWrap>

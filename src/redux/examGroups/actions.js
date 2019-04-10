@@ -11,7 +11,7 @@ const fetchExamGroupsData = () => {
     })
 
     try{
-      const res  = await models.examGroups.Query.FetcG()
+      const res  = await models.examGroups.query.fetcG()
       dispatch(fetchExamGroupsSuccess(res))
     }
     catch(e){

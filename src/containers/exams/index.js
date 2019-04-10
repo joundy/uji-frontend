@@ -1,6 +1,7 @@
-import React, {useState} from "react"
+import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
+import { push } from "connected-react-router"
 
 import BreadCrumbC from "../../components/BreadCrumb"
 import TitleC from "../../components/Title"
@@ -10,73 +11,108 @@ import ModalC from "../../components/Modal"
 import ExamInfoC from "../../components/ExamInfo"
 import ButtonC from "../../components/Button"
 
-const Exams = props => {
+import actions from "../../redux/actions"
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+class Exams extends React.Component{
+  state = {
+    isModalOpen: false
+  }
 
-  return (
-    <Wrapper>
+  componentDidMount = async () => {
 
-      <Modal width={350} height={450} isOpen={isModalOpen} onButtonCloseClick={() => setIsModalOpen(false)}>
-        <ExamInfo/>
-        <Button title="Start"/>
-      </Modal>
+    await this.fetchExams()
+    if(this.props.exams.payload.data.length === 0){
+      this.props.dispatch(push("/"))
+    }
+  }
 
-      <MainWrap>
-        <BreadCrumb
-          links={[
+  fetchExams = async () => {  
+    const examGroupSlug = this.props.match.params.examGroupSlug
+
+    const filter = {
+      examGroupSlug
+    }
+
+    await this.props.dispatch(actions.setExamsFilter({ ...filter }))
+    await this.props.dispatch(actions.fetchExamsData(this.props.exams.filter))
+  }
+
+  render(){
+    const { examGroupSlug } = this.props.match.params
+    return (
+      <Wrapper>
+        {console.log(this.props.match)}
+        <Modal width={350} height={450} isOpen={this.state.isModalOpen} onButtonCloseClick={() => this.setState({isModalOpen: false})}>
+          <ExamInfo/>
+          <Button title="Start"/>
+        </Modal>
+  
+        <MainWrap>
+          <BreadCrumb
+            links={[
+              {
+                title:"exam-groups",
+                link:"/"
+              },
+              {
+                title: examGroupSlug,
+                link:`/${examGroupSlug}`
+              }
+            ]}
+          />
+          <Title title={examGroupSlug}/>
+          <ExamCardWrap>
+            {this.props.exams.payload.data.map((v) => (
+              <ExamCard
+                title={v.title}
+                description={v.description}
+                source={v.source}
+                passingGrade={v.passingGrade}
+                duration={v.duration}
+                questionsTotal={v.maxQuestion}
+                onClickButton ={() => this.setState({isModalOpen: true})}
+              />
+            ))}
+          </ExamCardWrap>
+          <Pagination
+          pages={[
             {
-              title:"exam-groups",
-              link:"#"
+              value: "1",
+              isFill: true
             },
             {
-              title:"tryout-un-smp-2019",
-              link:"#"
+              value: "2",
+              isFill: false
+            },
+            {
+              value: "3",
+              isFill: false
+            },
+            {
+              value: "4",
+              isFill: false
+            },
+            {
+              value: "5",
+              isFill: false
             }
           ]}
         />
-        <Title title="Tryout UN SMP 2019"/>
-        <ExamCardWrap>
-          {[1,2,3,4,5,6].map((v) => (
-            <ExamCard
-              title="Matematika"
-              description="Lorem ipsum dono dan si memet"
-              source="http://pak-anang.blogpsot.com"
-              passingGrade="50"
-              duration="75"
-              questionsTotal="25"
-              onClickButton ={() => setIsModalOpen(true)}
-            />
-          ))}
-        </ExamCardWrap>
-        <Pagination
-        pages={[
-          {
-            value: "1",
-            isFill: true
-          },
-          {
-            value: "2",
-            isFill: false
-          },
-          {
-            value: "3",
-            isFill: false
-          },
-          {
-            value: "4",
-            isFill: false
-          },
-          {
-            value: "5",
-            isFill: false
-          }
-        ]}
-      />
-      </MainWrap>
-    </Wrapper>
-  )
+        </MainWrap>
+      </Wrapper>
+    )
+  }
 }
+
+const mapStateToProps = ({exams, router}) => {
+  return {
+    exams,
+    router
+  }
+}
+
+export default connect(mapStateToProps)(Exams)
+
 
 const Wrapper = styled.section`
   margin-top: 60px;
@@ -138,5 +174,3 @@ const Pagination = styled(PaginationC)`
   align-self: center;
   margin-bottom: 100px;
 `
-
-export default connect()(Exams)

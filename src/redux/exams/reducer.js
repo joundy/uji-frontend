@@ -1,20 +1,50 @@
+import {
+  FETCH_EXAMS_DATA,
+  FETCH_EXAMS_SUCCESS,
+  FETCH_EXAMS_FAILURE,
+  SET_EXAMS_FILTER
+} from "./actions"
+
 const initialState = {
-  examGroups: {
+  payload: {
     data: [],
     count: 0
   },
+  isLoading: false,
+  error: {},
   filter: {
-    level: "",
-    class: "",
-    tag: ""
+    examGroupSlug: "",
+    start: 0,
+    limit: 10
   }
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "TEST":
+    case FETCH_EXAMS_DATA:
     return {
-      ...state
+      ...state,
+      isLoading: true
+    }
+    case FETCH_EXAMS_SUCCESS:
+    return {
+      ...state,
+      isLoading: false,
+      payload: action.payload
+    }
+    case FETCH_EXAMS_FAILURE:
+    return {
+      ...state,
+      isLoading: false,
+      error: action.error
+    }
+    case SET_EXAMS_FILTER:
+    return {
+      ...state,
+      filter: {
+        ...state.filter,
+        ...action.filter
+      }
     }
     default:
       return state

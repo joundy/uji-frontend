@@ -22,7 +22,7 @@ const ExamGroupCard = (props) => (
         <Class>{props.class}</Class> 
       </LCDWrap>
       <BWrap>
-        <Button title="View Exams"/>
+        <Button onClick={props.onClick} title="View Exams"/>
       </BWrap>
     </LBWrap>
   </Wrapper>
