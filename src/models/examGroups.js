@@ -12,22 +12,15 @@ const Query = {
         ...filter
       }
     })
-    
-    if (res.status !== 200){
-      return [res.status, null]
+   
+    if (res.data.length == 0 || res.data == null ){
+      return {
+        data: [],
+        count: 0
+      }
     }
-    if (res.data.length === 0){
-      return [200,
-        {
-          data: [],
-          count: 0
-        }
-      ]
-    } 
-    return [
-      200,
-      res.data[0]
-    ]
+
+    return res.data[0]
   }
 }
 

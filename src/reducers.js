@@ -1,6 +1,7 @@
 import { combineReducers } from "redux"
-import home from "./containers/home/reducer"
+
+import examGroups from "./redux/examGroups/reducer"
 
 export default combineReducers({
-  home
+  examGroups
 })

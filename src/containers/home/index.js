@@ -9,7 +9,7 @@ import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
 
-import actions from "./actions" 
+import actions from "../../redux/actions" 
 
 class Home extends React.Component{
 
@@ -18,13 +18,13 @@ class Home extends React.Component{
   }
 
   loadExamGroups = () => {
-    this.props.dispatch(actions.loadExamGroups(this.props.home.filter))
+    this.props.dispatch(actions.fetchExamGroupsData())
   }
 
   render(){
     return (
       <Wrapper>
-        {console.log(this.props.home.examGroups.data)}
+        {console.log(this.props.examGroups)}
         <Banner>
           <BannerContentWrap>
             <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
@@ -57,7 +57,7 @@ class Home extends React.Component{
             />
           </FiltersWrap>
           <ExamGroupCardWrap>
-            {this.props.home.examGroups.data.map((v) => (
+            {this.props.examGroups.payload.data.map((v) => (
               <ExamGroupCard
                 title={v.title}
                 tag={["UN"]}
@@ -97,9 +97,9 @@ class Home extends React.Component{
   }
 }
 
-const mapStateToProps = ({ home }) => {
+const mapStateToProps = ({ examGroups }) => {
   return {
-    home
+    examGroups
   }
 }
 
