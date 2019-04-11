@@ -1,9 +1,10 @@
-import React from "react"
-import { Route } from "react-router-dom"
+import React, {Component} from "react"
+import { Route, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { push } from "connected-react-router"
 import styled from "styled-components"
+
 import Home from "../home"
 import Exams from "../exams"
 // import MyExams from "../myExam"
@@ -15,17 +16,10 @@ import NavbarC from "../../components/Navbar"
 import Exam from "../exam"
 import ExamResult from "../examResult"
 
-import models from "../../models"
-
 class App extends React.Component {
 
   componentDidMount = () => {
-    this.authGuest()
-  }
 
-  authGuest = async () => {
-    const auth = await models.auth.mutation.guest()
-    localStorage.setItem('accessToken', `Bearer ${auth.token}`)
   }
 
   render() {
@@ -55,7 +49,8 @@ class App extends React.Component {
         </header>
     
         <main>
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
+          <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/:examGroupSlug" component={Exams} />
           <Route exact path="/exam-logs/:id/guest" component={Exam}/>
           <Route exact path="/exams/:exam/result" component={ExamResult}/>
@@ -69,15 +64,25 @@ class App extends React.Component {
   }
 }
 
-const Navbar = styled(NavbarC)`
-  position: fixed;
-  top: 0px;
-`
-
-// const Bar = styled(BarC)`
-//   position: fixed;
-//   top: 0px;
-// `
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        false ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 const mapStateToPops = (state) => {
   return{
@@ -92,5 +97,16 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
 ) 
+
+const Navbar = styled(NavbarC)`
+  position: fixed;
+  top: 0px;
+`
+
+// const Bar = styled(BarC)`
+//   position: fixed;
+//   top: 0px;
+// `
+
 
 export default connect(mapStateToPops, mapDispatchToProps)(App)

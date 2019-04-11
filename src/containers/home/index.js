@@ -10,16 +10,25 @@ import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
 
+import models from "../../models"
 import actions from "../../redux/actions" 
 
 class Home extends React.Component{
 
   componentDidMount = async() => {
+    this.authGuest()
     this.fetchExamGroups()
   }
 
   fetchExamGroups = () => {
     this.props.dispatch(actions.fetchExamGroupsData())
+  }
+
+  authGuest = async () => {
+    if (!localStorage.getItem("accessToken")){
+      const auth = await models.auth.mutation.guest()
+      localStorage.setItem("accessToken", `Bearer ${auth.token}`)
+    }
   }
 
   render(){
