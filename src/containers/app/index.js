@@ -15,43 +15,59 @@ import NavbarC from "../../components/Navbar"
 import Exam from "../exam"
 import ExamResult from "../examResult"
 
-const App = (props) => (
-  <div>
-    <header>
-      {/* exclude navbar in /exams/:exam container */}
-      {!RegExp("/exams/.+").test(props.router.location.pathname) ? (
-        <Navbar
-          title="Uji Yuksinau"
-          titleOnlick={() => props.changePage("/")}
-          menus={[
-            // {
-            //   title: "My exams",
-            //   onClick: () => props.changePage("/my-exams")
-            // },
-            // { 
-            //   title: "SignIn",
-            //   onClick: () => props.changePage("/signin")
-            // }
-          ]}
-        />
-      ) : null}
-      
-      {/* <Bar/> */}
-      
-    </header>
+import models from "../../models"
 
-    <main>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/:examGroupSlug" component={Exams} />
-      <Route exact path="/exam-logs/:id/guest" component={Exam}/>
-      <Route exact path="/exams/:exam/result" component={ExamResult}/>
-      {/* <Route exact path="/my-exams" component={MyExams} /> */}
-      {/* <Route exact path="/signin" component={SignIn} /> */}
-      {/* <Route exact path="/signup" component={SignUp} /> */}
-      {/* <Route exact path="/play" component={Play} /> */}
-    </main>
-  </div>
-)
+class App extends React.Component {
+
+  componentDidMount = () => {
+    this.authGuest()
+  }
+
+  authGuest = async () => {
+    const auth = await models.auth.mutation.guest()
+    localStorage.setItem('accessToken', `Bearer ${auth.token}`)
+  }
+
+  render() {
+    return (
+      <div>
+        <header>
+          {/* exclude navbar in /exams/:exam container */}
+          {!RegExp("/exams/.+").test(this.props.router.location.pathname) ? (
+            <Navbar
+              title="Uji Yuksinau"
+              titleOnlick={() => this.props.changePage("/")}
+              menus={[
+                // {
+                //   title: "My exams",
+                //   onClick: () => props.changePage("/my-exams")
+                // },
+                // { 
+                //   title: "SignIn",
+                //   onClick: () => props.changePage("/signin")
+                // }
+              ]}
+            />
+          ) : null}
+          
+          {/* <Bar/> */}
+          
+        </header>
+    
+        <main>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/:examGroupSlug" component={Exams} />
+          <Route exact path="/exam-logs/:id/guest" component={Exam}/>
+          <Route exact path="/exams/:exam/result" component={ExamResult}/>
+          {/* <Route exact path="/my-exams" component={MyExams} /> */}
+          {/* <Route exact path="/signin" component={SignIn} /> */}
+          {/* <Route exact path="/signup" component={SignUp} /> */}
+          {/* <Route exact path="/play" component={Play} /> */}
+        </main>
+      </div>
+    )
+  }
+}
 
 const Navbar = styled(NavbarC)`
   position: fixed;
