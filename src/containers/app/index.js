@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React from "react"
 import { Route, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
@@ -11,7 +11,7 @@ import Exams from "../exams"
 // import Play from "../play"
 import NavbarC from "../../components/Navbar"
 // import BarC from "../../components/Bar"
-// import SignIn from "../signin"
+import SignIn from "../signin"
 // import SignUp from "../signup"
 import Exam from "../exam"
 import ExamResult from "../examResult"
@@ -49,14 +49,12 @@ class App extends React.Component {
         </header>
     
         <main>
-          {/* <Route exact path="/" component={Home} /> */}
           <PrivateRoute exact path="/" component={Home} />
-          <Route exact path="/:examGroupSlug" component={Exams} />
-          <Route exact path="/exam-logs/:id/guest" component={Exam}/>
-          <Route exact path="/exams/:exam/result" component={ExamResult}/>
+          <Route exact path="/signin" component={SignIn} />
+          <PrivateRoute exact strict path="/exam-groups/:examGroupSlug" component={Exams} />
+          {/* <Route exact path="/exam-logs/:id/guest" component={Exam}/> */}
+          {/* <Route exact path="/exams/:exam/result" component={ExamResult}/> */}
           {/* <Route exact path="/my-exams" component={MyExams} /> */}
-          {/* <Route exact path="/signin" component={SignIn} /> */}
-          {/* <Route exact path="/signup" component={SignUp} /> */}
           {/* <Route exact path="/play" component={Play} /> */}
         </main>
       </div>
@@ -69,12 +67,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        false ? (
+        isAccessToken()  ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: "/signin",
               state: { from: props.location }
             }}
           />
@@ -84,9 +82,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 }
 
-const mapStateToPops = (state) => {
+const isAccessToken = () => {
+  if (!localStorage.getItem("accessToken")){
+    return false
+  }
+  return true
+}
+
+const mapStateToPops = ({ router }) => {
   return{
-    router: state.router
+    router
   }
 }
 

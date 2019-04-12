@@ -16,7 +16,7 @@ const query = {
     if (res.data.length == 0 || res.data == null ){
       return {
         data: [],
-        count: 0
+        count: 0        
       }
     }
 

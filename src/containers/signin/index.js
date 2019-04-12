@@ -1,25 +1,49 @@
 import React from "react"
 import { connect } from "react-redux"
+import { push, goBack } from "connected-react-router"
 import styled from "styled-components"
 import InputC from "../../components/Input"
 import ButtonC from "../../components/Button"
 import CheckboxC from "../../components/Checkbox"
 
+import models from "../../models"
 
-const SignIn = props => (
-  <Wrapper>
-    <MainWrap>
-      <Title>Signin Uji Yuksinau</Title>
-      <Input title="Email"/>
-      <Input type="password" title="Password"/>
-      <RememberMeWrap>
-        <Checkbox/>
-        <RememberMeTitle>Remember Me</RememberMeTitle>
-      </RememberMeWrap>
-      <Button title="SignIn"/>
-    </MainWrap>
-  </Wrapper>
-)
+
+class SignIn extends React.Component{
+
+  componentDidMount = () => {
+    this.authGuest()
+  }
+
+  authGuest = async () => {
+    if (!localStorage.getItem("accessToken")){
+      const auth = await models.auth.mutation.guest()
+      localStorage.setItem("accessToken", `Bearer ${auth.token}`)
+    }
+
+    setTimeout(() => {
+      this.props.dispatch(push("/"))
+    }, 1000)
+  }
+
+  render(){
+    return (
+      <Wrapper>
+        <MainWrap>
+          <Title>Login as a Guest..</Title>
+          <p style={{textAlign: "center"}}>Uji Yuksinau BETA.</p>
+          {/* <Input title="Email"/>
+          <Input type="password" title="Password"/>
+          <RememberMeWrap>
+            <Checkbox/>
+            <RememberMeTitle>Remember Me</RememberMeTitle>
+          </RememberMeWrap>
+          <Button title="SignIn"/> */}
+        </MainWrap>
+      </Wrapper>
+    )
+  }
+}
 
 const Wrapper = styled.section`
   margin-top: 60px;

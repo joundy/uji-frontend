@@ -11,6 +11,8 @@ import ModalC from "../../components/Modal"
 import ExamInfoC from "../../components/ExamInfo"
 import ButtonC from "../../components/Button"
 
+import models from "../../models"
+
 import actions from "../../redux/actions"
 
 class Exams extends React.Component{
@@ -19,6 +21,15 @@ class Exams extends React.Component{
   }
 
   componentDidMount = async () => {
+
+    // try{
+    //   const authorization = localStorage.getItem("accessToken")
+    //   const examId = "5c94d18450e8986339d26405"
+    //   console.log(await models.examLogs.mutation.generate(authorization, examId))
+    // }
+    // catch(e){
+    //   console.log(e)
+    // }
 
     await this.fetchExams()
     if(this.props.exams.payload.data.length === 0){
@@ -56,7 +67,7 @@ class Exams extends React.Component{
               },
               {
                 title: examGroupSlug,
-                link:`/${examGroupSlug}`
+                link:`/exam-groups/${examGroupSlug}`
               }
             ]}
           />
