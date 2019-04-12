@@ -17,20 +17,13 @@ import actions from "../../redux/actions"
 
 class Exams extends React.Component{
   state = {
-    isModalOpen: false
+    modal: {
+      isOpen: false,
+      data: {}
+    }
   }
 
   componentDidMount = async () => {
-
-    // try{
-    //   const authorization = localStorage.getItem("accessToken")
-    //   const examId = "5c94d18450e8986339d26405"
-    //   console.log(await models.examLogs.mutation.generate(authorization, examId))
-    // }
-    // catch(e){
-    //   console.log(e)
-    // }
-
     await this.fetchExams()
     if(this.props.exams.payload.data.length === 0){
       this.props.dispatch(push("/"))
@@ -48,14 +41,57 @@ class Exams extends React.Component{
     await this.props.dispatch(actions.fetchExamsData(this.props.exams.filter))
   }
 
+  generateExamLog = async (examId) => {
+    try{
+      const authorization = localStorage.getItem("accessToken")
+      return (await models.examLogs.mutation.generate(authorization, examId)).id
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
+  handleStartExam = async (examId) => {
+    const examLogId = await this.generateExamLog(examId)
+    this.props.dispatch(push(`/exam-logs/${examLogId}`))
+  }
+
+  //handle modal
+  handleModalOpen = (v) => {
+    this.setState({
+      modal: {
+        isOpen: true,
+        data: v
+      }
+    })
+  }
+
+  handleModalClose = () => {
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        isOpen: false 
+      }
+    })
+  }
+  //end modal
+
   render(){
     const { examGroupSlug } = this.props.match.params
+    const { data } = this.state.modal
     return (
       <Wrapper>
         {console.log(this.props.match)}
-        <Modal width={350} height={450} isOpen={this.state.isModalOpen} onButtonCloseClick={() => this.setState({isModalOpen: false})}>
-          <ExamInfo/>
-          <Button title="Start"/>
+        <Modal width={350} height={450} isOpen={this.state.modal.isOpen} onButtonCloseClick={() => this.handleModalClose()}>
+          <ExamInfo
+            title={data.title}
+            description={data.description}
+            totalQuestion={data.maxQuestion}
+            duration={data.duration}
+            source={data.source}
+            passingGrade={data.passingGrade}
+          />
+          <Button title="Start" onClick={() => this.handleStartExam(data.id)}/>
         </Modal>
   
         <MainWrap>
@@ -81,7 +117,7 @@ class Exams extends React.Component{
                 passingGrade={v.passingGrade}
                 duration={v.duration}
                 questionsTotal={v.maxQuestion}
-                onClickButton ={() => this.setState({isModalOpen: true})}
+                onClickButton ={() => this.handleModalOpen(v)}
               />
             ))}
           </ExamCardWrap>

@@ -10,27 +10,27 @@ const ExamInfo = (props) => (
     <MainWrap>
       <ListWrap>
         <ListTitle>Title</ListTitle>
-        <ListValue>Matematika</ListValue>
+        <ListValue>{props.title}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Description</ListTitle>
-        <ListValue>Lorem ipsum dono dan si memet bermain bersama sama dan mereka sangat akrab.</ListValue>
+        <ListValue>{props.description}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Total Questions</ListTitle>
-        <ListValue>23</ListValue>
+        <ListValue>{props.totalQuestion}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Duration</ListTitle>
-        <ListValue>60 minutes</ListValue>
+        <ListValue>{props.duration}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Source</ListTitle>
-        <ListValue>http://pak-anang.blogspot.com</ListValue>
+        <ListValue>{props.source}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Passing Grade</ListTitle>
-        <ListValue>23</ListValue>
+        <ListValue>{props.passingGrade}</ListValue>
       </ListWrap>
       <Line/>
     </MainWrap>

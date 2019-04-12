@@ -51,8 +51,8 @@ class App extends React.Component {
         <main>
           <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
-          <PrivateRoute exact strict path="/exam-groups/:examGroupSlug" component={Exams} />
-          {/* <Route exact path="/exam-logs/:id/guest" component={Exam}/> */}
+          <PrivateRoute exact path="/exam-groups/:examGroupSlug" component={Exams} />
+          <PrivateRoute exact path="/exam-logs/:id" component={Exam}/>
           {/* <Route exact path="/exams/:exam/result" component={ExamResult}/> */}
           {/* <Route exact path="/my-exams" component={MyExams} /> */}
           {/* <Route exact path="/play" component={Play} /> */}
