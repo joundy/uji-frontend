@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
-import { push, goBack } from "connected-react-router"
+import { push } from "connected-react-router"
 import styled from "styled-components"
-import InputC from "../../components/Input"
-import ButtonC from "../../components/Button"
-import CheckboxC from "../../components/Checkbox"
+// import InputC from "../../components/Input"
+// import ButtonC from "../../components/Button"
+// import CheckboxC from "../../components/Checkbox"
 
 import models from "../../models"
 
@@ -51,10 +51,10 @@ const Wrapper = styled.section`
   justify-content: center;
 `
 
-const Input = styled(InputC)`
-  width: 100%;
-  margin-bottom: 20px;
-`
+// const Input = styled(InputC)`
+//   width: 100%;
+//   margin-bottom: 20px;
+// `
 
 const MainWrap = styled.section`
   margin-top: 50px;
@@ -73,25 +73,25 @@ const Title = styled.h2`
   margin-bottom: 50px;
 `
 
-const Button = styled(ButtonC)`
-  width: 100%;
-`
+// const Button = styled(ButtonC)`
+//   width: 100%;
+// `
 
-const Checkbox = styled(CheckboxC)`
+// const Checkbox = styled(CheckboxC)`
 
-`
+// `
 
-const RememberMeTitle = styled.p`
-  margin: 0px;
-  color: #505565;
-  margin-left: 5px;  
-  font-size: 14px;
-`
+// const RememberMeTitle = styled.p`
+//   margin: 0px;
+//   color: #505565;
+//   margin-left: 5px;  
+//   font-size: 14px;
+// `
 
-const RememberMeWrap = styled.section`
-  display: flex;
-  align-items: center;
-  margin-bottom: 35px;
-`
+// const RememberMeWrap = styled.section`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 35px;
+// `
 
 export default connect()(SignIn)

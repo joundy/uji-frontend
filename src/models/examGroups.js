@@ -13,7 +13,7 @@ const query = {
       }
     })
    
-    if (res.data.length == 0 || res.data == null ){
+    if (res.data.length === 0 || res.data === null ){
       return {
         data: [],
         count: 0        

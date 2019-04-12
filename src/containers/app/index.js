@@ -14,7 +14,7 @@ import NavbarC from "../../components/Navbar"
 import SignIn from "../signin"
 // import SignUp from "../signup"
 import Exam from "../exam"
-import ExamResult from "../examResult"
+// import ExamResult from "../examResult"
 
 class App extends React.Component {
 

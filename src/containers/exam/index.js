@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import Navbar from "../../components/Navbar"
@@ -10,99 +10,125 @@ import IconPreviousI from "../../images/icon-previous.svg"
 import IconCloseWhiteI from "../../images/icon-close-white.svg"
 import IconPreviousWhiteI from "../../images/icon-previous-white.svg"
 
-const Exam = props => {
+import actions from "../../redux/actions"
 
-  const [isSideOpen, setIsSideOpen] = useState(false)
-  
-  return (
-    <Wrapper>
-      <Navbar
-        title="12 : 23"
-        // titleOnlick={() => props.changePage("/")}
-        menus={[
-          { 
-            title: "Exit",
-            // onClick: () => props.changePage("/signin")
-          }
-        ]}
-      />
-      <MainWrap>
-        <QuestionWrap>
-          <QAWrap>
-            <QuestionNo>No. 12 / 25</QuestionNo>
-            <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
-  
-            <AnswerWrap>
-              <Answer/>
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-              <Answer/> 
-            </AnswerWrap>
-          </QAWrap>
-  
-          <BWrap>
-            <ButtonNavWrap>
-              <ButtonNavLeft>
-                <IconPrevious/>
-              </ButtonNavLeft>
-              <ButtonNavMiddle>
-                <MarkForReviewText>Mark for review</MarkForReviewText>
-              </ButtonNavMiddle>
-              <ButtonNavRight>
-                <IconNext/>
-              </ButtonNavRight>
-            </ButtonNavWrap>
-          </BWrap>
-        </QuestionWrap>
+class Exam extends React.Component{
+  state = {
+    isSideOpen: false
+  }
 
-        {isSideOpen ? (
-          <ButtonClose onClick={() => setIsSideOpen(false)}>
-            <IconCloseWhite/>
-          </ButtonClose>
-        ): (
-          <ButtonOpen onClick={() => setIsSideOpen(true)}>
-            <IconPreviousWhite/>
-          </ButtonOpen>
-        )}
-        
-        <SideWrap isSideOpen={isSideOpen}>
-          <NCWrap>
-            <NoWrap>
-              {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26].map((v) => (
-                <Box value={v}/>
-              ))}
-            </NoWrap>
-            
-            <ColorDescTBWrap>
-              <ColorDescBoxOutline/>
-              <ColorDescTitle>Not answered</ColorDescTitle>
-            </ColorDescTBWrap>
-            
-            <ColorDescTBWrap>
-              <ColorDescBoxFill/>
-              <ColorDescTitle>Answered</ColorDescTitle>
-            </ColorDescTBWrap>
+  componentDidMount = () => {
+    this.getByIdAndStartExamLog()
+  }
+
+  getByIdAndStartExamLog = () => {
+    const examLogId = this.props.match.params.id
+    const authorization = localStorage.getItem("accessToken")
+
+    this.props.dispatch(actions.getByIdAndStartExamLogData(authorization, examLogId))
+  }
+
+  render(){
+    return (
+      <Wrapper>
+        {console.log(this.props.examLog)}
+        <Navbar
+          title="12 : 23"
+          // titleOnlick={() => props.changePage("/")}
+          menus={[
+            { 
+              title: "Exit",
+              // onClick: () => props.changePage("/signin")
+            }
+          ]}
+        />
+        <MainWrap>
+          <QuestionWrap>
+            <QAWrap>
+              <QuestionNo>No. 12 / 25</QuestionNo>
+              <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
+    
+              <AnswerWrap>
+                <Answer/>
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+                <Answer/> 
+              </AnswerWrap>
+            </QAWrap>
+    
+            <BWrap>
+              <ButtonNavWrap>
+                <ButtonNavLeft>
+                  <IconPrevious/>
+                </ButtonNavLeft>
+                <ButtonNavMiddle>
+                  <MarkForReviewText>Mark for review</MarkForReviewText>
+                </ButtonNavMiddle>
+                <ButtonNavRight>
+                  <IconNext/>
+                </ButtonNavRight>
+              </ButtonNavWrap>
+            </BWrap>
+          </QuestionWrap>
   
-            <ColorDescTBWrap>
-              <ColorDescBoxWarning/>
-              <ColorDescTitle>Marked for review</ColorDescTitle>
-            </ColorDescTBWrap>
-            
-            
-          </NCWrap>
+          {this.state.isSideOpen ? (
+            <ButtonClose onClick={() => this.setState({ isSideOpen: false })}>
+              <IconCloseWhite/>
+            </ButtonClose>
+          ): (
+            <ButtonOpen onClick={() => this.setState({ isSideOpen: true })}>
+              <IconPreviousWhite/>
+            </ButtonOpen>
+          )}
           
-  
-        </SideWrap>
-      </MainWrap>
-    </Wrapper>
-  )
+          <SideWrap isSideOpen={this.state.isSideOpen}>
+            <NCWrap>
+              <NoWrap>
+                {this.props.examLog.payload.questions.map((v, i) => (
+                  <Box value={i + 1}/>
+                ))}
+              </NoWrap>
+              
+              <ColorDescTBWrap>
+                <ColorDescBoxOutline/>
+                <ColorDescTitle>Not answered</ColorDescTitle>
+              </ColorDescTBWrap>
+              
+              <ColorDescTBWrap>
+                <ColorDescBoxFill/>
+                <ColorDescTitle>Answered</ColorDescTitle>
+              </ColorDescTBWrap>
+    
+              <ColorDescTBWrap>
+                <ColorDescBoxWarning/>
+                <ColorDescTitle>Marked for review</ColorDescTitle>
+              </ColorDescTBWrap>
+              
+              
+            </NCWrap>
+            
+    
+          </SideWrap>
+        </MainWrap>
+      </Wrapper>
+    )
+  }
 }
+
+const mapStateToProps = ({ examLog }) => {
+  return {
+    examLog
+  }
+}
+
+export default connect(mapStateToProps)(Exam)
+
 
 const Wrapper = styled.section`
   display: flex; 
@@ -389,6 +415,3 @@ const ColorDescTBWrap = styled.section`
 const AnswerWrap = styled.section`
 
 `
-
-
-export default connect()(Exam)

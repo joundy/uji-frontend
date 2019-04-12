@@ -20,21 +20,16 @@ const mutation = {
 }
 
 const query = {
-  // async fetcG(filter){
-    // const res = await axios.get(`${config.API_URL}/examGroups`, {
-    //   params: {
-    //     ...filter
-    //   }
-    // })
-    // if (res.data.length === 0){
-    //   return {
-    //     data: [],
-    //     count: 0
-    //   }
-    // } 
+  async getByIdAndStart(authorization, examLogId){
+    console.log(authorization)
+    const res = await axios.get(`${config.API_URL}/examLogs/${examLogId}`, {
+      headers: {
+        "Authorization": authorization
+      }
+    })
 
-    // return res.data[0]
-  // }
+    return res.data
+  }
 }
 
 export default {
