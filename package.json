@@ -22,6 +22,7 @@
     "lodash": "^4.17.11",
     "querystring": "^0.2.0",
     "react": "16.8.6",
+    "react-countdown-now": "^2.1.0",
     "react-dom": "16.8.6",
     "react-modal": "^3.8.1",
     "react-redux": "5.1.1",

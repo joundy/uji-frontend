@@ -24,7 +24,8 @@ const initialState = {
     result:{
       pass: 0,
       failed: 0
-    }
+    },
+    remainingTime: 0
   },
   isLoading: false,
   error: {},

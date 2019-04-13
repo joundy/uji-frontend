@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import { push } from "connected-react-router"
 
+import CountDown from "../../components/CountDown"
 import Navbar from "../../components/Navbar"
 import BoxC from "../../components/Box"
 import AnswerRadio from "../../components/AnswerRadio"
@@ -18,12 +19,27 @@ import models from "../../models"
 class Exam extends React.Component{
   state = {
     isSideOpen: false,
-    questionIndex: 0
+    questionIndex: 0,
+    remainingTime: 0
   }
 
   componentDidMount = () => {
     this.getByIdAndStartExamLog()
+
+    //initialState from redux
+    this.setState({
+      // remainingTime: this.props.examLog.payload.remaini  ngTime
+    })
   }
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.examLog.payload.remainingTime !== this.state.remainingTime){
+      this.setState({
+        remainingTime: nextProps.examLog.payload.remainingTime
+      })
+    }
+  }
+
 
   getByIdAndStartExamLog = () => {
     const examLogId = this.props.match.params.id
@@ -77,7 +93,7 @@ class Exam extends React.Component{
     return (
       <Wrapper>
         <Navbar
-          title="12 : 23"
+          title={<CountDown remainingTime={examLog.payload.remainingTime}/>}
           menus={[
             { 
               title: "Exit",
@@ -86,6 +102,7 @@ class Exam extends React.Component{
           ]}
         />
         <MainWrap>
+          {console.log(examLog.payload)}
           <QuestionWrap>
             <QAWrap>
               <QuestionNo>No. {this.state.questionIndex + 1} / {examLog.payload.questions.length}</QuestionNo>
@@ -159,6 +176,9 @@ class Exam extends React.Component{
     )
   }
 }
+
+
+
 
 const mapStateToProps = ({ examLog }) => {
   return {
