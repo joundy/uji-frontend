@@ -14,7 +14,7 @@ import NavbarC from "../../components/Navbar"
 import SignIn from "../signin"
 // import SignUp from "../signup"
 import Exam from "../exam"
-// import ExamResult from "../examResult"
+import ExamResult from "../examResult"
 
 class App extends React.Component {
 
@@ -53,7 +53,7 @@ class App extends React.Component {
           <Route exact path="/signin" component={SignIn} />
           <PrivateRoute exact path="/exam-groups/:examGroupSlug" component={Exams} />
           <PrivateRoute exact path="/exam-logs/:id" component={Exam}/>
-          {/* <Route exact path="/exams/:exam/result" component={ExamResult}/> */}
+          <Route exact path="/exam-logs/:id/result" component={ExamResult}/>
           {/* <Route exact path="/my-exams" component={MyExams} /> */}
           {/* <Route exact path="/play" component={Play} /> */}
         </main>

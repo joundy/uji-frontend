@@ -1,9 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
+import { push } from "connected-react-router"
+
 import Navbar from "../../components/Navbar"
 import BoxC from "../../components/Box"
-import Answer from "../../components/Answer"
+import AnswerRadio from "../../components/AnswerRadio"
 
 import IconNextI from "../../images/icon-next.svg"
 import IconPreviousI from "../../images/icon-previous.svg"
@@ -11,6 +13,7 @@ import IconCloseWhiteI from "../../images/icon-close-white.svg"
 import IconPreviousWhiteI from "../../images/icon-previous-white.svg"
 
 import actions from "../../redux/actions"
+import models from "../../models"
 
 class Exam extends React.Component{
   state = {
@@ -35,6 +38,19 @@ class Exam extends React.Component{
     })
   }
 
+  submitExamLog = async (examLogId) => {
+    try{
+      const authorization = localStorage.getItem("accessToken")
+      await models.examLogs.mutation.submit(authorization, examLogId)
+
+      //push to result container
+      this.props.dispatch(push(`/exam-logs/${examLogId}/result`))
+    }
+    catch(e){
+      
+    }
+  } 
+
   handleNextQuestion = () => {
     if (this.state.questionIndex !== this.props.examLog.payload.questions.length - 1){
       this.setState({
@@ -50,19 +66,25 @@ class Exam extends React.Component{
       })
     }
   }
+  
+  setQuestionAnswers = (examLogId, questionId, answerId) => {
+    const authorization = localStorage.getItem("accessToken")
+    this.props.dispatch(actions.setQuestionAnswersExamLogData(authorization, examLogId, questionId, answerId))
+  }
 
   render(){
     const { examLog } = this.props
     return (
       <Wrapper>
         {console.log(examLog)}
+        {console.log(examLog.payload.questions[0])}
+        {console.log(examLog.payload.questions[0].answer)}
         <Navbar
           title="12 : 23"
-          // titleOnlick={() => props.changePage("/")}
           menus={[
             { 
               title: "Exit",
-              // onClick: () => props.changePage("/signin")
+              onClick: () => this.props.dispatch(push("/"))
             }
           ]}
         />
@@ -73,7 +95,11 @@ class Exam extends React.Component{
               <QuestionTitle>{examLog.payload.questions[this.state.questionIndex].title}</QuestionTitle>
               <AnswerWrap>
                 {examLog.payload.questions[this.state.questionIndex].answer.list.map((v) => (
-                  <Answer title={v.title}/>
+                  <AnswerRadio
+                    title={v.title}
+                    isChecked={examLog.payload.questions[this.state.questionIndex].answer.selectedIds.includes(v.id)}
+                    onClick={() => this.setQuestionAnswers(examLog.payload.id, examLog.payload.questions[this.state.questionIndex].id, v.id)}
+                  />
                 ))}
               </AnswerWrap>
             </QAWrap>
@@ -83,7 +109,7 @@ class Exam extends React.Component{
                 <ButtonNavLeft onClick={() => this.handlePreviousQuestion()}>
                   <IconPrevious/>
                 </ButtonNavLeft>
-                <ButtonNavMiddle>
+                <ButtonNavMiddle onClick={() => this.submitExamLog(examLog.payload.id)}>
                   <MarkForReviewText>Mark for review</MarkForReviewText>
                 </ButtonNavMiddle>
                 <ButtonNavRight onClick={() => this.handleNextQuestion()}>

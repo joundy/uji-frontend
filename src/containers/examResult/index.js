@@ -3,26 +3,60 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import Navbar from "../../components/Navbar"
 import ButtonC from "../../components/Button"
-
 import ResultC from "../../components/Result"
 
-const Exam = props => (
-  <Wrapper>
-    <Navbar
-      title=""
-      // titleOnlick={() => props.changePage("/")}
-      menus={[
-      ]}
-    />
-    <MainWrap>
-      <ResultWrap>
-        <ResultC/>
-        <Button title="Exit"/>
-        <Button title="Retake Exam" btn="outline"/>
-      </ResultWrap>
-    </MainWrap>
-  </Wrapper>
-)
+import actions from "../../redux/actions"
+
+class ExamLogResult extends React.Component{
+
+  componentDidMount = () =>{
+    this.getByIdExamLog()
+  }
+
+  getByIdExamLog = () => {
+    const examLogId = this.props.match.params.id
+    const authorization = localStorage.getItem("accessToken")
+
+    this.props.dispatch(actions.getByIdAndStartExamLogData(authorization, examLogId))
+  }
+
+  render(){
+    const { examLog } = this.props
+    return (
+      <Wrapper>
+        {console.log(examLog)}
+        <Navbar
+          title=""
+          // titleOnlick={() => props.changePage("/")}
+          menus={[
+          ]}
+        />
+        <MainWrap>
+          <ResultWrap>
+            <Result
+              score={100 / (examLog.payload.result.pass + examLog.payload.result.failed) * examLog.payload.result.pass}
+              passingGrade={examLog.payload.exam.passingGrade}
+              timeSpent={examLog.payload.timeSpent}
+              correctAnswer={examLog.payload.result.pass}
+              incCorrectAnswer={examLog.payload.result.failed}
+              // notAnswered="unknown"
+            />
+            <Button title="Exit"/>
+            <Button title="Retake Exam" btn="outline"/>
+          </ResultWrap>
+        </MainWrap>
+      </Wrapper>
+    )
+  }
+}
+
+const mapStateToProps = ({ examLog }) => {
+  return {
+    examLog
+  }
+}
+ 
+export default connect(mapStateToProps)(ExamLogResult)
 
 const Wrapper = styled.section`
   display: flex; 
@@ -60,4 +94,6 @@ const Button = styled(ButtonC)`
   margin-bottom: 10px;
 `
 
-export default connect()(Exam)
+const Result = styled(ResultC)`
+
+`

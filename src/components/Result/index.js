@@ -6,29 +6,29 @@ const ResultC = (props) => (
   
   <Wrapper className={props.className}>
     <HeaderTitle>Passed</HeaderTitle>
-    <SubHeaderTitle>Your Score 60 from 100</SubHeaderTitle>
+    <SubHeaderTitle>Your Score {props.score} from 100</SubHeaderTitle>
     <Line/>
     <MainWrap>
       <ListWrap>
         <ListTitle>Passing grade</ListTitle>
-        <ListValue>50</ListValue>
+        <ListValue>{props.passingGrade}</ListValue>
       </ListWrap>
       <ListWrap>
-        <ListTitle>Time consume</ListTitle>
-        <ListValue>10 min 32 sec</ListValue>
+        <ListTitle>Time spent</ListTitle>
+        <ListValue>{props.timeSpent} sec</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Correct answer</ListTitle>
-        <ListValue>23</ListValue>
+        <ListValue>{props.correctAnswer}</ListValue>
       </ListWrap>
       <ListWrap>
         <ListTitle>Incorrect answer</ListTitle>
-        <ListValue>1</ListValue>
+        <ListValue>{props.incCorrectAnswer}</ListValue>
       </ListWrap>
-      <ListWrap>
+      {/* <ListWrap>
         <ListTitle>Not answered</ListTitle>
-        <ListValue>23</ListValue>
-      </ListWrap>
+        <ListValue>{props.notAnswered}</ListValue>
+      </ListWrap> */}
       <Line/>
     </MainWrap>
   </Wrapper>

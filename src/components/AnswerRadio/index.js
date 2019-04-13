@@ -1,35 +1,21 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "styled-components"
 
-const AnswerC = (props) => {
+const AnswerRadioC = (props) => (
 
-  const [isChecked, setIsChecked] = useState(false)
-
-  return (
-  
-    <Wrapper className={props.className}>
-      <AnswerWrap isChecked={isChecked} onClick={() => setIsChecked(!isChecked)}>
-        <RadioWrap isChecked={isChecked}>
-          <Radio onChange={() => setIsChecked(!isChecked)}/>
-        </RadioWrap>
-        <AnswerTitle>{props.title}</AnswerTitle>
-      </AnswerWrap>
-    </Wrapper>
-  )
-}
+  <Wrapper className={props.className} onClick={props.onClick}>
+   <AnswerWrap isChecked={props.isChecked}>
+      <Radio isChecked={props.isChecked}/>
+      <AnswerTitle>{props.title}</AnswerTitle>
+    </AnswerWrap>
+  </Wrapper>
+)
 
 const Wrapper = styled.section`
 
 `;
 
-const Radio = styled.input.attrs({type: "checkbox"})`
-  width: 20px;
-  height: 20px;
-  cursor: pointer; 
-  opacity: 0;
-`
-
-const RadioWrap = styled.section`
+const Radio = styled.section`
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -69,4 +55,4 @@ const AnswerWrap = styled.section`
 `
 
 
-export default AnswerC
+export default AnswerRadioC
