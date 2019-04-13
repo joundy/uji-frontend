@@ -4,9 +4,9 @@ import {
   GETBYIDANDSTART_EXAMLOG_DATA,
   GETBYIDANDSTART_EXAMLOG_SUCCESS,
   GETBYIDANDSTART_EXAMLOG_FAILURE,
-  // SET_QUESTION_ANSWERS_EXAMLOG_DATA,
+  SET_QUESTION_ANSWERS_EXAMLOG_DATA,
   SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS,
-  // SET_QUESTION_ANSWERS_EXAMLOG_FAILURE
+  SET_QUESTION_ANSWERS_EXAMLOG_FAILURE
 } from "./actions"
 
 const initialState = {
@@ -49,10 +49,27 @@ export default (state = initialState, action) => {
       isLoading: false,
       error: action.error
     }
+    case SET_QUESTION_ANSWERS_EXAMLOG_DATA:
+
+    let index = _.findIndex(state.payload.questions, { id: action.questionId } )
+    state.payload.questions[index].answer.tempSelectedIds = state.payload.questions[index].answer.selectedIds
+    state.payload.questions[index].answer.selectedIds = [action.answerId]
+
+    return {
+      ...state
+    }
     case SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS:
 
-    const index = _.findIndex(state.payload.questions, { id: action.questionId } )
-    state.payload.questions[index].answer.selectedIds = [action.answerId]
+    index = _.findIndex(state.payload.questions, { id: action.questionId } )
+    state.payload.questions[index].answer.tempSelectedIds = state.payload.questions[index].answer.selectedIds
+
+    return {
+      ...state
+    }
+    case SET_QUESTION_ANSWERS_EXAMLOG_FAILURE:
+    
+    index = _.findIndex(state.payload.questions, { id: action.questionId } )
+    state.payload.questions[index].answer.selectedIds = state.payload.questions[index].answer.tempSelectedIds
 
     return {
       ...state

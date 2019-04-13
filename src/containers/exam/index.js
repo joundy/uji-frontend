@@ -76,9 +76,6 @@ class Exam extends React.Component{
     const { examLog } = this.props
     return (
       <Wrapper>
-        {console.log(examLog)}
-        {console.log(examLog.payload.questions[0])}
-        {console.log(examLog.payload.questions[0].answer)}
         <Navbar
           title="12 : 23"
           menus={[

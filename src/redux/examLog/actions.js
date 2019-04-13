@@ -24,32 +24,6 @@ const getByIdAndStartExamLogData = (authorization, examId) => {
   }
 }
 
-const setQuestionAnswersExamLogData = (authorization, examLogId, questionId, answerId) => {
-  return async dispatch => {
-    dispatch({
-      type: SET_QUESTION_ANSWERS_EXAMLOG_DATA
-    })
-    try{
-      await models.examLogs.mutation.setAnswers(authorization, examLogId, questionId, answerId)
-      dispatch(setQuestionAnswersExamLogSuccess(questionId, answerId))
-    }
-    catch(e){
-      dispatch(setQuestionAnswersExamLogFailure(e))
-    }
-  }
-}
-
-const setQuestionAnswersExamLogSuccess = (questionId, answerId) => ({
-  type: SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS,
-  questionId,
-  answerId
-})
-
-const setQuestionAnswersExamLogFailure = (e) => ({
-  type: SET_QUESTION_ANSWERS_EXAMLOG_FAILURE,
-  error: e
-})
-  
 const getByIdAndStartExamLogSuccess = (data) => ({
   type: GETBYIDANDSTART_EXAMLOG_SUCCESS,
   payload: data
@@ -59,6 +33,35 @@ const getByIdAndStartExamLogFailure = (e) => ({
   type: GETBYIDANDSTART_EXAMLOG_FAILURE,
   error: e
 })
+
+const setQuestionAnswersExamLogData = (authorization, examLogId, questionId, answerId) => {
+  return async dispatch => {
+    dispatch({
+      type: SET_QUESTION_ANSWERS_EXAMLOG_DATA,
+      questionId,
+      answerId
+    })
+    try{
+      await models.examLogs.mutation.setAnswers(authorization, examLogId, questionId, answerId)
+      dispatch(setQuestionAnswersExamLogSuccess(questionId))
+    }
+    catch(e){
+      dispatch(setQuestionAnswersExamLogFailure(e, questionId))
+    }
+  }
+}
+
+const setQuestionAnswersExamLogSuccess = (questionId) => ({
+  type: SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS,
+  questionId
+})
+
+const setQuestionAnswersExamLogFailure = (e, questionId) => ({
+  type: SET_QUESTION_ANSWERS_EXAMLOG_FAILURE,
+  error: e,
+  questionId
+})
+
 
 export default {
   getByIdAndStartExamLogData,
