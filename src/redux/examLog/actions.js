@@ -12,7 +12,6 @@ const getByIdAndStartExamLogData = (authorization, examId) => {
 
     try{
       const res  = await models.examLogs.query.getByIdAndStart(authorization, examId)
-      console.log(res)
       dispatch(getByIdAndStartExamLogSuccess(res))
     }
     catch(e){

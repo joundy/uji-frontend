@@ -14,7 +14,8 @@ import actions from "../../redux/actions"
 
 class Exam extends React.Component{
   state = {
-    isSideOpen: false
+    isSideOpen: false,
+    questionIndex: 0
   }
 
   componentDidMount = () => {
@@ -28,10 +29,33 @@ class Exam extends React.Component{
     this.props.dispatch(actions.getByIdAndStartExamLogData(authorization, examLogId))
   }
 
+  setQuestionIndex = (questionIndex) => {
+    this.setState({
+      questionIndex
+    })
+  }
+
+  handleNextQuestion = () => {
+    if (this.state.questionIndex !== this.props.examLog.payload.questions.length - 1){
+      this.setState({
+        questionIndex: this.state.questionIndex + 1
+      })
+    }
+  }
+
+  handlePreviousQuestion = () => {
+    if (this.state.questionIndex !== 0){
+      this.setState({
+        questionIndex: this.state.questionIndex - 1
+      })
+    }
+  }
+
   render(){
+    const { examLog } = this.props
     return (
       <Wrapper>
-        {console.log(this.props.examLog)}
+        {console.log(examLog)}
         <Navbar
           title="12 : 23"
           // titleOnlick={() => props.changePage("/")}
@@ -45,32 +69,24 @@ class Exam extends React.Component{
         <MainWrap>
           <QuestionWrap>
             <QAWrap>
-              <QuestionNo>No. 12 / 25</QuestionNo>
-              <QuestionTitle>Lorem ipsum dono dan simemet berman bersama sama ?</QuestionTitle>
-    
+              <QuestionNo>No. {this.state.questionIndex + 1} / {examLog.payload.questions.length}</QuestionNo>
+              <QuestionTitle>{examLog.payload.questions[this.state.questionIndex].title}</QuestionTitle>
               <AnswerWrap>
-                <Answer/>
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
-                <Answer/> 
+                {examLog.payload.questions[this.state.questionIndex].answer.list.map((v) => (
+                  <Answer title={v.title}/>
+                ))}
               </AnswerWrap>
             </QAWrap>
     
             <BWrap>
               <ButtonNavWrap>
-                <ButtonNavLeft>
+                <ButtonNavLeft onClick={() => this.handlePreviousQuestion()}>
                   <IconPrevious/>
                 </ButtonNavLeft>
                 <ButtonNavMiddle>
                   <MarkForReviewText>Mark for review</MarkForReviewText>
                 </ButtonNavMiddle>
-                <ButtonNavRight>
+                <ButtonNavRight onClick={() => this.handleNextQuestion()}>
                   <IconNext/>
                 </ButtonNavRight>
               </ButtonNavWrap>
@@ -90,8 +106,8 @@ class Exam extends React.Component{
           <SideWrap isSideOpen={this.state.isSideOpen}>
             <NCWrap>
               <NoWrap>
-                {this.props.examLog.payload.questions.map((v, i) => (
-                  <Box value={i + 1}/>
+                {examLog.payload.questions.map((v, i) => (
+                  <Box value={i + 1} onClick={() => this.setQuestionIndex(i)}/>
                 ))}
               </NoWrap>
               
@@ -170,6 +186,7 @@ const QuestionWrap = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
     height: calc(100% - 60px);
     position: absolute;
+    width: 100%;
     z-index: 0;
     display: flex:
     flex-direction: column

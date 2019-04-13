@@ -6,7 +6,12 @@ import {
 
 const initialState = {
   payload: {
-    questions: []
+    questions: [{
+      title: "",
+      answer: {
+        list: []
+      }
+    }]
   },
   isLoading: false,
   error: {},

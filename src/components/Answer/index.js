@@ -12,7 +12,7 @@ const AnswerC = (props) => {
         <RadioWrap isChecked={isChecked}>
           <Radio onChange={() => setIsChecked(!isChecked)}/>
         </RadioWrap>
-        <AnswerTitle>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</AnswerTitle>
+        <AnswerTitle>{props.title}</AnswerTitle>
       </AnswerWrap>
     </Wrapper>
   )

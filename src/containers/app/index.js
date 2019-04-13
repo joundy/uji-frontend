@@ -27,7 +27,7 @@ class App extends React.Component {
       <div>
         <header>
           {/* exclude navbar in /exams/:exam container */}
-          {!RegExp("/exams/.+").test(this.props.router.location.pathname) ? (
+          {!RegExp("/exam-logs/.+").test(this.props.router.location.pathname) ? (
             <Navbar
               title="Uji Yuksinau"
               titleOnlick={() => this.props.changePage("/")}

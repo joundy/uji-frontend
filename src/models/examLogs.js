@@ -21,7 +21,6 @@ const mutation = {
 
 const query = {
   async getByIdAndStart(authorization, examLogId){
-    console.log(authorization)
     const res = await axios.get(`${config.API_URL}/examLogs/${examLogId}`, {
       headers: {
         "Authorization": authorization
