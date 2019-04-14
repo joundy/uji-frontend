@@ -23,10 +23,11 @@ class CountDownC extends React.Component{
 
   render() {
     return (
-      <Countdown 
+      <Countdown
         date={Date.now() + (1000 * this.props.remainingTime)} 
         renderer={this.renderer}
         zeroPadTime={2}
+        onComplete={this.props.onComplete}
       />
     )
   }

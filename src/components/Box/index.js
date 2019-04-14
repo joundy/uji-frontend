@@ -46,5 +46,6 @@ const Wrapper = styled.section`
 const Value = styled.p`
   color: ${(props) => props.isFill ? `white`: `#505565`};
   margin: 0px;
+  user-select: none;
 `
 export default BoxC

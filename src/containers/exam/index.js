@@ -8,6 +8,9 @@ import CountDown from "../../components/CountDown"
 import Navbar from "../../components/Navbar"
 import BoxC from "../../components/Box"
 import AnswerRadio from "../../components/AnswerRadio"
+import ModalC from "../../components/Modal"
+import ButtonC from "../../components/Button"
+import LineC from "../../components/Line"
 
 import IconNextI from "../../images/icon-next.svg"
 import IconPreviousI from "../../images/icon-previous.svg"
@@ -20,11 +23,23 @@ import models from "../../models"
 class Exam extends React.Component{
   state = {
     isSideOpen: false,
-    questionIndex: 0
+    questionIndex: 0,
+    modal: {
+      isOpen: false
+    },
+    //for internal state only, prevent duplicate submit
+    isSubmit: false
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.getByIdAndStartExamLog()
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    if(nextProps.examLog.payload.remainingTime < 0 && this.state.isSubmit === false){
+      this.setState({ isSubmit: true })
+      this.submitExamLog(nextProps.examLog.payload.id)
+    }
   }
 
   getByIdAndStartExamLog = () => {
@@ -53,6 +68,10 @@ class Exam extends React.Component{
     }
   } 
 
+  handleOnSubmit = (examLogId) => {
+    this.submitExamLog(examLogId)
+  }
+
   handleNextQuestion = () => {
     if (this.state.questionIndex !== this.props.examLog.payload.questions.length - 1){
       this.setState({
@@ -79,12 +98,33 @@ class Exam extends React.Component{
     this.props.dispatch(actions.setQuestionIsMarkedExamLogData(authorization, examLogId, questionId, !this.props.examLog.payload.questions[this.state.questionIndex].isMarked))
   }
 
+  handleModalClose = () => {
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        isOpen: false 
+      }
+    })
+  }
+
+  handleModalOpen = (v) => {
+    this.setState({
+      modal: {
+        isOpen: true
+      }
+    })
+  }
+
   render(){
     const { examLog } = this.props
     return (
       <Wrapper>
+        {console.log(examLog)}
         <Navbar
-          title={<CountDown remainingTime={examLog.payload.remainingTime}/>}
+          title={<CountDown 
+            remainingTime={examLog.payload.remainingTime}
+            onComplete={() => this.handleOnSubmit(examLog.payload.id)}
+          />}
           menus={[
             { 
               title: "Exit",
@@ -92,6 +132,27 @@ class Exam extends React.Component{
             }
           ]}
         />
+
+        <Modal
+          isOpen={this.state.modal.isOpen} 
+          width={300} 
+          height={210}
+          onButtonCloseClick={() => this.handleModalClose()}
+        >
+
+        <SubmitConfirmWrap>
+          <SubmitConfirmTitle>Confirm</SubmitConfirmTitle>
+          <Line/>
+          <SubmitDescription>Are you sure want to submit?</SubmitDescription>
+          <Line/>
+          <ButtonWrap>
+            <Button title="Review" btn="outline" onClick={() => this.handleModalClose()} />
+            <Button title="Submit" onClick={() => this.handleOnSubmit(examLog.payload.id)} />
+          </ButtonWrap>
+        </SubmitConfirmWrap>
+
+        </Modal>
+
         <MainWrap>
           {console.log(examLog.payload)}
           <QuestionWrap>
@@ -112,7 +173,10 @@ class Exam extends React.Component{
             <BWrap>
               <ButtonNavWrap>
                 <ButtonNavLeft onClick={() => this.handlePreviousQuestion()}>
-                  <IconPrevious/>
+                  {this.state.questionIndex !== 0 ? (
+                    <IconPrevious/>
+
+                  ): null}
                 </ButtonNavLeft>
                 {/* <ButtonNavMiddle onClick={() => this.submitExamLog(examLog.payload.id)}> */}
                 <ButtonNavMiddle onClick={() => this.setQuestionIsMarked(examLog.payload.id, examLog.payload.questions[this.state.questionIndex].id)}>
@@ -122,8 +186,16 @@ class Exam extends React.Component{
                     {examLog.payload.questions[this.state.questionIndex].isMarked ? "Unmark" : "Mark for review"}
                   </MarkForReviewText>
                 </ButtonNavMiddle>
-                <ButtonNavRight onClick={() => this.handleNextQuestion()}>
-                  <IconNext/>
+                <ButtonNavRight 
+                  onClick={this.state.questionIndex === examLog.payload.questions.length - 1 
+                    ? () => this.handleModalOpen()
+                    : () => this.handleNextQuestion()}
+                >
+                  {this.state.questionIndex === examLog.payload.questions.length - 1 ? (
+                    <SubmitText>Submit</SubmitText>
+                  ) : (
+                    <IconNext/>
+                  )}
                 </ButtonNavRight>
               </ButtonNavWrap>
             </BWrap>
@@ -179,9 +251,6 @@ class Exam extends React.Component{
   }
 }
 
-
-
-
 const mapStateToProps = ({ examLog }) => {
   return {
     examLog
@@ -197,6 +266,49 @@ const Wrapper = styled.section`
   flex-direction: column;
   height: calc(100% - 60px);
 `
+const Modal = styled(ModalC)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  right: 50%;
+  margin-right: -125px;
+  // padding-bottom: 20px;
+`
+
+const SubmitConfirmWrap = styled.section`
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+`
+
+const SubmitConfirmTitle = styled.h3`
+  margin: 0px;
+  margin-bottom: 15px;
+  color: #232735;
+`
+
+const SubmitDescription = styled.p`
+
+`
+
+const Line = styled(LineC)`
+  width: 100%;
+`
+
+const ButtonWrap = styled.section`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`
+
+const Button = styled(ButtonC)`
+  width: 120px;
+`
+
 const MainWrap = styled.section`
   width: 960px;
   display: flex;
@@ -356,6 +468,7 @@ const ButtonNavLeft = styled.section`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  user-select: none
 
   :hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -374,6 +487,7 @@ const ButtonNavMiddle = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none
 
   :hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -385,12 +499,21 @@ const ButtonNavMiddle = styled.section`
 `
 
 const MarkForReviewText = styled.p`
-   color: #505565;  
-   font-size: 14px;
-   ${props => props.isMarked ? `
-    color: #EF7923;
-    font-weight: 600;
-   `: null}
+  user-select: none
+  color: #505565;  
+  font-size: 14px;
+  ${props => props.isMarked ? `
+  color: #EF7923;
+  font-weight: 600;
+  `: null}
+`
+
+const SubmitText = styled.p`
+  font-size: 14px;
+  color: #2A76E5;
+  font-weight: 600;
+  user-select: none;
+
 `
 
 const ButtonNavRight = styled.section`
@@ -399,6 +522,7 @@ const ButtonNavRight = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 
   :hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);

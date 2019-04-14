@@ -37,6 +37,7 @@ const customStyles = {
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.3)",
+    zIndex: "999"
   }
 }
 
@@ -56,13 +57,13 @@ const IconClose = styled.img.attrs({src: IconCloseC})`
   height: 15px;
   cursor: pointer;
   position: absolute;
-  z-index: 2
+  z-index: 2;
   right: 20px;
 `
 
 const MainWrap = styled.section`
   position: absolute;  
-  z-index: 0
+  z-index: 0;
   margin-left: auto; 
   margin-right: auto;
   // right: 1px;

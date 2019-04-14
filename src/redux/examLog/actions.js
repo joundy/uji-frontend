@@ -46,7 +46,7 @@ const setQuestionAnswersExamLogData = (authorization, examLogId, questionId, ans
       answerId
     })
     try{
-      await models.examLogs.mutation.setAnswers(authorization, examLogId, questionId, answerId)
+      await models.examLogs.mutation.setQuestionAnswers(authorization, examLogId, questionId, answerId)
       dispatch(setQuestionAnswersExamLogSuccess(questionId))
     }
     catch(e){
