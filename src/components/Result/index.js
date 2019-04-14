@@ -5,7 +5,7 @@ import LineC from "../Line"
 const ResultC = (props) => (
   
   <Wrapper className={props.className}>
-    <HeaderTitle>Passed</HeaderTitle>
+    <HeaderTitle isPassed={props.score >= props.passingGrade}>{props.score < props.passingGrade ? "Not Passed" : "Passed"}</HeaderTitle>
     <SubHeaderTitle>Your Score {props.score} from 100</SubHeaderTitle>
     <Line/>
     <MainWrap>
@@ -44,6 +44,10 @@ const HeaderTitle = styled.h2`
   margin: 0px;
   margin-bottom: 15px;
   color: #2A76E5;
+
+  ${props => !props.isPassed ? `
+    color: #e52a30;  
+  ` : null}
 `
 
 const SubHeaderTitle = styled.h4`

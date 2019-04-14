@@ -89,13 +89,17 @@ class Exam extends React.Component{
   }
   
   setQuestionAnswers = (examLogId, questionId, answerId) => {
-    const authorization = localStorage.getItem("accessToken")
-    this.props.dispatch(actions.setQuestionAnswersExamLogData(authorization, examLogId, questionId, answerId))
+    if(!this.props.examLog.payload.isSubmit){
+      const authorization = localStorage.getItem("accessToken")
+      this.props.dispatch(actions.setQuestionAnswersExamLogData(authorization, examLogId, questionId, answerId))
+    }
   }
 
   setQuestionIsMarked = (examLogId, questionId) => {
-    const authorization = localStorage.getItem("accessToken")
-    this.props.dispatch(actions.setQuestionIsMarkedExamLogData(authorization, examLogId, questionId, !this.props.examLog.payload.questions[this.state.questionIndex].isMarked))
+    if(!this.props.examLog.payload.isSubmit){
+      const authorization = localStorage.getItem("accessToken")
+      this.props.dispatch(actions.setQuestionIsMarkedExamLogData(authorization, examLogId, questionId, !this.props.examLog.payload.questions[this.state.questionIndex].isMarked))
+    }
   }
 
   handleModalClose = () => {
@@ -108,26 +112,30 @@ class Exam extends React.Component{
   }
 
   handleModalOpen = (v) => {
-    this.setState({
-      modal: {
-        isOpen: true
-      }
-    })
+    if(!this.props.examLog.payload.isSubmit){
+      this.setState({
+        modal: {
+          isOpen: true
+        }
+      })
+    }
   }
 
   render(){
     const { examLog } = this.props
+    const { correctIds, selectedIds } = examLog.payload.questions[this.state.questionIndex].answer
+    const question = examLog.payload.questions[this.state.questionIndex]
     return (
       <Wrapper>
         {console.log(examLog)}
         <Navbar
-          title={<CountDown 
-            remainingTime={examLog.payload.remainingTime}
-            onComplete={() => this.handleOnSubmit(examLog.payload.id)}
-          />}
+          title={examLog.payload.isSubmit ? "Review" : <CountDown 
+          remainingTime={examLog.payload.remainingTime}
+          onComplete={() => this.handleOnSubmit(examLog.payload.id)}
+        />}
           menus={[
             { 
-              title: "Exit",
+              title: examLog.payload.isSubmit ? "Exit" : "",
               onClick: () => this.props.dispatch(push("/"))
             }
           ]}
@@ -146,7 +154,7 @@ class Exam extends React.Component{
           <SubmitDescription>Are you sure want to submit?</SubmitDescription>
           <Line/>
           <ButtonWrap>
-            <Button title="Review" btn="outline" onClick={() => this.handleModalClose()} />
+            <Button title="Cancel" btn="outline" onClick={() => this.handleModalClose()} />
             <Button title="Submit" onClick={() => this.handleOnSubmit(examLog.payload.id)} />
           </ButtonWrap>
         </SubmitConfirmWrap>
@@ -158,13 +166,15 @@ class Exam extends React.Component{
           <QuestionWrap>
             <QAWrap>
               <QuestionNo>No. {this.state.questionIndex + 1} / {examLog.payload.questions.length}</QuestionNo>
-              <QuestionTitle>{examLog.payload.questions[this.state.questionIndex].title}</QuestionTitle>
+              <QuestionTitle>{question.title}</QuestionTitle>
               <AnswerWrap>
-                {examLog.payload.questions[this.state.questionIndex].answer.list.map((v) => (
+                {question.answer.list.map((v) => (
                   <AnswerRadio
                     title={v.title}
-                    isChecked={examLog.payload.questions[this.state.questionIndex].answer.selectedIds.includes(v.id)}
-                    onClick={() => this.setQuestionAnswers(examLog.payload.id, examLog.payload.questions[this.state.questionIndex].id, v.id)}
+                    isChecked={selectedIds.includes(v.id) || correctIds.includes(v.id)}
+                    isRadioChecked={selectedIds.includes(v.id)}
+                    color={correctIds.includes(v.id) ? "success" : (selectedIds.includes(v.id) && examLog.payload.isSubmit ? "danger" : "primary")}
+                    onClick={() => this.setQuestionAnswers(examLog.payload.id, question.id, v.id)}
                   />
                 ))}
               </AnswerWrap>
@@ -179,20 +189,21 @@ class Exam extends React.Component{
                   ): null}
                 </ButtonNavLeft>
                 {/* <ButtonNavMiddle onClick={() => this.submitExamLog(examLog.payload.id)}> */}
-                <ButtonNavMiddle onClick={() => this.setQuestionIsMarked(examLog.payload.id, examLog.payload.questions[this.state.questionIndex].id)}>
+                <ButtonNavMiddle onClick={() => this.setQuestionIsMarked(examLog.payload.id, question.id)}>
                   <MarkForReviewText 
-                    isMarked={examLog.payload.questions[this.state.questionIndex].isMarked}
+                    isMarked={question.isMarked}
                   >
-                    {examLog.payload.questions[this.state.questionIndex].isMarked ? "Unmark" : "Mark for review"}
+                    { !examLog.payload.isSubmit ? (question.isMarked ? "Unmark" : "Mark for review"): "" }
                   </MarkForReviewText>
                 </ButtonNavMiddle>
+
                 <ButtonNavRight 
                   onClick={this.state.questionIndex === examLog.payload.questions.length - 1 
                     ? () => this.handleModalOpen()
                     : () => this.handleNextQuestion()}
                 >
                   {this.state.questionIndex === examLog.payload.questions.length - 1 ? (
-                    <SubmitText>Submit</SubmitText>
+                    (!examLog.payload.isSubmit ? <SubmitText>Submit</SubmitText> : "")
                   ) : (
                     <IconNext/>
                   )}

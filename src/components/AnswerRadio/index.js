@@ -1,11 +1,26 @@
 import React from "react"
 import styled from "styled-components"
 
+const setColor = (color = "") => {
+  switch (color) {
+    case "warning":
+      return "#EF7923"
+    case "primary":
+      return "#f6faff"
+    case "danger":
+      return "#ffefef"
+    case "success":
+      return "#e1fff3"
+    default:
+      return "#f6faff"
+  }
+}
+
 const AnswerRadioC = (props) => (
 
   <Wrapper className={props.className} onClick={props.onClick}>
-   <AnswerWrap isChecked={props.isChecked}>
-      <Radio isChecked={props.isChecked}/>
+   <AnswerWrap isChecked={props.isChecked} color={setColor(props.color)}>
+      <Radio isRadioChecked={props.isRadioChecked}/>
       <AnswerTitle>{props.title}</AnswerTitle>
     </AnswerWrap>
   </Wrapper>
@@ -26,7 +41,7 @@ const Radio = styled.section`
   border: 1px solid #A1A4B1;
   box-sizing: border-box;
 
-  ${(props) => props.isChecked ? `
+  ${(props) => props.isRadioChecked ? `
     background: #2A76E5;
     border: 1px solid #2A76E5;
   ` : `background: white;`};
@@ -50,7 +65,7 @@ const AnswerWrap = styled.section`
   border-radius: 5px;
 
   ${(props) => props.isChecked ? `
-    background: #f6faff;
+    background: ${props.color};
   ` : `background: white;`};
 `
 

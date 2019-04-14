@@ -1,5 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
+import { push } from "connected-react-router"
+
 import styled from "styled-components"
 import Navbar from "../../components/Navbar"
 import ButtonC from "../../components/Button"
@@ -34,15 +36,16 @@ class ExamLogResult extends React.Component{
         <MainWrap>
           <ResultWrap>
             <Result
-              score={100 / (examLog.payload.result.pass + examLog.payload.result.failed) * examLog.payload.result.pass}
+              score={parseFloat(100 / (examLog.payload.result.pass + examLog.payload.result.failed) * examLog.payload.result.pass).toFixed(2)}
               passingGrade={examLog.payload.exam.passingGrade}
-              timeSpent={examLog.payload.timeSpent}
+              timeSpent={parseFloat(examLog.payload.timeSpent).toFixed(2)}
               correctAnswer={examLog.payload.result.pass}
               incCorrectAnswer={examLog.payload.result.failed}
               // notAnswered="unknown"
             />
-            <Button title="Exit"/>
-            <Button title="Retake Exam" btn="outline"/>
+            <Button title="Exit" onClick={() => this.props.dispatch(push("/"))}/>
+            <Button title="Review" btn="outline" onClick={() => this.props.dispatch(push(`/exam-logs/${this.props.match.params.id}`))}/>
+            {/* <Button title="Retake Exam" btn="outline"/> */}
           </ResultWrap>
         </MainWrap>
       </Wrapper>
