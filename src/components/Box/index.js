@@ -14,7 +14,8 @@ const setColor = (color = "") => {
 
 const BoxC = (props) => (
   
-  <Wrapper className={props.className} color={setColor(props.color)} isFill={props.isFill} onClick={props.onClick}>
+  <Wrapper className={props.className} color={setColor(props.color)} isFill={props.isFill} onClick={props.onClick} isActive={props.isActive}>
+    {console.log(props)}
     <Value isFill={props.isFill}>{props.value}</Value>
   </Wrapper>
 )
@@ -22,16 +23,21 @@ const BoxC = (props) => (
 const Wrapper = styled.section`
   width: 35px;
   height: 35px;
-  background-color: ${(props) => props.color};
+  background-color: transparent;
   border-radius: 5px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border: 1px solid #505565;
 
-  ${(props) => !props.isFill ? `
-    background-color: transparent;
+  ${props => props.isActive ? `
+    border: 1px solid #2A76E5
+  ` : null}
+
+  ${(props) => props.isFill ? `
+    background-color: ${props.color};
     border: 1px solid ${props.color};
     box-sizing: border-box;
   `: null}

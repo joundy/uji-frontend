@@ -26,6 +26,18 @@ const mutation = {
       }
     })
 
+    return res.data 
+  },
+  async setQuestionIsMarked(authorization, examLogId, questionId, isMarked){
+    const res = await axios.put(`${config.API_URL}/examLogs/${examLogId}/setIsMarked/questions/${questionId}`, querystring.stringify({
+      isMarked
+    }),{
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": authorization
+      }
+    })
+
     return res.data
   },
   async submit(authorization, examLogId){

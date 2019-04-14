@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { push } from "connected-react-router"
 
 import CountDown from "../../components/CountDown"
+
 import Navbar from "../../components/Navbar"
 import BoxC from "../../components/Box"
 import AnswerRadio from "../../components/AnswerRadio"
@@ -19,27 +20,12 @@ import models from "../../models"
 class Exam extends React.Component{
   state = {
     isSideOpen: false,
-    questionIndex: 0,
-    remainingTime: 0
+    questionIndex: 0
   }
 
   componentDidMount = () => {
     this.getByIdAndStartExamLog()
-
-    //initialState from redux
-    this.setState({
-      // remainingTime: this.props.examLog.payload.remaini  ngTime
-    })
   }
-
-  componentWillReceiveProps = nextProps => {
-    if (nextProps.examLog.payload.remainingTime !== this.state.remainingTime){
-      this.setState({
-        remainingTime: nextProps.examLog.payload.remainingTime
-      })
-    }
-  }
-
 
   getByIdAndStartExamLog = () => {
     const examLogId = this.props.match.params.id
@@ -88,6 +74,11 @@ class Exam extends React.Component{
     this.props.dispatch(actions.setQuestionAnswersExamLogData(authorization, examLogId, questionId, answerId))
   }
 
+  setQuestionIsMarked = (examLogId, questionId) => {
+    const authorization = localStorage.getItem("accessToken")
+    this.props.dispatch(actions.setQuestionIsMarkedExamLogData(authorization, examLogId, questionId, !this.props.examLog.payload.questions[this.state.questionIndex].isMarked))
+  }
+
   render(){
     const { examLog } = this.props
     return (
@@ -123,8 +114,13 @@ class Exam extends React.Component{
                 <ButtonNavLeft onClick={() => this.handlePreviousQuestion()}>
                   <IconPrevious/>
                 </ButtonNavLeft>
-                <ButtonNavMiddle onClick={() => this.submitExamLog(examLog.payload.id)}>
-                  <MarkForReviewText>Mark for review</MarkForReviewText>
+                {/* <ButtonNavMiddle onClick={() => this.submitExamLog(examLog.payload.id)}> */}
+                <ButtonNavMiddle onClick={() => this.setQuestionIsMarked(examLog.payload.id, examLog.payload.questions[this.state.questionIndex].id)}>
+                  <MarkForReviewText 
+                    isMarked={examLog.payload.questions[this.state.questionIndex].isMarked}
+                  >
+                    {examLog.payload.questions[this.state.questionIndex].isMarked ? "Unmark" : "Mark for review"}
+                  </MarkForReviewText>
                 </ButtonNavMiddle>
                 <ButtonNavRight onClick={() => this.handleNextQuestion()}>
                   <IconNext/>
@@ -147,7 +143,13 @@ class Exam extends React.Component{
             <NCWrap>
               <NoWrap>
                 {examLog.payload.questions.map((v, i) => (
-                  <Box value={i + 1} onClick={() => this.setQuestionIndex(i)}/>
+                  <Box 
+                    isActive={i === this.state.questionIndex}
+                    value={i + 1} 
+                    onClick={() => this.setQuestionIndex(i)} 
+                    isFill={examLog.payload.questions[i].answer.selectedIds.length !== 0 || examLog.payload.questions[i].isMarked}
+                    color={examLog.payload.questions[i].isMarked ? "warning" : "primary"}
+                  />
                 ))}
               </NoWrap>
               
@@ -385,6 +387,10 @@ const ButtonNavMiddle = styled.section`
 const MarkForReviewText = styled.p`
    color: #505565;  
    font-size: 14px;
+   ${props => props.isMarked ? `
+    color: #EF7923;
+    font-weight: 600;
+   `: null}
 `
 
 const ButtonNavRight = styled.section`

@@ -1,17 +1,21 @@
 import models from "../../models"
 
-export const GETBYIDANDSTART_EXAMLOG_DATA = "GETBYIDANDSTART_EXAMLOG_DATA"
-export const GETBYIDANDSTART_EXAMLOG_SUCCESS = "GETBYIDANDSTART_EXAMLOG_SUCCESS"
-export const GETBYIDANDSTART_EXAMLOG_FAILURE = "GETBYIDANDSTART_EXAMLOG_FAILURE"
+export const GET_BY_ID_AND_START_EXAMLOG_DATA = "GET_BY_ID_AND_START_EXAMLOG_DATA"
+export const GET_BY_ID_AND_START_EXAMLOG_SUCCESS = "GET_BY_ID_AND_START_EXAMLOG_SUCCESS"
+export const GET_BY_ID_AND_START_EXAMLOG_FAILURE = "GET_BY_ID_AND_START_EXAMLOG_FAILURE"
 
 export const SET_QUESTION_ANSWERS_EXAMLOG_DATA = "SET_QUESTION_ANSWERS_EXAMLOG_DATA"
 export const SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS = "SET_QUESTION_ANSWERS_EXAMLOG_SUCCESS"
 export const SET_QUESTION_ANSWERS_EXAMLOG_FAILURE = "SET_QUESTION_ANSWERS_EXAMLOG_FAILURE"
 
+export const SET_QUESTION_ISMARKED_EXAMLOG_DATA = "SET_QUESTION_ISMARKED_EXAMLOG_DATA"
+export const SET_QUESTION_ISMARKED_EXAMLOG_SUCCESS = "SET_QUESTION_ISMARKED_EXAMLOG_SUCCESS"
+export const SET_QUESTION_ISMARKED_EXAMLOG_FAILURE = "SET_QUESTION_ISMARKED_EXAMLOG_FAILURE"
+
 const getByIdAndStartExamLogData = (authorization, examId) => {
   return async dispatch => {
     dispatch({
-      type: GETBYIDANDSTART_EXAMLOG_DATA
+      type: GET_BY_ID_AND_START_EXAMLOG_DATA
     })
 
     try{
@@ -25,12 +29,12 @@ const getByIdAndStartExamLogData = (authorization, examId) => {
 }
 
 const getByIdAndStartExamLogSuccess = (data) => ({
-  type: GETBYIDANDSTART_EXAMLOG_SUCCESS,
+  type: GET_BY_ID_AND_START_EXAMLOG_SUCCESS,
   payload: data
 })
 
 const getByIdAndStartExamLogFailure = (e) => ({
-  type: GETBYIDANDSTART_EXAMLOG_FAILURE,
+  type: GET_BY_ID_AND_START_EXAMLOG_FAILURE,
   error: e
 })
 
@@ -62,8 +66,37 @@ const setQuestionAnswersExamLogFailure = (e, questionId) => ({
   questionId
 })
 
+const setQuestionIsMarkedExamLogData = (authorization, examLogId, questionId, isMarked) => {
+  return async dispatch => {
+    dispatch({
+      type: SET_QUESTION_ISMARKED_EXAMLOG_DATA,
+      questionId,
+      isMarked
+    })
+    try{
+      await models.examLogs.mutation.setQuestionIsMarked(authorization, examLogId, questionId, isMarked)
+      dispatch(setQuestionIsMarkedExamLogSuccess(questionId))
+    }
+    catch(e){
+      dispatch(setQuestionIsMarkedExamLogFailure(e, questionId))
+    }
+  }
+}
+
+const setQuestionIsMarkedExamLogSuccess = (questionId) => ({
+  type: SET_QUESTION_ISMARKED_EXAMLOG_SUCCESS,
+  questionId
+})
+
+const setQuestionIsMarkedExamLogFailure = (e, questionId) => ({
+  type: SET_QUESTION_ISMARKED_EXAMLOG_FAILURE,
+  error: e,
+  questionId
+})
+
 
 export default {
   getByIdAndStartExamLogData,
-  setQuestionAnswersExamLogData
+  setQuestionAnswersExamLogData,
+  setQuestionIsMarkedExamLogData
 }
