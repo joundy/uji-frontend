@@ -80,7 +80,7 @@ const MyExams = props => {
             </ExamGroupWrap>
           ))}
         </ExamCardWrap>
-        <Pagination
+        {/* <Pagination
         pages={[
           {
             value: "1",
@@ -103,7 +103,7 @@ const MyExams = props => {
             isFill: false
           }
         ]}
-      />
+      /> */}
       </MainWrap>
     </Wrapper>
   )

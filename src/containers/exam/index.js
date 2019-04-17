@@ -165,7 +165,7 @@ class Exam extends React.Component{
           {console.log(examLog.payload)}
           <QuestionWrap>
             <QAWrap>
-              <QuestionNo>No. {this.state.questionIndex + 1} / {examLog.payload.questions.length}</QuestionNo>
+              <QuestionNo>{this.state.questionIndex + 1} from {examLog.payload.questions.length}</QuestionNo>
               <QuestionTitle>{question.title}</QuestionTitle>
               <AnswerWrap>
                 {question.answer.list.map((v) => (

@@ -14,6 +14,10 @@ import actions from "../../redux/actions"
 
 class Home extends React.Component{
 
+  state = {
+    count: 10
+  }
+
   componentDidMount = async() => {
     this.fetchExamGroups()
   }
@@ -70,29 +74,9 @@ class Home extends React.Component{
             ))}
           </ExamGroupCardWrap>
           <Pagination
-          pages={[
-            {
-              value: "1",
-              isFill: true
-            },
-            {
-              value: "2",
-              isFill: false
-            },
-            {
-              value: "3",
-              isFill: false
-            },
-            {
-              value: "4",
-              isFill: false
-            },
-            {
-              value: "5",
-              isFill: false
-            }
-          ]}
-        />
+            activePage={3}
+            totalPage={20}
+          />
         </MainWrap>
       </Wrapper>
     )

@@ -121,7 +121,7 @@ class Exams extends React.Component{
               />
             ))}
           </ExamCardWrap>
-          <Pagination
+          {/* <Pagination
           pages={[
             {
               value: "1",
@@ -144,7 +144,7 @@ class Exams extends React.Component{
               isFill: false
             }
           ]}
-        />
+        /> */}
         </MainWrap>
       </Wrapper>
     )
