@@ -1,18 +1,28 @@
 import React from "react"
 import styled from "styled-components"
 import Box from "../Box"
-import { strict } from "assert";
 
 class PaginationC extends React.Component{
 
   state = {
     //limit page must ood
     limitPage: 5,
+    activePage: 1,
     pages: []
   }
 
   componentDidMount = () => {
     this.fillPages(this.props.totalPage)
+  }
+
+  componentWillReceiveProps = async (nextProps) => {
+    //set activePage
+    await this.setState({
+      activePage: nextProps.activePage
+    })
+
+    // set totalPage
+    this.fillPages(nextProps.totalPage)
   }
 
   fillPages = (totalPage) => {
@@ -28,14 +38,14 @@ class PaginationC extends React.Component{
 
     deduction = (limit - 1) / 2
 
-    if (this.props.activePage - deduction <= 1){
+    if (this.state.activePage - deduction <= 1){
       start = 1
     }
-    else if(this.props.activePage >= totalPage - deduction){
+    else if(this.state.activePage >= totalPage - deduction){
       start = totalPage - (limit - 1)
     }
     else{
-      start = this.props.activePage - deduction
+      start = this.state.activePage - deduction
     }
 
     let end = start + (limit - 1)
@@ -56,8 +66,8 @@ class PaginationC extends React.Component{
       <Wrapper className={this.props.className}>
         {console.log(this.state)}
         {this.state.pages.map((v) => (
-          <BoxWrap>
-            <Box isFill={v === this.props.activePage} value={v} />
+          <BoxWrap onClick={() => this.props.onClickPage(v)}>
+            <Box isFill={v === this.state.activePage} value={v} />
           </BoxWrap>
         ))}
       </Wrapper>

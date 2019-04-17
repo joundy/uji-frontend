@@ -15,7 +15,6 @@ const setColor = (color = "") => {
 const BoxC = (props) => (
   
   <Wrapper className={props.className} color={setColor(props.color)} isFill={props.isFill} onClick={props.onClick} isActive={props.isActive}>
-    {console.log(props)}
     <Value isFill={props.isFill}>{props.value}</Value>
   </Wrapper>
 )
