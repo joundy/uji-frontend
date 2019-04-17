@@ -1,7 +1,8 @@
 import {
   FETCH_EXAMGROUPS_DATA,
   FETCH_EXAMGROUPS_SUCCESS,
-  FETCH_EXAMGROUPS_FAILURE
+  FETCH_EXAMGROUPS_FAILURE,
+  SET_EXAMGROUPS_FILTER
 } from "./actions"
 
 const initialState = {
@@ -16,7 +17,7 @@ const initialState = {
     class: "",
     tag: "",
     start: 0,
-    limit: 1000
+    limit: 100
   }
 }
 
@@ -38,6 +39,14 @@ export default (state = initialState, action) => {
       ...state,
       isLoading: false,
       error: action.error
+    }
+    case SET_EXAMGROUPS_FILTER:
+    return {
+      ...state,
+      filter: {
+        ...state.filter,
+        ...action.filter
+      }
     }
     default:
       return state

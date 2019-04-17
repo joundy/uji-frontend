@@ -32,7 +32,7 @@ class PaginationC extends React.Component{
     let deduction = 0
     let limit = this.state.limitPage
 
-    if (limit % 2 == 0){
+    if (limit % 2 === 0){
       limit += 1
     }
 

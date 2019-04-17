@@ -12,7 +12,8 @@ const query = {
         ...filter
       }
     })
-    if (res.data.length === 0){
+    
+    if (res.data.length === 0 || res.data === null ){
       return {
         data: [],
         count: 0

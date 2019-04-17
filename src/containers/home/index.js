@@ -11,19 +11,19 @@ import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
 
-import actions from "../../redux/actions" 
+import actions from "../../redux/actions"
 
 class Home extends React.Component{
 
   state = {
-    limitItems: 2,
-    totalPage: 10,
+    limitItems: 1,
+    totalPage: 0,
     page: 1
   }
 
-  componentDidMount = async() => {
-    this.getPage()    
-    this.fetchExamGroups()
+  componentDidMount = async () => {
+    // this.fetchExamGroups()
+    await this.getPage()    
   }
   
   componentWillReceiveProps = (nextProps) => {
@@ -31,32 +31,48 @@ class Home extends React.Component{
   }
 
   //pagination
-  getPage = () => {
-    const params = qs.parse(this.props.location.search.replace("?",""))
-    this.setState({
-      page: parseInt(params.page || 1)
-    })
-  }
-
   getTotalPage = (count) => {
     this.setState({
       totalPage: Math.ceil(count / this.state.limitItems)
     })
   }
+    
+  getPage = async () => {
+    const params = qs.parse(this.props.location.search.replace("?",""))
+    await this.setState({
+      page: parseInt(params.page || 1)
+    })
 
-  onClickPage = (v) => {
+    await this.setFilterPageAndFetchExamGroups()
+  }
+
+  setFilterPageAndFetchExamGroups = async () => {
+    const filter = {
+      start: this.state.limitItems * (this.state.page - 1),
+      limit: this.state.limitItems
+    }
+
+    await this.props.dispatch(actions.setExamGroupsFilter({
+      ...filter
+    }))
+
+    this.fetchExamGroups()
+  }
+
+  onClickPage = async (v) => {
     this.props.dispatch(push(`/?page=${v}`))
 
     //set state Page
-    this.setState({
+    await this.setState({
       page: v
     })
-  }
 
+    this.setFilterPageAndFetchExamGroups()
+  }
   //end pagination
 
   fetchExamGroups = () => {
-    this.props.dispatch(actions.fetchExamGroupsData())
+    this.props.dispatch(actions.fetchExamGroupsData(this.props.examGroups.filter))
   }
 
   render(){
@@ -83,15 +99,15 @@ class Home extends React.Component{
           <FiltersWrap>
             <Filter
               title="Level"
-              options={[]}
+              options={filterLevel}
             />
             <Filter
               title="Class"
-              options={[]}
+              options={filterClass}
             />
             <Filter
               title="Tag"
-              options={[]}
+              options={filterTag}
             />
           </FiltersWrap>
           <ExamGroupCardWrap>
@@ -108,8 +124,8 @@ class Home extends React.Component{
           </ExamGroupCardWrap>
           <Pagination
             activePage={this.state.page}
-            // totalPage={this.state.totalPage}
-            totalPage={20}
+            totalPage={this.state.totalPage}
+            // totalPage={20}
             onClickPage={this.onClickPage}
           />
         </MainWrap>
@@ -125,7 +141,6 @@ const mapStateToProps = ({ examGroups }) => {
 }
 
 export default connect(mapStateToProps)(Home)
-
 
 const Wrapper = styled.section`
   margin-top: 60px;
@@ -212,3 +227,90 @@ const Pagination = styled(PaginationC)`
   align-self: center;
   margin-bottom: 100px;
 `
+
+//filter options
+
+const filterTag = [
+  {
+    value: "uts",
+    title: "UTS"
+  },
+  {
+    value: "uas",
+    title: "UAS"
+  },
+  {
+    value: "un",
+    title: "UN"
+  },
+  {
+    value: "sbmptn",
+    title: "SBMPTN"
+  }
+]
+
+const filterClass = [
+  {
+    value: "sd",
+    title: "SD"
+  },
+  {
+    value: "smp",
+    title: "SMP"
+  },
+  {
+    value: "sma/smk",
+    title: "SMA/SMK"
+  }
+]
+
+const filterLevel = [
+  {
+    value: "1",
+    title: "1"
+  },
+  {
+    value: "2",
+    title: "2"
+  },
+  {
+    value: "3",
+    title: "3"
+  },
+  {
+    value: "4",
+    title: "4"
+  },
+  {
+    value: "5",
+    title: "5"
+  },
+  {
+    value: "6",
+    title: "6"
+  },
+  {
+    value: "7",
+    title: "7"
+  },
+  {
+    value: "8",
+    title: "8"
+  },
+  {
+    value: "9",
+    title: "9"
+  },
+  {
+    value: "10",
+    title: "10"
+  },
+  {
+    value: "11",
+    title: "11"
+  },
+  {
+    value: "12",
+    title: "12"
+  }
+]
