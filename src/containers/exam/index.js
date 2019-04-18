@@ -127,7 +127,7 @@ class Exam extends React.Component{
     const question = examLog.payload.questions[this.state.questionIndex]
     return (
       <Wrapper>
-        {console.log(examLog)}
+        {console.log(this.props.common)}
         <Navbar
           title={examLog.payload.isSubmit ? "Review" : <CountDown 
           remainingTime={examLog.payload.remainingTime}
@@ -136,7 +136,7 @@ class Exam extends React.Component{
           menus={[
             { 
               title: examLog.payload.isSubmit ? "Exit" : "",
-              onClick: () => this.props.dispatch(push("/"))
+              onClick: () => this.props.dispatch(push(this.props.common.lastUrl))
             }
           ]}
         />
@@ -262,9 +262,10 @@ class Exam extends React.Component{
   }
 }
 
-const mapStateToProps = ({ examLog }) => {
+const mapStateToProps = ({ examLog, common }) => {
   return {
-    examLog
+    examLog,
+    common
   }
 }
 

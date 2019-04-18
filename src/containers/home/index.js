@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import { push } from "connected-react-router"
 import qs from 'querystring'
-import Loader from "react-loader-spinner"
 
 import Button from "../../components/Button"
 import BreadCrumbC from "../../components/BreadCrumb"
@@ -12,6 +11,9 @@ import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
 import LineC from "../../components/Line"
+import LoaderC from "../../components/Loader"
+import NoResultsC from "../../components/NoResults"
+import ErrorDataC from "../../components/ErrorData"
 
 import actions from "../../redux/actions"
 
@@ -24,7 +26,6 @@ class Home extends React.Component{
   }
 
   componentDidMount = async () => {
-    // this.fetchExamGroups()
     await this.getPage()    
   }
   
@@ -60,6 +61,7 @@ class Home extends React.Component{
   }
 
   onClickPage = async (v) => {
+    window.scroll({ top: 500, left: 0, behavior: 'smooth' })
     this.props.dispatch(push(`/?page=${v}`))
 
     //set state Page
@@ -107,7 +109,7 @@ class Home extends React.Component{
           <BannerContentWrap>
             <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
             <BannerDesc>Uji yuksinau adalah sebuah website ujian online,  pada website ini terdapat banyak course/tryout gratis mulai dari ujian nasional sampai smbpn</BannerDesc>
-            <Button title="Signup now" onClick={() => console.log("hello boy")} width={130}/>
+            {/* <Button title="Signup now" onClick={() => console.log("hello boy")} width={130}/> */}
           </BannerContentWrap>
         </Banner>
         <MainWrap>
@@ -115,7 +117,7 @@ class Home extends React.Component{
             links={[
               {
                 title:"exam-groups",
-                link:"#"
+                onClick: () => this.props.dispatch(push("/"))
               }
             ]}
           />
@@ -137,27 +139,17 @@ class Home extends React.Component{
               onChange={(e) => this.handleFilterChange(e, "tag")}
             />
           </FiltersWrap>
+
           <Line/> 
+
           <ExamGroupCardWrap>
 
           {this.props.examGroups.isLoading ? (
-            <LoaderWrap>
-              <Loader 
-                type="TailSpin"
-                color="#00BFFF"
-                height="30"	
-                width="30"
-              />
-              <LoaderTitle>Loading fetching data...</LoaderTitle>
-            </LoaderWrap>
+            <Loader/>
           ): (this.props.examGroups.error !== null ? (
-              <FetchErrorWrap>
-                <FetchErrorTitle>{this.props.examGroups.error.message}</FetchErrorTitle>
-              </FetchErrorWrap>
-          ) : this.props.examGroups.payload.data.length === 0 ? (
-            <NoResultsWrap>
-              <NoResultsTitle>No results ...</NoResultsTitle>
-            </NoResultsWrap>
+            <ErrorData error={this.props.examGroups.error.message}/>
+          ): this.props.examGroups.payload.data.length === 0 ? (
+            <NoResults/>
           ): 
             this.props.examGroups.payload.data.map((v) => (
               <ExamGroupCard
@@ -172,13 +164,12 @@ class Home extends React.Component{
           )}
 
           </ExamGroupCardWrap>
-          <Line/>
 
+          <Line/>
 
           <Pagination
             activePage={this.state.page}
             totalPage={this.state.totalPage}
-            // totalPage={20}
             onClickPage={this.onClickPage}
           />
         </MainWrap>
@@ -199,7 +190,7 @@ const Wrapper = styled.section`
   margin-top: 60px;
   display: flex;
   flex-direction: column;
-  min-height: 2000px;
+  // min-height: 2000px;
 `
 const Banner = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
@@ -213,7 +204,6 @@ const Banner = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
 `
 
 const BannerTitle = styled.h1`
@@ -249,6 +239,7 @@ const MainWrap = styled.section`
   align-self: center;
   display: flex; 
   flex-direction: column;
+  margin-bottom: 150px;
 `
 const BreadCrumb = styled(BreadCrumbC)`
   margin-top: 20px;
@@ -282,41 +273,21 @@ const Line = styled(LineC)`
   width: 100%;
 `
 
-const LoaderWrap = styled.section`
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const LoaderTitle = styled.p`
-  font-size: 14px;
-  color: #505565;
-`
-
-const NoResultsWrap = styled.section`
+const Loader = styled(LoaderC)`
   margin: auto;
 `
 
-const NoResultsTitle = styled.p`
-  font-size: 14px;
-  color: #505565;
-`
-
-const FetchErrorWrap = styled.section`
+const NoResults = styled(NoResultsC)`
   margin: auto;
 `
 
-const FetchErrorTitle = styled.p`
-  font-size: 14px;
-  color: #505565;
+const ErrorData = styled(ErrorDataC)`
+  margin: auto;
 `
-
 
 const Pagination = styled(PaginationC)`
   margin-top: 50px;
   align-self: center;
-  margin-bottom: 100px;
 `
 
 //filter options

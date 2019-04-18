@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import { push } from "connected-react-router"
+import qs from 'querystring'
 
 import BreadCrumbC from "../../components/BreadCrumb"
 import TitleC from "../../components/Title"
@@ -10,6 +11,11 @@ import PaginationC from "../../components/Pagination"
 import ModalC from "../../components/Modal"
 import ExamInfoC from "../../components/ExamInfo"
 import ButtonC from "../../components/Button"
+import LineC from "../../components/Line"
+import LoaderC from "../../components/Loader"
+import NoResultsC from "../../components/NoResults"
+import ErrorDataC from "../../components/ErrorData"
+
 
 import models from "../../models"
 
@@ -20,25 +26,32 @@ class Exams extends React.Component{
     modal: {
       isOpen: false,
       data: {}
-    }
+    },
+    limitItems: 2,
+    totalPage: 10,
+    page: 1
   }
 
   componentDidMount = async () => {
-    await this.fetchExams()
-    if(this.props.exams.payload.data.length === 0){
-      this.props.dispatch(push("/"))
-    }
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+    await this.setFilterExamGroupSlug()
+    await this.getPage()
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.getTotalPage(nextProps.exams.payload.count)
   }
 
   fetchExams = async () => {  
-    const examGroupSlug = this.props.match.params.examGroupSlug
+    await this.props.dispatch(actions.fetchExamsData(this.props.exams.filter))
+  }
 
+  setFilterExamGroupSlug = async () => {
+    const examGroupSlug = this.props.match.params.examGroupSlug
     const filter = {
       examGroupSlug
     }
-
-    await this.props.dispatch(actions.setExamsFilter({ ...filter }))
-    await this.props.dispatch(actions.fetchExamsData(this.props.exams.filter))
+    await this.props.dispatch(actions.setExamsFilter(filter))
   }
 
   generateExamLog = async (examId) => {
@@ -52,9 +65,54 @@ class Exams extends React.Component{
   }
 
   handleStartExam = async (examId) => {
+    //set last url
+    this.props.dispatch(actions.setLastUrl(this.props.location.pathname + this.props.location.search))
+
     const examLogId = await this.generateExamLog(examId)
     this.props.dispatch(push(`/exam-logs/${examLogId}`))
   }
+
+  //pagination
+  getTotalPage = (count) => {
+    this.setState({
+      totalPage: Math.ceil(count / this.state.limitItems)
+    })
+  }
+    
+  getPage = async () => {
+    const params = qs.parse(this.props.location.search.replace("?",""))
+    await this.setState({
+      page: parseInt(params.page || 1)
+    })
+
+    await this.setFilterPageAndFetchExams()
+  }
+
+  setFilterPageAndFetchExams = async () => {
+    const filter = {
+      start: this.state.limitItems * (this.state.page - 1),
+      limit: this.state.limitItems
+    }
+
+    await this.props.dispatch(actions.setExamsFilter(filter))
+
+    this.fetchExams()
+  }
+
+  onClickPage = async (v) => {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+    const examGroupSlug = this.props.match.params.examGroupSlug
+
+    this.props.dispatch(push(`/exam-groups/${examGroupSlug}/?page=${v}`))
+
+    //set state Page
+    await this.setState({
+      page: v
+    })
+
+    this.setFilterPageAndFetchExams()
+  }
+  //end pagination
 
   //handle modal
   handleModalOpen = (v) => {
@@ -81,7 +139,6 @@ class Exams extends React.Component{
     const { data } = this.state.modal
     return (
       <Wrapper>
-        {console.log(this.props.match)}
         <Modal width={350} height={450} isOpen={this.state.modal.isOpen} onButtonCloseClick={() => this.handleModalClose()}>
           <ExamInfo
             title={data.title}
@@ -99,52 +156,45 @@ class Exams extends React.Component{
             links={[
               {
                 title:"exam-groups",
-                link:"/"
+                onClick: () => this.props.dispatch(push("/"))
               },
               {
                 title: examGroupSlug,
-                link:`/exam-groups/${examGroupSlug}`
+                onClick: () => this.props.dispatch(push(`/exam-groups/${examGroupSlug}`))
               }
             ]}
           />
-          <Title title={examGroupSlug}/>
+          {/* <Title title={examGroupSlug}/> */}
+          <Title title="Exams"/>
+          <Line/>
+
           <ExamCardWrap>
-            {this.props.exams.payload.data.map((v) => (
-              <ExamCard
-                title={v.title}
-                description={v.description}
-                source={v.source}
-                passingGrade={v.passingGrade}
-                duration={v.duration}
-                questionsTotal={v.maxQuestion}
-                onClickButton ={() => this.handleModalOpen(v)}
-              />
-            ))}
+            {this.props.exams.isLoading ? (
+              <Loader/>
+            ): (this.props.exams.error !== null ? (
+              <ErrorData error={this.props.exams.error.message}/>
+            ): this.props.exams.payload.data.length === 0 ? (
+              <NoResults/>
+            ): this.props.exams.payload.data.map((v) => (
+                <ExamCard
+                  title={v.title}
+                  description={v.description}
+                  source={v.source}
+                  passingGrade={v.passingGrade}
+                  duration={v.duration}
+                  questionsTotal={v.maxQuestion}
+                  onClickButton ={() => this.handleModalOpen(v)}
+                />
+              ))
+            )}
           </ExamCardWrap>
-          {/* <Pagination
-          pages={[
-            {
-              value: "1",
-              isFill: true
-            },
-            {
-              value: "2",
-              isFill: false
-            },
-            {
-              value: "3",
-              isFill: false
-            },
-            {
-              value: "4",
-              isFill: false
-            },
-            {
-              value: "5",
-              isFill: false
-            }
-          ]}
-        /> */}
+
+          <Line/> 
+          <Pagination
+            activePage={this.state.page}
+            totalPage={this.state.totalPage}
+            onClickPage={this.onClickPage}
+          />
         </MainWrap>
       </Wrapper>
     )
@@ -165,7 +215,6 @@ const Wrapper = styled.section`
   margin-top: 60px;
   display: flex;
   flex-direction: column;
-  min-height: 1000px;
 `
 
 const Button = styled(ButtonC)`
@@ -191,6 +240,7 @@ const MainWrap = styled.section`
   align-self: center;
   display: flex; 
   flex-direction: column;
+  margin-bottom: 150px;
 
   @media (min-width: 0px) and (max-width: 480px) {
     width: 100%;
@@ -205,13 +255,33 @@ const BreadCrumb = styled(BreadCrumbC)`
 const Title = styled(TitleC)`
   margin-bottom: 50px;
 `
+const Line = styled(LineC)`
+  width: 100%;
+`
+
+const Loader = styled(LoaderC)`
+  margin-top: auto;
+  margin-bottom: 60px;
+`
+
+const NoResults = styled(NoResultsC)`
+  margin-top: auto;
+  margin-bottom: 70px;
+`
+
+const ErrorData = styled(ErrorDataC)`
+  margin-top: auto;
+  margin-bottom: 70px;
+`
 
 const ExamCard = styled(ExamCardC)`
   margin-bottom: 15px;
 `
 const ExamCardWrap = styled.section`
-  margin-bottom: 50px;
-
+  padding-top: 15px;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 0px) and (max-width: 480px) {
     width: 100%;
   } 
@@ -219,5 +289,5 @@ const ExamCardWrap = styled.section`
 
 const Pagination = styled(PaginationC)`
   align-self: center;
-  margin-bottom: 100px;
+  margin-top: 50px;
 `

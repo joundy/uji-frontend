@@ -9,7 +9,7 @@ const BreadCrumbC = (props) => (
     <MainWrap>
       {props.links.map((v, i) => (
         <div>
-          <MainText as="a" href={v.link} >{v.title}</MainText>
+          <MainText onClick={v.onClick}>{v.title}</MainText>
           { i + 1 !== props.links.length ? <IconNext/> : null}
         </div>
       ))}
@@ -25,6 +25,8 @@ const MainText = styled.a`
   color: #8B90A0;
   font-size: 14px;
   margin: 0px;
+  text-decoration: underline;
+  cursor: pointer;
 `
 
 const IconNext = styled.img.attrs({

@@ -11,7 +11,7 @@ const initialState = {
     count: 0
   },
   isLoading: false,
-  error: {},
+  error: null,
   filter: {
     examGroupSlug: "",
     start: 0,
@@ -24,13 +24,15 @@ export default (state = initialState, action) => {
     case FETCH_EXAMS_DATA:
     return {
       ...state,
-      isLoading: true
+      isLoading: true,
+      error: null
     }
     case FETCH_EXAMS_SUCCESS:
     return {
       ...state,
       isLoading: false,
-      payload: action.payload
+      payload: action.payload,
+      error: null
     }
     case FETCH_EXAMS_FAILURE:
     return {
