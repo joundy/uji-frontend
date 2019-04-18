@@ -102,7 +102,7 @@ class Home extends React.Component{
   render(){
     return (
       <Wrapper>
-        {/* {console.log(this.state)} */}
+        {console.log(this.props.examGroups)}
         <Banner>
           <BannerContentWrap>
             <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
@@ -139,6 +139,7 @@ class Home extends React.Component{
           </FiltersWrap>
           <Line/> 
           <ExamGroupCardWrap>
+
           {this.props.examGroups.isLoading ? (
             <LoaderWrap>
               <Loader 
@@ -149,23 +150,27 @@ class Home extends React.Component{
               />
               <LoaderTitle>Loading fetching data...</LoaderTitle>
             </LoaderWrap>
+          ): (this.props.examGroups.error !== null ? (
+              <FetchErrorWrap>
+                <FetchErrorTitle>{this.props.examGroups.error.message}</FetchErrorTitle>
+              </FetchErrorWrap>
+          ) : this.props.examGroups.payload.data.length === 0 ? (
+            <NoResultsWrap>
+              <NoResultsTitle>No results ...</NoResultsTitle>
+            </NoResultsWrap>
           ): 
-            this.props.examGroups.payload.data.length === 0 ? (
-              <NoResultsWrap>
-                <NoResultsTitle>No results ...</NoResultsTitle>
-              </NoResultsWrap>
-            ): 
             this.props.examGroups.payload.data.map((v) => (
               <ExamGroupCard
                 title={v.title}
-                tag={["UN"]}
+                tag={[v.tag]}
                 description={v.description}
-                level={v.level.title}
-                class={v.class.title}
+                level={v.level}
+                class={v.class}
                 onClick={() => this.props.dispatch(push(`/exam-groups/${v.slug}`))}
               />
             ))
-          }
+          )}
+
           </ExamGroupCardWrap>
           <Line/>
 
@@ -297,6 +302,16 @@ const NoResultsTitle = styled.p`
   font-size: 14px;
   color: #505565;
 `
+
+const FetchErrorWrap = styled.section`
+  margin: auto;
+`
+
+const FetchErrorTitle = styled.p`
+  font-size: 14px;
+  color: #505565;
+`
+
 
 const Pagination = styled(PaginationC)`
   margin-top: 50px;

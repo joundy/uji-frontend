@@ -11,7 +11,7 @@ const initialState = {
     count: 0
   },
   isLoading: false,
-  error: {},
+  error: null,
   filter: {
     level: "",
     class: "",
@@ -26,13 +26,15 @@ export default (state = initialState, action) => {
     case FETCH_EXAMGROUPS_DATA:
     return {
       ...state,
-      isLoading: true
+      isLoading: true,
+      error: null
     }
     case FETCH_EXAMGROUPS_SUCCESS:
     return {
       ...state,
       isLoading: false,
-      payload: action.payload
+      payload: action.payload,
+      error: null
     }
     case FETCH_EXAMGROUPS_FAILURE:
     return {
