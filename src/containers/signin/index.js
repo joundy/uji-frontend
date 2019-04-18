@@ -21,14 +21,17 @@ class SignIn extends React.Component{
       localStorage.setItem("accessToken", `Bearer ${auth.token}`)
     }
 
+    const redirect = this.props.common.lastUrl === "/signin" ? "/" : this.props.common.lastUrl
+
     setTimeout(() => {
-      this.props.dispatch(push("/"))
+      this.props.dispatch(push(redirect))
     }, 1000)
   }
 
   render(){
     return (
       <Wrapper>
+        {console.log(this.props.common)}
         <MainWrap>
           <Title>Login as a Guest..</Title>
           <p style={{textAlign: "center"}}>Uji Yuksinau BETA.</p>
@@ -44,6 +47,13 @@ class SignIn extends React.Component{
     )
   }
 }
+
+const mapStateToProps = ({common}) => ({
+  common
+})
+
+export default connect(mapStateToProps)(SignIn)
+
 
 const Wrapper = styled.section`
   margin-top: 60px;
@@ -93,5 +103,3 @@ const Title = styled.h2`
 //   align-items: center;
 //   margin-bottom: 35px;
 // `
-
-export default connect()(SignIn)

@@ -16,10 +16,13 @@ import SignIn from "../signin"
 import Exam from "../exam"
 import ExamResult from "../examResult"
 
+import actions from "../../redux/actions"
+
 class App extends React.Component {
 
   componentDidMount = () => {
-
+    const {pathname, search} = this.props.router.location
+    this.props.setLastUrl(pathname + search)
   }
 
   render() {
@@ -62,14 +65,16 @@ class App extends React.Component {
   }
 }
 
+
 const PrivateRoute = ({ component: Component, ...rest }) => {
+
   return (
     <Route
       {...rest}
       render={props =>
         isAccessToken()  ? (
           <Component {...props} />
-        ) : (
+        ) :(
           <Redirect
             to={{
               pathname: "/signin",
@@ -89,16 +94,18 @@ const isAccessToken = () => {
   return true
 }
 
-const mapStateToPops = ({ router }) => {
+const mapStateToPops = ({ router,location }) => {
   return{
-    router
+    router,
+    location
   }
 }
 
 const mapDispatchToProps = dispatch => 
   bindActionCreators(
     {
-      changePage: (url) => push(url)
+      changePage: (url) => push(url),
+      setLastUrl: (url) => actions.setLastUrl(url)
     },
     dispatch
 ) 

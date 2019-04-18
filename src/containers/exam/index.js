@@ -562,6 +562,8 @@ const NoWrap = styled.section`
   flex-direction: row;
   flex-wrap: wrap;
   width: 200px;
+  height: 300px;
+  overflow: auto;
   justify-content: space-between;
   margin-bottom: 50px;
 `
