@@ -8,9 +8,9 @@ import BreadCrumbC from "../../components/BreadCrumb"
 import TitleC from "../../components/Title"
 import ExamCardC from "../../components/ExamCard"
 import PaginationC from "../../components/Pagination"
-import ModalC from "../../components/Modal"
-import ExamInfoC from "../../components/ExamInfo"
-import ButtonC from "../../components/Button"
+// import ModalC from "../../components/Modal"
+// import ExamInfoC from "../../components/ExamInfo"
+// import ButtonC from "../../components/Button"
 import LineC from "../../components/Line"
 import LoaderC from "../../components/Loader"
 import NoResultsC from "../../components/NoResults"
@@ -23,9 +23,14 @@ import actions from "../../redux/actions"
 
 class Exams extends React.Component{
   state = {
-    modal: {
-      isOpen: false,
-      data: {}
+    // modal: {
+    //   isOpen: false,
+    //   data: {}
+    // },
+    generateExamLog: {
+      examId: "",
+      isLoading: false,
+      error: null
     },
     limitItems: 6,
     totalPage: 0,
@@ -42,6 +47,38 @@ class Exams extends React.Component{
     this.getTotalPage(nextProps.exams.payload.count)
   }
 
+  generateExamLog = async (examId) => {
+    try{
+      this.setState({
+        generateExamLog: {
+          ...this.generateExamLog,
+          isLoading: true,
+          examId
+        }
+      })
+      const authorization = localStorage.getItem("accessToken")
+      const result = await models.examLogs.mutation.generate(authorization, examId)
+
+      this.setState({
+        generateExamLog: {
+          ...this.generateExamLog,
+          isLoading: false
+        }
+      })
+
+      return result.id
+    }
+    catch(e){
+      this.setState({
+        generateExamLog: {
+          ...this.generateExamLog,
+          isLoading: false,
+          error: e
+        }
+      })
+    }
+  }
+
   fetchExams = async () => {  
     await this.props.dispatch(actions.fetchExamsData(this.props.exams.filter))
   }
@@ -52,16 +89,6 @@ class Exams extends React.Component{
       examGroupSlug
     }
     await this.props.dispatch(actions.setExamsFilter(filter))
-  }
-
-  generateExamLog = async (examId) => {
-    try{
-      const authorization = localStorage.getItem("accessToken")
-      return (await models.examLogs.mutation.generate(authorization, examId)).id
-    }
-    catch(e){
-      console.log(e)
-    }
   }
 
   handleStartExam = async (examId) => {
@@ -115,31 +142,31 @@ class Exams extends React.Component{
   //end pagination
 
   //handle modal
-  handleModalOpen = (v) => {
-    this.setState({
-      modal: {
-        isOpen: true,
-        data: v
-      }
-    })
-  }
+  // handleModalOpen = (v) => {
+  //   this.setState({
+  //     modal: {
+  //       isOpen: true,
+  //       data: v
+  //     }
+  //   })
+  // }
 
-  handleModalClose = () => {
-    this.setState({
-      modal: {
-        ...this.state.modal,
-        isOpen: false 
-      }
-    })
-  }
+  // handleModalClose = () => {
+  //   this.setState({
+  //     modal: {
+  //       ...this.state.modal,
+  //       isOpen: false 
+  //     }
+  //   })
+  // }
   //end modal
 
   render(){
     const { examGroupSlug } = this.props.match.params
-    const { data } = this.state.modal
+    // const { data } = this.state.modal
     return (
       <Wrapper>
-        <Modal width={350} height={450} isOpen={this.state.modal.isOpen} onButtonCloseClick={() => this.handleModalClose()}>
+        {/* <Modal width={350} height={450} isOpen={this.state.modal.isOpen} onButtonCloseClick={() => this.handleModalClose()}>
           <ExamInfo
             title={data.title}
             description={data.description}
@@ -149,7 +176,7 @@ class Exams extends React.Component{
             passingGrade={data.passingGrade}
           />
           <Button title="Start" onClick={() => this.handleStartExam(data.id)}/>
-        </Modal>
+        </Modal> */}
   
         <MainWrap>
           <BreadCrumb
@@ -183,7 +210,9 @@ class Exams extends React.Component{
                   passingGrade={v.passingGrade}
                   duration={v.duration}
                   questionsTotal={v.maxQuestion}
-                  onClickButton ={() => this.handleModalOpen(v)}
+                  // onClickButton ={() => this.handleModalOpen(v)}
+                  onClickButton ={() => this.handleStartExam(v.id)}
+                  isLoading={this.state.generateExamLog.examId == v.id && this.state.generateExamLog.isLoading}
                 />
               ))
             )}
@@ -217,24 +246,24 @@ const Wrapper = styled.section`
   flex-direction: column;
 `
 
-const Button = styled(ButtonC)`
-  width: 100%;
-`
+// const Button = styled(ButtonC)`
+//   width: 100%;
+// `
 
-const ExamInfo = styled(ExamInfoC)`
-  overflow: auto;
-  height: 350px;
-`
+// const ExamInfo = styled(ExamInfoC)`
+//   overflow: auto;
+//   height: 350px;
+// `
 
-const Modal = styled(ModalC)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-  right: 50%;
-  margin-right: -150px;
-  padding-bottom: 20px;
-`
+// const Modal = styled(ModalC)`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   margin-top: 10px;
+//   right: 50%;
+//   margin-right: -150px;
+//   padding-bottom: 20px;
+// `
 const MainWrap = styled.section`
   width: 960px;
   align-self: center;

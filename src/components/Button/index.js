@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import Loader from "react-loader-spinner"
 
 const setColor = (color = "") => {
   switch (color) {
@@ -13,7 +14,16 @@ const setColor = (color = "") => {
 }
 
 const ButtonC = (props) => (
-    <Button className={props.className} btn={props.btn} onClick={props.onClick} color={setColor(props.color)} width={props.width}>{props.title}</Button>
+    <Button className={props.className} btn={props.btn} onClick={props.onClick} color={setColor(props.color)} width={props.width}>
+      {props.isLoading ? (
+        <Loader 
+          type="TailSpin"
+          color="#FFFFFF"
+          height="20"	
+          width="20"
+        />
+      ) : props.title}
+    </Button>
 )
 
 const Button = styled.button`

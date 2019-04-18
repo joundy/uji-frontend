@@ -32,7 +32,7 @@ const ExamCardC = (props) => (
           </MainDetailValueWrap>
         </MainDetailWrap>
 
-        <Button onClick={props.onClickButton} title={props.status === "submited" ? "Review Exam" : (props.status === "started" ? "Continue" : "Take Exam")} color={props.status === "started" ? "warning" : "primary"} btn={props.status === "submited" ? "outline" : ""}/>
+        <Button isLoading={props.isLoading} onClick={props.onClickButton} title={props.status === "submited" ? "Review Exam" : (props.status === "started" ? "Continue" : "Take Exam")} color={props.status === "started" ? "warning" : "primary"} btn={props.status === "submited" ? "outline" : ""}/>
       </MBWrap>
     </RightWrap>
 

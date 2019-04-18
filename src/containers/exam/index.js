@@ -127,7 +127,6 @@ class Exam extends React.Component{
     const question = examLog.payload.questions[this.state.questionIndex]
     return (
       <Wrapper>
-        {console.log(this.props.common)}
         <Navbar
           title={examLog.payload.isSubmit ? "Review" : <CountDown 
           remainingTime={examLog.payload.remainingTime}
@@ -576,7 +575,7 @@ const NoWrap = styled.section`
   flex-direction: row;
   flex-wrap: wrap;
   width: 200px;
-  height: 300px;
+  max-height: 300px;
   overflow: auto;
   justify-content: space-between;
   margin-bottom: 50px;
