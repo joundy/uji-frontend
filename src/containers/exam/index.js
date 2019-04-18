@@ -136,7 +136,7 @@ class Exam extends React.Component{
           menus={[
             { 
               title: examLog.payload.isSubmit ? "Exit" : "",
-              onClick: () => this.props.dispatch(push(this.props.common.lastUrl))
+              onClick: () => this.props.dispatch(push(this.props.common.lastUrlBeforeExam))
             }
           ]}
         />
@@ -234,6 +234,11 @@ class Exam extends React.Component{
                     color={examLog.payload.questions[i].isMarked ? "warning" : "primary"}
                   />
                 ))}
+                
+                {/* fix flex wrap */}
+                {numToArrList(5 - (examLog.payload.questions.length % 5)).map(() => (
+                  <BoxFake/>
+                ))}
               </NoWrap>
               
               <ColorDescTBWrap>
@@ -271,6 +276,15 @@ const mapStateToProps = ({ examLog, common }) => {
 
 export default connect(mapStateToProps)(Exam)
 
+const numToArrList = (number) => {
+  let list = []
+
+  for (let i = 0; i < number; i++) {
+    list.push(i)
+  }
+
+  return list
+}
 
 const Wrapper = styled.section`
   display: flex; 
@@ -618,4 +632,10 @@ const ColorDescTBWrap = styled.section`
 
 const AnswerWrap = styled.section`
 
+`
+
+const BoxFake = styled.section`
+  width: 35px;
+  height: 35px;
+  margin-bottom: 5px;
 `

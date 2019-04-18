@@ -4,7 +4,6 @@ import styled from "styled-components"
 import { push } from "connected-react-router"
 import qs from 'querystring'
 
-import Button from "../../components/Button"
 import BreadCrumbC from "../../components/BreadCrumb"
 import TitleC from "../../components/Title"
 import FilterC from "../../components/Filter"
@@ -20,7 +19,7 @@ import actions from "../../redux/actions"
 class Home extends React.Component{
 
   state = {
-    limitItems: 2,
+    limitItems: 6,
     totalPage: 0,
     page: 1
   }
@@ -163,6 +162,11 @@ class Home extends React.Component{
             ))
           )}
 
+          {/* fill examGroupCard fake to fix flex wrap */}
+          {this.props.examGroups.payload.data.length % 3 === 2 ? (
+            <ExamGroupCardFake/>
+          ):null}
+
           </ExamGroupCardWrap>
 
           <Line/>
@@ -260,6 +264,15 @@ const FiltersWrap = styled.section`
 const ExamGroupCard = styled(ExamGroupCardC)`
   margin-bottom: 15px;
 `
+const ExamGroupCardFake = styled.section`
+  width: 310px;
+  height: 211px;
+  margin-bottom: 15px;
+  @media (min-width: 0px) and (max-width: 480px) {
+    display: none;
+  }
+`
+
 const ExamGroupCardWrap = styled.section`
   display: flex;
   justify-content: space-between;

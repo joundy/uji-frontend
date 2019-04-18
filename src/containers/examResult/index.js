@@ -43,7 +43,7 @@ class ExamLogResult extends React.Component{
               incCorrectAnswer={examLog.payload.result.failed}
               // notAnswered="unknown"
             />
-            <Button title="Exit" onClick={() => this.props.dispatch(push(this.props.common.lastUrl))}/>
+            <Button title="Exit" onClick={() => this.props.dispatch(push(this.props.common.lastUrlBeforeExam))}/>
             <Button title="Review" btn="outline" onClick={() => this.props.dispatch(push(`/exam-logs/${this.props.match.params.id}`))}/>
             {/* <Button title="Retake Exam" btn="outline"/> */}
           </ResultWrap>

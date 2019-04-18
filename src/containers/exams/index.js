@@ -27,8 +27,8 @@ class Exams extends React.Component{
       isOpen: false,
       data: {}
     },
-    limitItems: 2,
-    totalPage: 10,
+    limitItems: 6,
+    totalPage: 0,
     page: 1
   }
 
@@ -66,7 +66,7 @@ class Exams extends React.Component{
 
   handleStartExam = async (examId) => {
     //set last url
-    this.props.dispatch(actions.setLastUrl(this.props.location.pathname + this.props.location.search))
+    this.props.dispatch(actions.setLastUrlBeforeExam(this.props.location.pathname + this.props.location.search))
 
     const examLogId = await this.generateExamLog(examId)
     this.props.dispatch(push(`/exam-logs/${examLogId}`))
