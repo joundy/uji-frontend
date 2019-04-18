@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import { push } from "connected-react-router"
 import qs from 'querystring'
+import Loader from "react-loader-spinner"
 
 import Button from "../../components/Button"
 import BreadCrumbC from "../../components/BreadCrumb"
@@ -10,13 +11,14 @@ import TitleC from "../../components/Title"
 import FilterC from "../../components/Filter"
 import ExamGroupCardC from "../../components/ExamGroupCard"
 import PaginationC from "../../components/Pagination"
+import LineC from "../../components/Line"
 
 import actions from "../../redux/actions"
 
 class Home extends React.Component{
 
   state = {
-    limitItems: 1,
+    limitItems: 2,
     totalPage: 0,
     page: 1
   }
@@ -52,9 +54,7 @@ class Home extends React.Component{
       limit: this.state.limitItems
     }
 
-    await this.props.dispatch(actions.setExamGroupsFilter({
-      ...filter
-    }))
+    await this.props.dispatch(actions.setExamGroupsFilter(filter))
 
     this.fetchExamGroups()
   }
@@ -73,6 +73,30 @@ class Home extends React.Component{
 
   fetchExamGroups = () => {
     this.props.dispatch(actions.fetchExamGroupsData(this.props.examGroups.filter))
+  }
+
+  handleFilterChange = async (e, name) => {
+    let filter = {}
+    
+    if(name === "level"){
+      filter = {
+        level: e.target.value
+      }
+    }
+    else if(name === "class"){
+      filter = {
+        class: e.target.value
+      }
+    }
+    else if(name === "tag"){
+      filter = {
+        tag: e.target.value
+      }
+    }
+
+    await this.props.dispatch(actions.setExamGroupsFilter(filter))
+    await this.onClickPage(1)
+    this.fetchExamGroups()
   }
 
   render(){
@@ -100,18 +124,38 @@ class Home extends React.Component{
             <Filter
               title="Level"
               options={filterLevel}
+              onChange={(e) => this.handleFilterChange(e, "level")}
             />
             <Filter
               title="Class"
               options={filterClass}
+              onChange={(e) => this.handleFilterChange(e, "class")}
             />
             <Filter
               title="Tag"
               options={filterTag}
+              onChange={(e) => this.handleFilterChange(e, "tag")}
             />
           </FiltersWrap>
+          <Line/> 
           <ExamGroupCardWrap>
-            {this.props.examGroups.payload.data.map((v) => (
+          {this.props.examGroups.isLoading ? (
+            <LoaderWrap>
+              <Loader 
+                type="TailSpin"
+                color="#00BFFF"
+                height="30"	
+                width="30"
+              />
+              <LoaderTitle>Loading fetching data...</LoaderTitle>
+            </LoaderWrap>
+          ): 
+            this.props.examGroups.payload.data.length === 0 ? (
+              <NoResultsWrap>
+                <NoResultsTitle>No results ...</NoResultsTitle>
+              </NoResultsWrap>
+            ): 
+            this.props.examGroups.payload.data.map((v) => (
               <ExamGroupCard
                 title={v.title}
                 tag={["UN"]}
@@ -120,8 +164,12 @@ class Home extends React.Component{
                 class={v.class.title}
                 onClick={() => this.props.dispatch(push(`/exam-groups/${v.slug}`))}
               />
-            ))}
+            ))
+          }
           </ExamGroupCardWrap>
+          <Line/>
+
+
           <Pagination
             activePage={this.state.page}
             totalPage={this.state.totalPage}
@@ -146,7 +194,7 @@ const Wrapper = styled.section`
   margin-top: 60px;
   display: flex;
   flex-direction: column;
-  min-height: 1000px;
+  min-height: 2000px;
 `
 const Banner = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
@@ -220,10 +268,38 @@ const ExamGroupCardWrap = styled.section`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  padding-top: 15px;
+  min-height: 241px;
+  // margin-bottom: 50px;
+`
+
+const Line = styled(LineC)`
+  width: 100%;
+`
+
+const LoaderWrap = styled.section`
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const LoaderTitle = styled.p`
+  font-size: 14px;
+  color: #505565;
+`
+
+const NoResultsWrap = styled.section`
+  margin: auto;
+`
+
+const NoResultsTitle = styled.p`
+  font-size: 14px;
+  color: #505565;
 `
 
 const Pagination = styled(PaginationC)`
+  margin-top: 50px;
   align-self: center;
   margin-bottom: 100px;
 `
@@ -249,7 +325,7 @@ const filterTag = [
   }
 ]
 
-const filterClass = [
+const filterLevel = [
   {
     value: "sd",
     title: "SD"
@@ -264,7 +340,7 @@ const filterClass = [
   }
 ]
 
-const filterLevel = [
+const filterClass = [
   {
     value: "1",
     title: "1"

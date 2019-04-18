@@ -2,15 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import iconArrowDown from "../../images/icon-arrow-down.svg"
 
-const handleChange = (e) => {
-  console.log(e.target.value)
-}
-
 const FilterC = (props) => (
   <Wrapper className={props.className}>
     <Title>{props.title}</Title>
     <SelectWrap>
-      <Select onChange={handleChange}>
+      <Select onChange={props.onChange}>
         <Option value="">-- All --</Option>
         {props.options.map((v) => <Option value={v.value}>{v.title}</Option>)}
       </Select>
