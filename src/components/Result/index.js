@@ -5,7 +5,12 @@ import LineC from "../Line"
 const ResultC = (props) => (
   
   <Wrapper className={props.className}>
-    <HeaderTitle isPassed={props.score >= props.passingGrade}>{props.score < props.passingGrade ? "Not Passed" : "Passed"}</HeaderTitle>
+    {/* sementara boy */}
+    <HeaderTitle 
+      isPassed={props.isLoading ? true : (props.score >= props.passingGrade)}
+    >
+      {props.isLoading ? "Loading..": (props.score < props.passingGrade ? "Not Passed" : "Passed")}
+    </HeaderTitle>
     <SubHeaderTitle>Your Score {props.score} from 100</SubHeaderTitle>
     <Line/>
     <MainWrap>

@@ -1,3 +1,3 @@
 export default {
-  API_URL: "https://saepius.serveo.net"
+  API_URL: "http://localhost:9001"
 }

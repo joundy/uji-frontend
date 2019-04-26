@@ -204,6 +204,7 @@ class Exams extends React.Component{
               <NoResults/>
             ): this.props.exams.payload.data.map((v) => (
                 <ExamCard
+                  key={v.id}
                   title={v.title}
                   description={v.description}
                   source={v.source}
@@ -212,7 +213,7 @@ class Exams extends React.Component{
                   questionsTotal={v.maxQuestion}
                   // onClickButton ={() => this.handleModalOpen(v)}
                   onClickButton ={() => this.handleStartExam(v.id)}
-                  isLoading={this.state.generateExamLog.examId == v.id && this.state.generateExamLog.isLoading}
+                  isLoading={this.state.generateExamLog.examId === v.id && this.state.generateExamLog.isLoading}
                 />
               ))
             )}

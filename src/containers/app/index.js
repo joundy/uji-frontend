@@ -8,7 +8,6 @@ import styled from "styled-components"
 import Home from "../home"
 import Exams from "../exams"
 // import MyExams from "../myExam"
-// import Play from "../play"
 import NavbarC from "../../components/Navbar"
 // import BarC from "../../components/Bar"
 import SignIn from "../signin"
@@ -58,7 +57,6 @@ class App extends React.Component {
           <PrivateRoute exact path="/exam-logs/:id" component={Exam}/>
           <Route exact path="/exam-logs/:id/result" component={ExamResult}/>
           {/* <Route exact path="/my-exams" component={MyExams} /> */}
-          {/* <Route exact path="/play" component={Play} /> */}
         </main>
       </div>
     )
@@ -72,7 +70,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isAccessToken()  ? (
+        isAuthorize()  ? (
           <Component {...props} />
         ) :(
           <Redirect
@@ -87,10 +85,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 }
 
-const isAccessToken = () => {
+const isAuthorize = () => {
   if (!localStorage.getItem("accessToken")){
     return false
   }
+
+  const jwtData = JSON.parse(atob(localStorage.getItem("accessToken").split(" ")[1].split(".")[1]))
+  if(new Date().getTime() > (jwtData.exp * 1000)){
+    localStorage.removeItem("accessToken")
+    return false
+  }
+
   return true
 }
 

@@ -8,7 +8,6 @@ const DotC = (props) => {
 
   return (
     <Wrapper>
-      {console.log(isChecked)}
       <CheckboxWrap isChecked={isChecked}>
         <Checkbox onChange={() => setIsChecked(!isChecked)}/>
       </CheckboxWrap>

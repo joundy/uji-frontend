@@ -7,6 +7,10 @@ const setColor = (color = "") => {
       return "#EF7923"
     case "primary":
       return "#2A76E5"
+    case "danger":
+      return "#f33a3a"
+    case "success":
+      return "#0ad681"
     default:
       return "#2A76E5"
   }

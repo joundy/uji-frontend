@@ -64,9 +64,8 @@ class PaginationC extends React.Component{
   render(){
     return (
       <Wrapper className={this.props.className}>
-        {console.log(this.state)}
-        {this.state.pages.map((v) => (
-          <BoxWrap onClick={() => this.props.onClickPage(v)}>
+        {this.state.pages.map((v,i) => (
+          <BoxWrap key={i} onClick={() => this.props.onClickPage(v)}>
             <Box isFill={v === this.state.activePage} value={v} />
           </BoxWrap>
         ))}

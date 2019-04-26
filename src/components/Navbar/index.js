@@ -7,8 +7,8 @@ const NavbarC = (props) => (
     <MainWrap>
       <Header onClick={props.titleOnlick}>{props.title}</Header>
       <MenuWrap>
-        {props.menus.map((v) => (
-          <MenuTitleWrap onClick={v.onClick}>
+        {props.menus.map((v,i) => (
+          <MenuTitleWrap key={i} onClick={v.onClick}>
             <MenuTitle>{v.title}</MenuTitle>
           </MenuTitleWrap>
         ))}

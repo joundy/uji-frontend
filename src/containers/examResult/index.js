@@ -26,7 +26,6 @@ class ExamLogResult extends React.Component{
     const { examLog } = this.props
     return (
       <Wrapper>
-        {console.log(examLog)}
         <Navbar
           title=""
           // titleOnlick={() => props.changePage("/")}
@@ -41,10 +40,11 @@ class ExamLogResult extends React.Component{
               timeSpent={parseFloat(examLog.payload.timeSpent).toFixed(2)}
               correctAnswer={examLog.payload.result.pass}
               incCorrectAnswer={examLog.payload.result.failed}
+              isLoading={examLog.isLoading}
               // notAnswered="unknown"
             />
-            <Button title="Exit" onClick={() => this.props.dispatch(push(this.props.common.lastUrlBeforeExam))}/>
-            <Button title="Review" btn="outline" onClick={() => this.props.dispatch(push(`/exam-logs/${this.props.match.params.id}`))}/>
+            <Button title="Review" onClick={() => this.props.dispatch(push(`/exam-logs/${this.props.match.params.id}`))}/>
+            <Button title="Exit" btn="outline" onClick={() => this.props.dispatch(push(this.props.common.lastUrlBeforeExam))}/>
             {/* <Button title="Retake Exam" btn="outline"/> */}
           </ResultWrap>
         </MainWrap>

@@ -161,7 +161,6 @@ class Exam extends React.Component{
         </Modal>
 
         <MainWrap>
-          {console.log(examLog.payload)}
           <QuestionWrap>
             <QAWrap>
               <QuestionNo>{this.state.questionIndex + 1} from {examLog.payload.questions.length}</QuestionNo>
@@ -169,6 +168,7 @@ class Exam extends React.Component{
               <AnswerWrap>
                 {question.answer.list.map((v) => (
                   <AnswerRadio
+                    key={v.id}
                     title={v.title}
                     isChecked={selectedIds.includes(v.id) || correctIds.includes(v.id)}
                     isRadioChecked={selectedIds.includes(v.id)}
@@ -226,17 +226,18 @@ class Exam extends React.Component{
               <NoWrap>
                 {examLog.payload.questions.map((v, i) => (
                   <Box 
+                    key={i}
                     isActive={i === this.state.questionIndex}
                     value={i + 1} 
                     onClick={() => this.setQuestionIndex(i)} 
-                    isFill={examLog.payload.questions[i].answer.selectedIds.length !== 0 || examLog.payload.questions[i].isMarked}
-                    color={examLog.payload.questions[i].isMarked ? "warning" : "primary"}
+                    isFill={examLog.payload.questions[i].answer.selectedIds.length !== 0 || examLog.payload.questions[i].isMarked || examLog.payload.isSubmit}
+                    color={examLog.payload.isSubmit ? (examLog.payload.questions[i].answer.correctIds[0] === examLog.payload.questions[i].answer.selectedIds[0] ? "success" : "danger") : examLog.payload.questions[i].isMarked ? "warning" : "primary"}
                   />
                 ))}
                 
                 {/* fix flex wrap */}
-                {numToArrList(5 - (examLog.payload.questions.length % 5)).map(() => (
-                  <BoxFake/>
+                {numToArrList(5 - (examLog.payload.questions.length % 5)).map((v,i) => (
+                  <BoxFake key={i}/>
                 ))}
               </NoWrap>
               

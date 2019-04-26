@@ -60,7 +60,7 @@ class Home extends React.Component{
   }
 
   onClickPage = async (v) => {
-    window.scroll({ top: 500, left: 0, behavior: 'smooth' })
+    window.scroll({ top: 500, lefffft: 0, behavior: 'smooth' })
     this.props.dispatch(push(`/?page=${v}`))
 
     //set state Page
@@ -103,7 +103,6 @@ class Home extends React.Component{
   render(){
     return (
       <Wrapper>
-        {console.log(this.props.examGroups)}
         <Banner>
           <BannerContentWrap>
             <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
@@ -125,16 +124,19 @@ class Home extends React.Component{
             <Filter
               title="Level"
               options={filterLevel}
+              activeValue={this.props.examGroups.filter.level}
               onChange={(e) => this.handleFilterChange(e, "level")}
             />
             <Filter
               title="Class"
               options={filterClass}
+              activeValue={this.props.examGroups.filter.class}
               onChange={(e) => this.handleFilterChange(e, "class")}
             />
             <Filter
               title="Tag"
               options={filterTag}
+              activeValue={this.props.examGroups.filter.tag}
               onChange={(e) => this.handleFilterChange(e, "tag")}
             />
           </FiltersWrap>
@@ -152,11 +154,12 @@ class Home extends React.Component{
           ): 
             this.props.examGroups.payload.data.map((v) => (
               <ExamGroupCard
+                key={v.id}
                 title={v.title}
                 tag={[v.tag]}
                 description={v.description}
-                level={v.level}
-                class={v.class}
+                level={v.level.toUpperCase()}
+                class={v.class.toUpperCase()}
                 onClick={() => this.props.dispatch(push(`/exam-groups/${v.slug}`))}
               />
             ))

@@ -9,7 +9,7 @@ const ExamGroupCard = (props) => (
   <Wrapper className={props.className}>
     <Header>{props.title}</Header>
     <TagWrap>
-      {props.tag.map((v) => <Tag>#{v}</Tag>)}
+      {props.tag.map((v,i) => <Tag key={i}>#{v}</Tag>)}
     </TagWrap>
     <Desc>{props.description}</Desc>
     <LWrap>

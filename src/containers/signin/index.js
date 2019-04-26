@@ -31,7 +31,6 @@ class SignIn extends React.Component{
   render(){
     return (
       <Wrapper>
-        {console.log(this.props.common)}
         <MainWrap>
           <Title>Login as a Guest..</Title>
           <p style={{textAlign: "center"}}>Uji Yuksinau BETA.</p>

@@ -8,7 +8,7 @@ const BreadCrumbC = (props) => (
   <Wrapper className={props.className}>
     <MainWrap>
       {props.links.map((v, i) => (
-        <div>
+        <div key={i}>
           <MainText onClick={v.onClick}>{v.title}</MainText>
           { i + 1 !== props.links.length ? <IconNext/> : null}
         </div>

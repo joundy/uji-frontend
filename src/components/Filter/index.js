@@ -8,7 +8,13 @@ const FilterC = (props) => (
     <SelectWrap>
       <Select onChange={props.onChange}>
         <Option value="">-- All --</Option>
-        {props.options.map((v) => <Option value={v.value}>{v.title}</Option>)}
+        {props.options.map((v, i) => 
+          <Option 
+            key={i} 
+            selected={v.value === props.activeValue ? "selected" : ""} 
+            value={v.value}>{v.title}
+          </Option>
+        )}
       </Select>
     </SelectWrap>
   </Wrapper>

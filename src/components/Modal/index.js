@@ -16,7 +16,7 @@ const ModalC = (props) => {
       shouldCloseOnOverlayClick={true}
       style={customStyles}
       contentLabel="Example Modal"
-      onClick={() => console.log("onclick")}
+      // onClick={() => console.log("onclick")}
     >
       <Content width={props.width || 100} height={props.height || 100}>
         <MainWrap className={props.className}>
