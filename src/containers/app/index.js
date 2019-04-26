@@ -51,10 +51,10 @@ class App extends React.Component {
         </header>
     
         <main>
-          <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute {...this.props}  exact path="/" component={Home} />
           <Route exact path="/signin" component={SignIn} />
-          <PrivateRoute exact path="/exam-groups/:examGroupSlug" component={Exams} />
-          <PrivateRoute exact path="/exam-logs/:id" component={Exam}/>
+          <PrivateRoute {...this.props} exact path="/exam-groups/:examGroupSlug" component={Exams} />
+          <PrivateRoute {...this.props} exact path="/exam-logs/:id" component={Exam}/>
           <Route exact path="/exam-logs/:id/result" component={ExamResult}/>
           {/* <Route exact path="/my-exams" component={MyExams} /> */}
         </main>
@@ -71,8 +71,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props =>
         isAuthorize()  ? (
-          <Component {...props} />
-        ) :(
+          isInExam(rest) ? (
+            <Redirect
+              to={{
+                pathname: `/exam-logs/${rest.examLog.payload.id}`,
+                state: { from: props.location }
+              }}
+          />
+          ):(
+            <Component {...props} />
+          ))
+          :(
           <Redirect
             to={{
               pathname: "/signin",
@@ -99,10 +108,24 @@ const isAuthorize = () => {
   return true
 }
 
-const mapStateToPops = ({ router,location }) => {
+const isInExam = (props) => {
+  if (
+      props.examLog.payload.isStart === true && 
+      props.examLog.payload.isSubmit === false && 
+      props.path !== "/exam-logs/:id"
+      // props.router.location.pathname.split("/").pop() !== props.examLog.payload.id
+    ){
+    return true
+  }
+
+  return false
+}
+
+const mapStateToPops = ({ router, location, examLog }) => {
   return{
     router,
-    location
+    location,
+    examLog
   }
 }
 
@@ -127,3 +150,7 @@ const Navbar = styled(NavbarC)`
 
 
 export default connect(mapStateToPops, mapDispatchToProps)(App)
+function newFunction(props) {
+  console.log(props);
+}
+
