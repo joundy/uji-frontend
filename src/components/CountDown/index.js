@@ -1,14 +1,9 @@
 import React from "react"
 
-import Countdown from "react-countdown-now"
+class CountDown extends React.Component{
 
-class CountDownC extends React.Component{
   state = {
     remainingTime: 0
-  }
-
-  renderer = ({ hours, minutes, seconds }) => {
-    return <span style={{letterSpacing: "2px"}}>{addDigit(hours)}:{addDigit(minutes)}:{addDigit(seconds)}</span>
   }
 
   shouldComponentUpdate = (nextProps) => {
@@ -22,13 +17,63 @@ class CountDownC extends React.Component{
   } 
 
   render() {
+    return <CountDownMain remainingTime={this.state.remainingTime} />
+  }
+}
+
+class CountDownMain extends React.Component{
+  state = {
+    countDownDate: 0, 
+    now: 0
+  }
+
+  componentDidMount = () => {
+    this.setCountDownDate()
+    this.setTimeNow()
+  }
+
+  setCountDownDate = () => {
+    this.setState({
+      countDownDate: new Date().getTime()
+    })
+  }
+
+  setTimeNow = () => {
+
+    const setNow = () => {
+      this.setState({
+        now: new Date().getTime()
+      })
+    }
+    
+    setNow()
+    setInterval(() => {
+      setNow()
+    }, 1000)
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.remainingTime !== 0) {
+      this.setState({
+        countDownDate: new Date().getTime() + (nextProps.remainingTime * 1000)
+      })
+    }
+  }
+
+  render() {
+
+    // const distance = this.state.countDownDate === 0 ? 0 : this.state.countDownDate - this.state.now === 0 ? 0 : this.state.now
+    const distance = this.state.countDownDate - this.state.now
+
+    // const days = Math.floor(this.state.distance / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
     return (
-      <Countdown
-        date={Date.now() + (1000 * this.props.remainingTime)} 
-        renderer={this.renderer}
-        zeroPadTime={2}
-        onComplete={this.props.onComplete}
-      />
+      <div>
+        <p>{addDigit(hours)}:{addDigit(minutes)}:{addDigit(seconds)}</p>
+      </div>
     )
   }
 }
@@ -37,4 +82,4 @@ const addDigit = (v) => {
   return ("0" + v).slice(-2)
 }
 
-export default CountDownC
+export default CountDown
