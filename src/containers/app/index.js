@@ -150,7 +150,3 @@ const Navbar = styled(NavbarC)`
 
 
 export default connect(mapStateToPops, mapDispatchToProps)(App)
-function newFunction(props) {
-  console.log(props);
-}
-

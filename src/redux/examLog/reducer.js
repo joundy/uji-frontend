@@ -30,7 +30,8 @@ const initialState = {
     },
     remainingTime: 0,
     isStart: false,
-    isSubmit: false
+    isSubmit: false,
+    endTime: "0"
   },
   isLoading: false,
   error: {},

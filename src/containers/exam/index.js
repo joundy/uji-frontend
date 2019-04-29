@@ -35,8 +35,12 @@ class Exam extends React.Component{
     this.getByIdAndStartExamLog()
   }
 
-  componentWillReceiveProps = async (nextProps) => {
-    if(nextProps.examLog.payload.remainingTime < 0 && this.state.isSubmit === false){
+  componentWillReceiveProps = (nextProps) => {
+    this.handleSubmitOnLoad(nextProps)
+  }
+
+  handleSubmitOnLoad = (nextProps) => {
+     if(nextProps.examLog.payload.endTime !== "0" && new Date(nextProps.examLog.payload.endTime).getTime() < new Date().getTime() && this.state.isSubmit === false){
       this.setState({ isSubmit: true })
       this.submitExamLog(nextProps.examLog.payload.id)
     }
@@ -127,9 +131,10 @@ class Exam extends React.Component{
     const question = examLog.payload.questions[this.state.questionIndex]
     return (
       <Wrapper>
+        {/* {console.log(examLog.payload.endTime)} */}
         <Navbar
           title={examLog.payload.isSubmit ? "Review" : <CountDown 
-          remainingTime={examLog.payload.remainingTime}
+          endTime={examLog.payload.endTime}
           onComplete={() => this.handleOnSubmit(examLog.payload.id)}
         />}
           menus={[
