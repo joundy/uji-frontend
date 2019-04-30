@@ -25,7 +25,7 @@ const Wrapper = styled.section`
   justify-content: center;
   align-items: center;
 
-  @media (min-width: 0px) and (max-width: 480px) {
+  @media (min-width: 0px) and (max-width: 960px) {
     justify-content: space-between;
     padding-left: 20px;
     padding-right: 20px;

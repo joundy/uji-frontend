@@ -28,7 +28,6 @@ const initialState = {
       pass: 0,
       failed: 0
     },
-    remainingTime: 0,
     isStart: false,
     isSubmit: false,
     endTime: "0"

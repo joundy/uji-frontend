@@ -348,6 +348,13 @@ const MainWrap = styled.section`
   border: 1px solid #F0F1F3;
   height: ${window.innerHeight - 60}px;
 
+  @media (min-width: 481px) and (max-width: 960px) {
+    width: 100%;
+    padding-right: 20px; 
+    padding-left: 20px; 
+
+  } 
+
   @media (min-width: 0px) and (max-width: 480px) {
     height: auto;
     width: 100%;

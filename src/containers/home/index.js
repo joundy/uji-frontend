@@ -60,7 +60,7 @@ class Home extends React.Component{
   }
 
   onClickPage = async (v) => {
-    window.scroll({ top: 500, lefffft: 0, behavior: 'smooth' })
+    window.scroll({ top: 500, left: 0, behavior: 'smooth' })
     this.props.dispatch(push(`/?page=${v}`))
 
     //set state Page
@@ -106,7 +106,7 @@ class Home extends React.Component{
         <Banner>
           <BannerContentWrap>
             <BannerTitle>Selamat Datang di Uji Yuksinau</BannerTitle>
-            <BannerDesc>Uji yuksinau adalah sebuah website ujian online,  pada website ini terdapat banyak course/tryout gratis mulai dari ujian nasional sampai smbpn</BannerDesc>
+            <BannerDesc>Uji yuksinau adalah sebuah website ujian online,  pada website ini terdapat banyak course/tryout gratis mulai dari ujian nasional sampai sbmptn</BannerDesc>
             {/* <Button title="Signup now" onClick={() => console.log("hello boy")} width={130}/> */}
           </BannerContentWrap>
         </Banner>
@@ -200,7 +200,7 @@ const Wrapper = styled.section`
   // min-height: 2000px;
 `
 const Banner = styled.section`
-  @media (min-width: 0px) and (max-width: 480px) {
+  @media (min-width: 0px) and (max-width: 960px) {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -236,7 +236,7 @@ const BannerContentWrap = styled.section`
   padding-bottom: 50px;
 `
 const MainWrap = styled.section`
-  @media (min-width: 0px) and (max-width: 480px) {
+  @media (min-width: 0px) and (max-width: 960px) {
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
@@ -283,6 +283,11 @@ const ExamGroupCardWrap = styled.section`
   padding-top: 15px;
   min-height: 241px;
   // margin-bottom: 50px;
+
+  @media (min-width: 481px) and (max-width: 960px) {
+    width: 635px;
+    align-self: center;
+  }
 `
 
 const Line = styled(LineC)`

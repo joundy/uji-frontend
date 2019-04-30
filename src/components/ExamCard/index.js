@@ -7,7 +7,7 @@ const ExamCardC = (props) => (
   <Wrapper className={props.className}>
     <LeftWrap>
       <Header>{props.title}</Header>
-      <Desc>{props.description}</Desc>
+      {/* <Desc>{props.description}</Desc> */}
       <Detail>Source: {props.source} | Passing grade: {props.passingGrade}</Detail>
     </LeftWrap>
 
@@ -19,14 +19,14 @@ const ExamCardC = (props) => (
     <RightWrap>
       <MBWrap>
         <MainDetailWrap>
-          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Rem. time (min)" : "Duration(min)"}</MainDetailTitle>
+          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Rem. time (min)" : "Duration(sec)"}</MainDetailTitle>
           <MainDetailValueWrap>
             <MainDetailValue>{props.status === "started" || props.status === "submited" ? props.remainingTime : props.duration}</MainDetailValue>
           </MainDetailValueWrap>
         </MainDetailWrap>
 
         <MainDetailWrap>
-          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Stat. questions" : "Total question"}</MainDetailTitle>
+          <MainDetailTitle>{props.status === "started" || props.status === "submited" ? "Stat. questions" : "Max Question"}</MainDetailTitle>
           <MainDetailValueWrap>
             <MainDetailValue>{props.status === "started" || props.status === "submited" ? props.statQuestion : props.questionsTotal}</MainDetailValue>
           </MainDetailValueWrap>
@@ -53,16 +53,21 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: space-between;
 
+  @media (min-width: 481px) and (max-width: 960px) {
+    width: 100%;
+  }
+
   @media (min-width: 0px) and (max-width: 480px) {
     align-items: flex-start;
     width: 100%;
-    height: 160px;
+    height: 135px;
     flex-direction: column;
   } 
 `
 
 const Header = styled.h3`
   margin: 0px;
+  margin-bottom: 10px;
   color: #232735;
 `
 

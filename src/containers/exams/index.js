@@ -271,8 +271,8 @@ const MainWrap = styled.section`
   display: flex; 
   flex-direction: column;
   margin-bottom: 150px;
-
-  @media (min-width: 0px) and (max-width: 480px) {
+  
+  @media (min-width: 0px) and (max-width: 960px) {
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
