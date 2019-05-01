@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install --silent
-RUN npm install react-scripts@1.1.1 -g --silent
+RUN npm install
+RUN npm run build
 
-EXPOSE 3000
+EXPOSE 5000
 
-CMD npm run build && node server.js
+CMD node server.js
