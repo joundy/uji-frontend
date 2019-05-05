@@ -16,9 +16,9 @@ const mutation = {
 
     return res.data
   },
-  async setQuestionAnswers(authorization, examLogId, questionId, selectedIds){
+  async setQuestionAnswers(authorization, examLogId, questionId, selectedId){
     const res = await axios.put(`${config.API_URL}/examLogs/${examLogId}/setAnswers/questions/${questionId}`, querystring.stringify({
-      selectedIds
+      selectedId
     }),{
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

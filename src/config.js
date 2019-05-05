@@ -1,3 +1,3 @@
 export default {
-  API_URL: "https://api-uji.yuksinau.id"
+  API_URL: "http://localhost:9001"
 }

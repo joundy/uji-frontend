@@ -127,11 +127,10 @@ class Exam extends React.Component{
 
   render(){
     const { examLog } = this.props
-    const { correctIds, selectedIds } = examLog.payload.questions[this.state.questionIndex].answer
+    const { selectedIds } = examLog.payload.questions[this.state.questionIndex].answer
     const question = examLog.payload.questions[this.state.questionIndex]
     return (
       <Wrapper>
-        {/* {console.log(examLog.payload.endTime)} */}
         <Navbar
           title={examLog.payload.isSubmit ? "Review" : <CountDown 
           endTime={examLog.payload.endTime}
@@ -175,9 +174,9 @@ class Exam extends React.Component{
                   <AnswerRadio
                     key={v.id}
                     title={v.title}
-                    isChecked={selectedIds.includes(v.id) || correctIds.includes(v.id)}
+                    isChecked={selectedIds.includes(v.id) || v.isCorrect}
                     isRadioChecked={selectedIds.includes(v.id)}
-                    color={correctIds.includes(v.id) ? "success" : (selectedIds.includes(v.id) && examLog.payload.isSubmit ? "danger" : "primary")}
+                    color={v.isCorrect ? "success" : (selectedIds.includes(v.id) && examLog.payload.isSubmit ? "danger" : "primary")}
                     onClick={() => this.setQuestionAnswers(examLog.payload.id, question.id, v.id)}
                   />
                 ))}
@@ -236,7 +235,8 @@ class Exam extends React.Component{
                     value={i + 1} 
                     onClick={() => this.setQuestionIndex(i)} 
                     isFill={examLog.payload.questions[i].answer.selectedIds.length !== 0 || examLog.payload.questions[i].isMarked || examLog.payload.isSubmit}
-                    color={examLog.payload.isSubmit ? (examLog.payload.questions[i].answer.correctIds[0] === examLog.payload.questions[i].answer.selectedIds[0] ? "success" : "danger") : examLog.payload.questions[i].isMarked ? "warning" : "primary"}
+                    // color={examLog.payload.isSubmit ? (true ? "success" : "danger") : examLog.payload.questions[i].isMarked ? "warning" : "primary"}
+                    color={examLog.payload.isSubmit ? (getCorrectIds(examLog.payload.questions[i].answer.list)[0] === examLog.payload.questions[i].answer.selectedIds[0] ? "success" : "danger") : examLog.payload.questions[i].isMarked ? "warning" : "primary"}
                   />
                 ))}
                 
@@ -289,6 +289,17 @@ const numToArrList = (number) => {
   }
 
   return list
+}
+
+const getCorrectIds = (answerList) => {
+  let correctIds = []
+  answerList.map((v) => {
+    if(v.isCorrect){
+      correctIds.push(v.id)
+    }
+  })
+
+  return correctIds
 }
 
 const Wrapper = styled.section`
