@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styled from "styled-components"
 import { push } from "connected-react-router"
+import { Parser } from "html-to-react"
 
 import CountDown from "../../components/CountDown"
 
@@ -19,6 +20,8 @@ import IconPreviousWhiteI from "../../images/icon-previous-white.svg"
 
 import actions from "../../redux/actions"
 import models from "../../models"
+
+const htmlToReactParser = new Parser()
 
 class Exam extends React.Component{
   state = {
@@ -168,7 +171,7 @@ class Exam extends React.Component{
           <QuestionWrap>
             <QAWrap>
               <QuestionNo>{this.state.questionIndex + 1} from {examLog.payload.questions.length}</QuestionNo>
-              <QuestionTitle>{question.title}</QuestionTitle>
+              <QuestionTitle>{htmlToReactParser.parse(question.title)}</QuestionTitle>
               <AnswerWrap>
                 {question.answer.list.map((v) => (
                   <AnswerRadio
@@ -413,8 +416,8 @@ const QuestionNo = styled.p`
 
 `
 
-const QuestionTitle = styled.h3`
-  color: #232735;
+const QuestionTitle = styled.section`
+  // color: #232735;
   margin: 0px;
   margin-bottom: 40px;
 ` 

@@ -71,13 +71,13 @@ const Header = styled.h3`
   color: #232735;
 `
 
-const Desc = styled.p`
-  font-weight: normal;
-  font-size: 14px;
-  color: #8B90A0;
-  margin-top: 13px;
-  margin-bottom: 7px;
-`
+// const Desc = styled.p`
+//   font-weight: normal;
+//   font-size: 14px;
+//   color: #8B90A0;
+//   margin-top: 13px;
+//   margin-bottom: 7px;
+// `
 
 const Detail = styled.p`
   font-weight: normal;

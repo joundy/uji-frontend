@@ -1,5 +1,8 @@
 import React from "react"
 import styled from "styled-components"
+import { Parser } from "html-to-react"
+
+const htmlToReactParser = new Parser()
 
 const setColor = (color = "") => {
   switch (color) {
@@ -21,7 +24,7 @@ const AnswerRadioC = (props) => (
   <Wrapper className={props.className} onClick={props.onClick}>
    <AnswerWrap isChecked={props.isChecked} color={setColor(props.color)}>
       <Radio isRadioChecked={props.isRadioChecked}/>
-      <AnswerTitle>{props.title}</AnswerTitle>
+      <AnswerTitle>{htmlToReactParser.parse(props.title)}</AnswerTitle>
     </AnswerWrap>
   </Wrapper>
 )
@@ -40,6 +43,7 @@ const Radio = styled.section`
   cursor: pointer;  
   border: 1px solid #A1A4B1;
   box-sizing: border-box;
+  flex: 0 0 20px;
 
   ${(props) => props.isRadioChecked ? `
     background: #2A76E5;

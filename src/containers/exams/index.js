@@ -48,6 +48,7 @@ class Exams extends React.Component{
   }
 
   generateExamLog = async (examId) => {
+    // console.log(examId)
     try{
       this.setState({
         generateExamLog: {
