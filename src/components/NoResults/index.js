@@ -4,7 +4,7 @@ import styled from "styled-components"
 const NoResultsC = (props) => (
   
   <Wrapper className={props.className}>
-      <NoResultsTitle>No results ...</NoResultsTitle>
+      <NoResultsTitle>No content ...</NoResultsTitle>
   </Wrapper>
 )
 

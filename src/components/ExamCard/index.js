@@ -60,7 +60,7 @@ const Wrapper = styled.section`
   @media (min-width: 0px) and (max-width: 480px) {
     align-items: flex-start;
     width: 100%;
-    height: 135px;
+    height: auto;
     flex-direction: column;
   } 
 `
@@ -103,7 +103,8 @@ const MainDetailValue = styled.h2`
 const MainDetailValueWrap = styled.section`
   height: 40px;
   // width: 100px;
-  border: 1px solid #D3D4D8;
+  // border: 1px solid #D3D4D8;
+  background-color: #e9f3ff;
   box-sizing: border-box;
   border-radius: 5px;
   display: flex;

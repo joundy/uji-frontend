@@ -44,6 +44,7 @@ const Radio = styled.section`
   border: 1px solid #A1A4B1;
   box-sizing: border-box;
   flex: 0 0 20px;
+  margin-top: 15px;
 
   ${(props) => props.isRadioChecked ? `
     background: #2A76E5;

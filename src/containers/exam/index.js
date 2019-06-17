@@ -23,6 +23,8 @@ import models from "../../models"
 
 const htmlToReactParser = new Parser()
 
+// import "./exam.css"
+
 class Exam extends React.Component{
   state = {
     isSideOpen: false,
@@ -82,7 +84,7 @@ class Exam extends React.Component{
   handleNextQuestion = () => {
     if (this.state.questionIndex !== this.props.examLog.payload.questions.length - 1){
       this.setState({
-        questionIndex: this.state.questionIndex + 1
+        questionIndex: this.state.  questionIndex + 1
       })
     }
   }
@@ -248,22 +250,25 @@ class Exam extends React.Component{
                   <BoxFake key={i}/>
                 ))}
               </NoWrap>
-              
-              <ColorDescTBWrap>
-                <ColorDescBoxOutline/>
-                <ColorDescTitle>Not answered</ColorDescTitle>
-              </ColorDescTBWrap>
-              
-              <ColorDescTBWrap>
-                <ColorDescBoxFill/>
-                <ColorDescTitle>Answered</ColorDescTitle>
-              </ColorDescTBWrap>
-    
-              <ColorDescTBWrap>
-                <ColorDescBoxWarning/>
-                <ColorDescTitle>Marked for review</ColorDescTitle>
-              </ColorDescTBWrap>
-              
+
+              {!examLog.payload.isSubmit ? (
+                <div>
+                  <ColorDescTBWrap>
+                    <ColorDescBoxOutline/>
+                    <ColorDescTitle>Not answered</ColorDescTitle>
+                  </ColorDescTBWrap>
+                  
+                  <ColorDescTBWrap>
+                    <ColorDescBoxFill/>
+                    <ColorDescTitle>Answered</ColorDescTitle>
+                  </ColorDescTBWrap>
+        
+                  <ColorDescTBWrap>
+                    <ColorDescBoxWarning/>
+                    <ColorDescTitle>Marked for review</ColorDescTitle>
+                  </ColorDescTBWrap>
+                </div>
+              ): null}
               
             </NCWrap>
             
